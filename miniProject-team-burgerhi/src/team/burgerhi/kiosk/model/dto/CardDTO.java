@@ -1,4 +1,4 @@
-package team.burgerhi.kiosk.controller;
+package team.burgerhi.kiosk.model.dto;
 
 import java.io.Serializable;
 
