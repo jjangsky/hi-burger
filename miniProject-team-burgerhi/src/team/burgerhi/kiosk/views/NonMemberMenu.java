@@ -12,7 +12,7 @@ public class NonMemberMenu {
 	public void displayMainMenu() {
 		
 		Scanner sc = new Scanner(System.in);
-		
+		  
 		do {
 			
 			System.out.println(">>>>   BurgerHI 비회원 주문하기   <<<<");
