@@ -1,8 +1,6 @@
 package team.burgerhi.kiosk.views;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import team.burgerhi.kiosk.controller.ClientController;
@@ -20,7 +18,6 @@ public class OrderMenu {
 		Scanner sc = new Scanner(System.in);
 		
 		boolean flag = true;
-		// 김유찬 Test
 		do {
 			
 			System.out.println(">>>> 어서오세요 BurgerHI 입니다. <<<<");
@@ -103,6 +100,7 @@ public class OrderMenu {
 							MenuDTO menu = new MenuDTO();
 							for(OrderMenuDTO orderMenu : orderMenuList) {
 								if(menu.getMenuCode() == orderMenu.getMenuCode()) {
+									System.out.println("▶ 메뉴번호: " + orderMenu.getMenuCode());
 									System.out.println("▶ 메뉴명 : " + menu.getName());
 									System.out.println("▶ 주문수량: " + orderMenu.getOrderAmount());
 									System.out.println("▶ 금액: " + menu.getPrice() + " * " + orderMenu.getOrderAmount() + " = " + menu.getPrice() * orderMenu.getOrderAmount());
@@ -122,8 +120,10 @@ public class OrderMenu {
 								System.out.println(">>>>    BurgerHI 장바구니 수정    <<<<");
 								System.out.println("===================================");
 								System.out.println();
-								System.out.println(">>>> 삭제하실 메뉴를 입력해 주세요: ");
+								System.out.println(">>>> 삭제하실 메뉴 번호를 입력해 주세요: ");
+								int deleteMenuCode = sc.nextInt();
 								System.out.println(">>>> 삭제하실 메뉴의 수량을 입력해 주세요: ");
+								int deletAmount = sc.nextInt();
 								
 							} else if(num == 3) {
 								flag = false;
