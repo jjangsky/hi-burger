@@ -42,7 +42,7 @@ public class NonMemberMenu {
 			System.out.print(">>>> 원하시는 메뉴의 번호를 입력해 주세요: ");
 			int menuNo = sc.nextInt();
 			System.out.print(">>>> 선택한 메뉴의 수량을 입력해 주세요: ");
-			int amount = sc.nextInt();
+			int amount = sc.nextInt();          
 			System.out.println("\\n\\n\\n\\n\\n");
 			
 			
