@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import team.burgerhi.kiosk.model.dao.ClientDAO;
+import team.burgerhi.kiosk.model.dto.CardDTO;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
@@ -56,5 +57,49 @@ public class ClientService {
 		
 		return orderMenuList;
 	}
+	public int deleteOrderMenu(int deleteMenuCode) {
+		Connection con = getConnection();
+		
+		int deleteResulte = clientDAO.deleteOrderMenu(deleteMenuCode);
+		
+		close(con);
+		
+		return deleteResulte;
+	}
+	public String selectGrade(int gradeNo) {
+		Connection con = getConnection();
+		
+		String selectResult = clientDAO.selectGrade(con, gradeNo);
+		
+		close(con);
+		return selectResult;
+	}
+	public List<CardDTO> selectCard() {
+		Connection con = getConnection();
+		
+		List<CardDTO> cardList = clientDAO.selectCard();
+		
+		close(con);
+		return cardList;
+	}
 
+	public int insertOrder(String date, double lastPayment) {
+		Connection con = getConnection();
+		
+		int insertResult = clientDAO.insertOrder(con, date, lastPayment);
+		
+		close(con);
+		
+		return insertResult;
+	}
+	public int insertPayment(int userNo, int totalPrice, double gradeDiscount, double cardDiscount, double lastPayment,
+			String payment) {
+		
+		int orderCode = clientDAO.selectLastOrderCode();
+		
+		int inserResult = clientDAO.insertPayment(orderCode, userNo, totalPrice, gradeDiscount, cardDiscount, lastPayment, payment);
+		
+		
+		return inserResult;
+	}
 }

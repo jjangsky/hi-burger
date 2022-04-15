@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Properties;
 
+import team.burgerhi.kiosk.model.dto.CardDTO;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
@@ -60,4 +61,42 @@ public class ClientDAO {
 		return null;
 	}
 
+	public int deleteOrderMenu(int deleteMenuCode) {
+		/* where = deleteMenuCode */
+		
+		return 0;
+	}
+
+	public String selectGrade(Connection con, int gradeNo) {
+		/* where = gradNo */
+		
+		return null;
+	}
+
+	public List<CardDTO> selectCard() {
+		/* card 테이블 where = cardAble - Y */
+		
+		return null;
+	}
+
+	
+	public int insertOrder(Connection con, String date, double lastPayment) {
+		/* order테이블 insert */
+		
+		return 0;
+	}
+
+	public int selectLastOrderCode() {
+		/* order테이블 orderCode 마지막 번호 반환 */
+		
+		return 0;
+	}
+
+	public int insertPayment(int orderCode, int userNo, int totalPrice, double gradeDiscount, double cardDiscount,
+			double lastPayment, String payment) {
+		/* payment 테이블 insert */
+		
+		
+		return 0;
+	}
 }
