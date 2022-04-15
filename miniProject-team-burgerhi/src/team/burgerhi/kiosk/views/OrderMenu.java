@@ -20,7 +20,7 @@ public class OrderMenu {
 		Scanner sc = new Scanner(System.in);
 		
 		boolean flag = true;
-		
+		// 김유찬 Test
 		do {
 			
 			System.out.println(">>>> 어서오세요 BurgerHI 입니다. <<<<");
