@@ -1,27 +1,28 @@
 package team.burgerhi.kiosk.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
+import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 import team.burgerhi.kiosk.model.service.ClientService;
+import team.burgerhi.kiosk.views.OrderResultSet;
 
 public class ClientController {
 	private ClientService clientService = new ClientService();
+	private OrderResultSet orderResultSet = new OrderResultSet();
 	
-	public int loginResult(String id, String pwd) {
+	public UserDTO loginResult(String id, String pwd) {
 		
-		List<UserDTO> userList = clientService.loginResult(id, pwd);
-		String userName = "";
-		int gradeNo = 0;
-		for(UserDTO user : userList) {
-			userName = user.getName();
-			gradeNo = user.getGradeNo();
-		}
+		UserDTO userDTO = clientService.loginResult(id, pwd);
+		int gradeNo = userDTO.getGradeNo();
+		String userName = userDTO.getName();
 		
-		Scanner sc = new Scanner(System.in);
 		if(userName != null) {
 			System.out.println(">>>> " + userName + "님 환영합니다!");
 			System.out.println();
@@ -29,7 +30,7 @@ public class ClientController {
 			System.out.println("회원정보가 일치하지 않습니다. 다시 입력해 주세요!");
 			System.out.println("\n\n\n");
 		}
-		return gradeNo;
+		return userDTO;
 	}
 
 	public List<CategoryDTO> selectAllCategory() {
@@ -45,5 +46,25 @@ public class ClientController {
 				
 		return menuList;
 	}
+
+	public void insertOrderMenu(int userNo, int inputMenuNo, int inputAmount) {
+		
+		int insertOrderMenu = clientService.insertOrderMenu(userNo, inputMenuNo, inputAmount);
+		
+		if(insertOrderMenu > 0) {
+			orderResultSet.orderMenuSuccess();
+		} else {
+			orderResultSet.orderMenuFail();
+		}
+		
+	}
+
+	public List<OrderMenuDTO> selectOrderMenu(int userNo) {
+		
+		List<OrderMenuDTO> orderMenuList = clientService.selectOrderMenu(userNo);
+		
+		return orderMenuList;
+	}
+
 
 }

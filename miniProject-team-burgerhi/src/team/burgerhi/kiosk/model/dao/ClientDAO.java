@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
+import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 
 public class ClientDAO {
@@ -21,7 +22,7 @@ public class ClientDAO {
 		}
 	}
 	
-	public List<UserDTO> loginResult(Connection con, String id, String pwd) {
+	public UserDTO loginResult(Connection con, String id, String pwd) {
 		/*
 		 * id와 pwd가 일치할 경우 회원의 이름과 등급번호 List에 담아 전달
 		 * 일치하는 id와 pwd가 없을 경우 name = null값으로 지정하여 전달
@@ -41,6 +42,19 @@ public class ClientDAO {
 
 	public List<MenuDTO> selectMenuBy(Connection con, int categoryNo) {
 		/* 카테고리 번호에 해당하는 메뉴만 Select 후 반환 */
+		
+		
+		return null;
+	}
+
+	public int insertOrderMenu(int userNo, int inputMenuNo, int inputAmount) {
+		/* OrderMenu 테이블에 지금까지 입력한 내용을 모두 insert */
+		
+		return 0;
+	}
+
+	public List<OrderMenuDTO> selectOrderMenu(Connection con, int userNo) {
+		/* where = userNo  */
 		
 		
 		return null;
