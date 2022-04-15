@@ -17,7 +17,7 @@ public class NonMemberMenu {
 			
 			System.out.println(">>>>   BurgerHI 비회원 주문하기   <<<<");
 			System.out.println("================================");
-			System.out.println();
+			System.out.println(); 
 
 			List<CategoryDTO> categoryList = clientController.selectAllCategory();
 			
