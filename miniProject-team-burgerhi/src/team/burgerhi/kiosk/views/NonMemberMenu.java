@@ -33,7 +33,7 @@ public class NonMemberMenu {
 			System.out.println("================================");
 			System.out.println();
 			List<MenuDTO> menuList = clientController.selectMenuBy(categoryNo);
-			
+			  
 			for(MenuDTO menu : menuList) {
 				System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  " + menu.getPrice() + "원/n     " + menu.getExplain());
 			}
