@@ -99,7 +99,7 @@ public class ClientController {
 
 	public void insertOrder(double lastPayment) {
 		Date now = new Date();
-		SimpleDateFormat smdf = new SimpleDateFormat("yyyy/mm/dd");
+		SimpleDateFormat smdf = new SimpleDateFormat("yyyy/MM/dd");
 		String date = smdf.format(now);
 		
 		int insertResult = clientService.insertOrder(date, lastPayment);
