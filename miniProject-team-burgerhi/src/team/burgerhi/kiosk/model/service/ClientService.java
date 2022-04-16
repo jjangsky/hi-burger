@@ -99,6 +99,16 @@ public class ClientService {
 		return cardList;
 	}
 	
+	/* Payment 테이블에 필요한 카드 번호 Select */
+	public List<CardDTO> selectAllCard() {
+		Connection con = getConnection();
+		
+		List<CardDTO> cardList = clientDAO.selectAllCard(con);
+		
+		close(con);
+		return cardList;
+	}
+	
 	/* 결제까지 완료 된 확정 정보를 Order 테이블에 Insert */
 	public int insertOrder(String date, double lastPayment) {
 		Connection con = getConnection();
@@ -111,14 +121,18 @@ public class ClientService {
 	}
 	
 	/* 결제까지 완료 된 확정 정보를 Payment 테이블에 Insert */
-	public int insertPayment(int userNo, int totalPrice, double gradeDiscount, double cardDiscount, double lastPayment,
+	public int insertPayment(int userNo, int totalPrice, int gradeNo, int cardCode, double lastPayment,
 			String payment) {
 		
-		int orderCode = clientDAO.selectLastOrderCode();
+		Connection con = getConnection();
 		
-		int inserResult = clientDAO.insertPayment(orderCode, userNo, totalPrice, gradeDiscount, cardDiscount, lastPayment, payment);
+		int orderCode = clientDAO.selectLastOrderCode(con);
 		
+		int inserResult = clientDAO.insertPayment(con, orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
+		
+		close(con);
 		
 		return inserResult;
 	}
+
 }

@@ -24,6 +24,7 @@ public class OrderMenu {
 		int menuPrice = 0;
 		int totalPrice = 0;
 		int paymentBy = 0;
+		int cardCode = 0;
 		double gradeDiscount = 0;
 		double cardDiscount = 0;
 		double lastPayment = 0;
@@ -176,6 +177,8 @@ public class OrderMenu {
 					}
 				}
 				
+				cardCode = clientController.selectCardBy(paymentCard);
+				
 				cardDiscount = totalPrice * cardDiscount;	// 카드 할인: 10%이기 때문에 총 금액에서 10%가 얼마인지 계산 후 변수에 담기
 				
 				/* 할인 내역 및 결제 금액 모두 출력 */
@@ -199,7 +202,7 @@ public class OrderMenu {
 			
 			/* 최종 모두 확정된 정보를 테이블에 Insert */
 			clientController.insertOrder(lastPayment);
-			clientController.insertPayment(userNo, totalPrice, gradeDiscount, cardDiscount, lastPayment, paymentBy);
+			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
 
 			
 		}

@@ -163,6 +163,21 @@ public class ClientController {
 		return cardList;
 	}
 
+	/* Payment 테이블에 필요한 카드 번호 Select */
+	public int selectCardBy(String paymentCard) {
+		
+		List<CardDTO> cardList = clientService.selectAllCard();
+		int cardCode = 0;
+		for(CardDTO card : cardList) {
+			if(card.getBank().equals(paymentCard)) {
+				cardCode = card.getCode();
+				break;
+			}
+		}
+		
+		return cardCode;
+	}
+	
 	/* 결제까지 완료 된 확정 정보를 Order 테이블에 Insert */
 	public void insertOrder(double lastPayment) {
 		Date now = new Date();
@@ -182,7 +197,7 @@ public class ClientController {
 	}
 	
 	/* 결제까지 완료 된 확정 정보를 Payment 테이블에 Insert */
-	public void insertPayment(int userNo, int totalPrice, double gradeDiscount, double cardDiscount, double lastPayment,
+	public void insertPayment(int userNo, int totalPrice, int gradeNo, int cardCode, double lastPayment,
 			int paymentBy) {
 		String payment = "";
 		switch(paymentBy) {
@@ -190,8 +205,7 @@ public class ClientController {
 		case 2: payment = "현금";
 		case 3: payment = "기프티콘";
 		}
-		int insertResult = clientService.insertPayment(userNo, totalPrice, gradeDiscount, cardDiscount, lastPayment, payment);
-		
+		int insertResult = clientService.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
 	}
 
 }

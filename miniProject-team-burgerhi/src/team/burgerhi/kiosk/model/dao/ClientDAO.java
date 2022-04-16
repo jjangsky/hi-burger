@@ -3,6 +3,11 @@ package team.burgerhi.kiosk.model.dao;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -11,6 +16,7 @@ import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
+import static team.burgerhi.common.JDBCTemplate.close;
 
 public class ClientDAO {
 	Properties prop = new Properties();		// xml 파일로 저장되어 있는 쿼리를 불러오기 위한 인스턴스 생성
@@ -87,26 +93,110 @@ public class ClientDAO {
 		return null;
 	}
 
+	/* Payment 테이블에 필요한 카드 번호 Select */
+	public List<CardDTO> selectAllCard(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		List<CardDTO> cardList = new ArrayList<CardDTO>();
+		String query = prop.getProperty("selectAllCard");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				CardDTO card = new CardDTO();
+				card.setCode(rset.getInt(1));
+				card.setBank(rset.getString(2));
+				card.setDiscount(rset.getString(3));
+				card.setCardable(rset.getString(4));
+				
+				cardList.add(card);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return cardList;
+	}
+	
 	/* 결제까지 완료 된 확정 정보를 Order 테이블에 Insert */
 	public int insertOrder(Connection con, String date, double lastPayment) {
 		/* order테이블 insert */
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
-		return 0;
+		String query = prop.getProperty("insertOrder");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, date);
+			pstmt.setInt(2, (int)lastPayment);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 	/* Payment 테이블에 필요한 OrderCode select */
-	public int selectLastOrderCode() {
+	public int selectLastOrderCode(Connection con) {
 		/* order테이블 orderCode 마지막 번호 반환 */
+		Statement stmt = null;
+		ResultSet rset = null;
+		int lastCode = 0;
 		
-		return 0;
+		String query = prop.getProperty("selectLastOrderCode");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				lastCode = rset.getInt("CURRVAL");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return lastCode;
 	}
 
 	/* 결제까지 완료 된 확정 정보를 Payment 테이블에 Insert */
-	public int insertPayment(int orderCode, int userNo, int totalPrice, double gradeDiscount, double cardDiscount,
+	public int insertPayment(Connection con, int orderCode, int userNo, int totalPrice, int gradeNo, int cardCode,
 			double lastPayment, String payment) {
 		/* payment 테이블 insert */
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
+		String query = prop.getProperty("insertPayment");
 		
-		return 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, orderCode);
+			pstmt.setInt(2, userNo);
+			pstmt.setInt(3, totalPrice);
+			pstmt.setInt(4, gradeNo);
+			pstmt.setInt(5, cardCode);
+			pstmt.setInt(6, (int)lastPayment);
+			pstmt.setString(7, payment);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
+
 }

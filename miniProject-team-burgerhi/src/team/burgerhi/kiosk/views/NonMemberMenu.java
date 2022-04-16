@@ -19,11 +19,6 @@ public class NonMemberMenu {
 			System.out.println("================================");
 			System.out.println();   
 
-			List<CategoryDTO> categoryList = clientController.selectAllCategory();
-			
-			for(CategoryDTO cate : categoryList) {
-				System.out.println("▶ " + cate.getCode() + ". " + cate.getName());
-			}
 			System.out.println();
 			System.out.print(">>>> 원하시는 카테고리의 번호를 입력해 주세요: ");
 			int categoryNo = sc.nextInt();

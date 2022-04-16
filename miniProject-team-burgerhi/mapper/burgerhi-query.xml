@@ -1,39 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-	<entry key="">
+	<entry key="loginResult">
 		
 	</entry>
 	
-	<entry key="">
+	<entry key="selectAllCategory">
 		
 	</entry>
 	
-	<entry key="">
+	<entry key="selectMenuBy">
 		
 	</entry>
 	
-	<entry key="">
+	<entry key="insertOrderMenu">
 		
 	</entry>
 	
-	<entry key="">
+	<entry key="selectOrderMenu">
 		
 	</entry>
 	
-	<entry key="">
+	<entry key="deleteOrderMenu">
  		
 	</entry>
 	
-	<entry key="">
+	<entry key="selectGrade">
 		
 	</entry>
 	
-	<entry key="">
+	<entry key="selectCard">
 		
 	</entry>
 	
-	<entry key="">
-        
+	<entry key="selectAllCard">
+		SELECT
+ 		      A.CARD_CODE
+ 		    , A.CARD_BANK
+ 		    , A.CARD_DISCOUNT
+ 		    , A.CARDABLE
+		  FROM CARD_TABLE A;
+	</entry>
+	
+	<entry key="insertOrder">
+        INSERT
+          INTO ORDER_TABLE A
+        (
+          A.ORDER_CODE
+        , A.ORDER_DATE
+        , A.TOTAL_PRICE
+        )
+        VALUES
+        (
+          SEQ_ORDER_CODE.NEXTVAL
+        , ?
+        , ?
+        );
+	</entry>
+	<entry key="selectLastOrderCode">
+        SELECT
+               SEQ_ORDER_CODE.CURRVAL
+          FROM DUAL;
+	</entry>
+	<entry key="insertPayment">
+        INSERT
+          INTO PAYMENT_TABLE A
+        (
+          A.ORDER_CODE
+        , A.USER_NO
+        , A.TOTAL_PRICE
+        , A.GRADE_NO
+        , A.CARD_CODE
+        , A.PAYMENT_PRICE
+        , A.PAYMENT_BY
+        )
+        VALUES
+        (
+          ?
+        , ?
+        , ?
+        , ?
+        , ?
+        , ?
+        , ?
+        );
 	</entry>
 </properties>
