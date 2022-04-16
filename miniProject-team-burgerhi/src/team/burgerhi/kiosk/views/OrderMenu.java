@@ -98,6 +98,8 @@ public class OrderMenu {
 					/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
 					totalPrice += inputAmount * menuPrice;
 					
+					
+					
 					/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
 					System.out.println("\n\n\n");
 					System.out.println("     1       |      2     ");
@@ -110,7 +112,7 @@ public class OrderMenu {
 					if(num == 1) {	// 추가 주문하기
 						continue;	// while문의 처음으로 돌아가도록 설정
 					} else if(num == 2) {	// 장바구니 확인하기
-						List<OrderMenuDTO> orderMenuList = clientController.selectOrderMenu(userNo, totalPrice);	// OrderMenu(장바구니) 모두 출력되도록 하는 메소드
+						List<OrderMenuDTO> orderMenuList = clientController.selectOrderMenu(totalPrice);	// OrderMenu(장바구니) 모두 출력되도록 하는 메소드
 						
 						/* 장바구니 while문 */
 						while(true) {	// 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
@@ -203,7 +205,7 @@ public class OrderMenu {
 			/* 최종 모두 확정된 정보를 테이블에 Insert */
 			clientController.insertOrder(lastPayment);
 			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
-
+			/* 장바구니 delete */
 			
 		}
 
