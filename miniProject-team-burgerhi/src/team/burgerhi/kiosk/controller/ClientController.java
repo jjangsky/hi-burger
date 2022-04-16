@@ -1,17 +1,13 @@
 package team.burgerhi.kiosk.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import team.burgerhi.kiosk.model.dto.CardDTO;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
-import team.burgerhi.kiosk.model.dto.OrderDTO;
 import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 import team.burgerhi.kiosk.model.service.ClientService;
@@ -38,10 +34,11 @@ public class ClientController {
 		System.out.print(">>>> PassWord를 입력해 주세요: ");
 		String pwd = sc.nextLine();
 		System.out.println("\n\n\n");
-		
-		/* 사용자에게 받은 id와 pwd를 받아서 존재하는 회원인지 확인 */
+
+		/* 회원 정보 dto로 담아서 return */
 		List<UserDTO> userList = clientService.loginResult(id, pwd);
-		for(UserDTO user : userList) {
+		for (UserDTO user : userList) {
+//			if(user.getId().equals(id) && user.getPwd().equals(pwd)) {
 				userDTO.setUserNo(user.getUserNo());
 				userDTO.setName(user.getName());
 				userDTO.setId(user.getId());
@@ -49,9 +46,9 @@ public class ClientController {
 				userDTO.setGradeNo(user.getGradeNo());
 				userDTO.setUserPoint(user.getUserPoint());
 				userDTO.setPhone(user.getPhone());
-				break;
+//			}
 		}
-		
+
 		/* name에 들어있는 값이 있을 경우 로그인 성공 | 없을 경우(null) 로그인 실패로 간주 */
 		if(userDTO.getName() != null) {
 			System.out.println(">>>> " + userDTO.getName() + "님 환영합니다!");
