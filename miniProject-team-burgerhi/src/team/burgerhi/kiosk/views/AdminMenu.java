@@ -63,6 +63,7 @@ public class AdminMenu {
 					System.out.println("　　 1 　　 |　　 2　　  |　　 3　　 ");
 					System.out.println(" 카테고리 추가 | 카테고리 수정 | 카테고리 삭제 ");
 					System.out.println();
+					/* 담 */
 					List<CategoryDTO> categoryList = adminController.selectAllCategory();
 					for(CategoryDTO cate : categoryList) {
 						System.out.println("▶ " + cate.getCode() + ". " + cate.getName() + "(추천 카테고리: " + cate.getRefName() + ")");

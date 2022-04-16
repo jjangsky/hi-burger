@@ -6,7 +6,11 @@
 	</entry>
 	
 	<entry key="selectAllCategory">
-		
+		SELECT
+		       CATEGORY_CODE
+		     , CATEGORY_NAME
+		     , REF_CATEGORY_CODE
+		  FROM CATEGORY_TABLE
 	</entry>
 	
 	<entry key="selectMenuBy">
