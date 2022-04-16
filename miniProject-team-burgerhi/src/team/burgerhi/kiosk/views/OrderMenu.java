@@ -145,6 +145,7 @@ public class OrderMenu {
 		
 		
 		/* 결제 진행 */
+<<<<<<< HEAD
 		while(true) {
 			System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
 			System.out.println("===================================");
@@ -203,6 +204,20 @@ public class OrderMenu {
 			/* 최종 모두 확정된 정보를 테이블에 Insert */
 			clientController.insertOrder(lastPayment);
 			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
+=======
+		System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
+		System.out.println("===================================");
+		System.out.println();
+		
+		  
+		
+		
+		
+		
+		
+	}
+	
+>>>>>>> 55e5525dbee963c60892a2df40b1cfe82276fb91
 
 			
 		}
