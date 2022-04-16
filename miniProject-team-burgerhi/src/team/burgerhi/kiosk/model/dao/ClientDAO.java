@@ -47,7 +47,11 @@ public class ClientDAO {
 			pstmt.setString(1, id);
 			pstmt.setString(2, pwd);
 			rset = pstmt.executeQuery();
+<<<<<<< HEAD
 			if(rset.next()) {
+=======
+			if (rset.next()) {
+>>>>>>> 4ddc96e071cda5bbbe6db467f130a9fbe9af4f13
 				userDTO.setUserNo(rset.getInt("USER_NO"));
 				userDTO.setName(rset.getString("USER_NAME"));
 				userDTO.setId(rset.getString("USER_ID"));
@@ -56,9 +60,14 @@ public class ClientDAO {
 				userDTO.setUserPoint(rset.getInt("USER_POINT"));
 				userDTO.setPhone(rset.getString("PHONE"));
 				userList.add(userDTO);
+<<<<<<< HEAD
 				System.out.println(userList);
 			}
 			
+=======
+//	            System.out.println(userList);		// List에 잘 담기는지 확인차 출력
+			}
+>>>>>>> 4ddc96e071cda5bbbe6db467f130a9fbe9af4f13
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -223,5 +232,4 @@ public class ClientDAO {
 		}
 		return result;
 	}
-
 }
