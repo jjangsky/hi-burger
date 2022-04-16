@@ -149,10 +149,7 @@ public class OrderMenu {
 		
 		
 		/* 결제 진행 */
-<<<<<<< HEAD
-		while (true) {
-=======
->>>>>>> 4ddc96e071cda5bbbe6db467f130a9fbe9af4f13
+
 		flag = true;
 		while(flag) {
 			System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
@@ -257,23 +254,11 @@ public class OrderMenu {
 			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
 			/* 장바구니 delete */
 			
-<<<<<<< HEAD
-		
+
 			orderResultSet.closeDisplayMainMenu();
 			flag = false;
 		}
-	}
-=======
-			orderResultSet.closeDisplayMainMenu();
-			flag = false;
-		}
->>>>>>> 4ddc96e071cda5bbbe6db467f130a9fbe9af4f13
 
 	}
 }
-<<<<<<< HEAD
 }
-}
-=======
-}
->>>>>>> 4ddc96e071cda5bbbe6db467f130a9fbe9af4f13
