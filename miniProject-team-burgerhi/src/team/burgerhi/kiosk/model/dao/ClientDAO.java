@@ -58,22 +58,22 @@ public class ClientDAO {
 	}
 
 	/* 사용자가 선택한 Menu를 장바구니에 Insert 하는 메소드 */
-	public int insertOrderMenu(int userNo, int inputMenuNo, int inputAmount) {
+	public int insertOrderMenu(Connection con, int userNo, int inputMenuNo, int inputAmount) {
 		/* OrderMenu 테이블에 지금까지 입력한 내용을 모두 insert */
 		
 		return 0;
 	}
 
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
-	public List<OrderMenuDTO> selectOrderMenu(Connection con, int userNo) {
-		/* where = userNo  */
+	public List<OrderMenuDTO> selectOrderMenu(Connection con) {
+		/* 전체select  */
 		
 		
 		return null;
 	}
 
 	/* 장바구니 내용 수정 | OrderMenu 테이블에서 원하지 않는 메뉴 삭제 후 최종 결제할 메뉴만 남기도록 설정 */
-	public int deleteOrderMenu(int deleteMenuCode) {
+	public int deleteOrderMenu(Connection con, int deleteMenuCode) {
 		/* where = deleteMenuCode */
 		
 		return 0;
@@ -87,7 +87,7 @@ public class ClientDAO {
 	}
 
 	/* 카드 할인 가능한 전체 제휴 카드 리스트 출력 */
-	public List<CardDTO> selectCard() {
+	public List<CardDTO> selectCard(Connection con) {
 		/* card 테이블 where = cardAble - Y */
 		
 		return null;

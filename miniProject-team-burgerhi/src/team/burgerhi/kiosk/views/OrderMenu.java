@@ -98,7 +98,13 @@ public class OrderMenu {
 
 					/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
 					totalPrice += inputAmount * menuPrice;
+<<<<<<< HEAD
 
+=======
+					
+					
+					
+>>>>>>> 1c9d4e1f63a2268feb51e4d9446b73e825ad89b5
 					/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
 					System.out.println("\n\n\n");
 					System.out.println("     1       |      2     ");
@@ -107,6 +113,7 @@ public class OrderMenu {
 					System.out.print(">>>> 번호를 선택해 주세요: ");
 					num = sc.nextInt();
 					System.out.println("\n\n\n\n\n");
+<<<<<<< HEAD
 
 					if (num == 1) { // 추가 주문하기
 						continue; // while문의 처음으로 돌아가도록 설정
@@ -117,6 +124,14 @@ public class OrderMenu {
 																													// 하는
 																													// 메소드
 
+=======
+					
+					if(num == 1) {	// 추가 주문하기
+						continue;	// while문의 처음으로 돌아가도록 설정
+					} else if(num == 2) {	// 장바구니 확인하기
+						List<OrderMenuDTO> orderMenuList = clientController.selectOrderMenu(totalPrice);	// OrderMenu(장바구니) 모두 출력되도록 하는 메소드
+						
+>>>>>>> 1c9d4e1f63a2268feb51e4d9446b73e825ad89b5
 						/* 장바구니 while문 */
 						while (true) { // 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
 
@@ -207,10 +222,15 @@ public class OrderMenu {
 			/* 최종 모두 확정된 정보를 테이블에 Insert */
 			clientController.insertOrder(lastPayment);
 			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
+<<<<<<< HEAD
 			System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
 			System.out.println("===================================");
 			System.out.println();
 
+=======
+			/* 장바구니 delete */
+			
+>>>>>>> 1c9d4e1f63a2268feb51e4d9446b73e825ad89b5
 		}
 
 	}
