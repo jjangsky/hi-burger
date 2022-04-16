@@ -232,4 +232,47 @@ public class ClientDAO {
 		}
 		return result;
 	}
+
+	public int selectGifticonBy(Connection con, String inputGiftNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int gifticonPrice = 0;
+		
+		String query = prop.getProperty("selectGifticonBy");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, inputGiftNo);
+			
+			if(rset.next()) {
+				gifticonPrice = rset.getInt(2);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return gifticonPrice;
+	}
+
+	public int updateGifticonPrice(Connection con, String inputGiftNo, int gifticonPrice) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateGifticonPrice");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, inputGiftNo);
+			pstmt.setInt(2, gifticonPrice);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

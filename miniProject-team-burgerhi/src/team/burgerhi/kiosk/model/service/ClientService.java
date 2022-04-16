@@ -135,4 +135,21 @@ public class ClientService {
 		return inserResult;
 	}
 
+	public int selectGifticonBy(String inputGiftNo) {
+		Connection con = getConnection();
+		
+		int gifticonPrice = clientDAO.selectGifticonBy(con, inputGiftNo);
+		
+		close(con);
+		return gifticonPrice;
+	}
+
+	public int updateGifticonPrice(String inputGiftNo, int gifticonPrice) {
+		Connection con = getConnection();
+		
+		int result = clientDAO.updateGifticonPrice(con, inputGiftNo, gifticonPrice);
+		
+		return result;
+	}
+
 }
