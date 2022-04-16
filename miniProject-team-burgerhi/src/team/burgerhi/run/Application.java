@@ -1,10 +1,7 @@
 package team.burgerhi.run;
 
-<<<<<<< HEAD
 import team.burgerhi.kiosk.views.OrderMenu;
-=======
 import team.burgerhi.kiosk.views.OrderMenu;  // PUSH-TEST Ver2
->>>>>>> 22e84e9ad14dd7133b6a1f1d38d4f6f38424ab36
 
 public class Application {
 	public static void main(String[] args) {
