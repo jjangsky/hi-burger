@@ -1,5 +1,7 @@
 package team.burgerhi.kiosk.model.dao;
 
+import static team.burgerhi.common.JDBCTemplate.close;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,7 +18,7 @@ import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
-import static team.burgerhi.common.JDBCTemplate.close;
+
 
 public class ClientDAO {
 	Properties prop = new Properties();		// xml 파일로 저장되어 있는 쿼리를 불러오기 위한 인스턴스 생성
@@ -36,7 +38,6 @@ public class ClientDAO {
 		 * 지정하여 전달
 		 */
 		PreparedStatement pstmt = null;
-<<<<<<< HEAD
 		ResultSet rset = null;
 		String query = prop.getProperty("loginResult");
 		List<UserDTO> userList = new ArrayList<>();
@@ -64,39 +65,7 @@ public class ClientDAO {
 			close(rset);
 		}
 		return userList;
-		
-		
-=======
-	      ResultSet rset = null;
-	      String query = prop.getProperty("loginResult");
-	      List<UserDTO> userList = new ArrayList<>();
-	      try {
-	         UserDTO userDTO = new UserDTO();
-	         pstmt = con.prepareStatement(query);
-	         pstmt.setString(1, id);
-	         pstmt.setString(2, pwd);
-	         rset = pstmt.executeQuery();
-	         if(rset.next()) {
-	            userDTO.setUserNo(rset.getInt("USER_NO"));
-	            userDTO.setName(rset.getString("USER_NAME"));
-	            userDTO.setId(rset.getString("USER_ID"));
-	            userDTO.setPwd(rset.getString("USER_PWD"));
-	            userDTO.setGradeNo(rset.getInt("GRADE_NO"));
-	            userDTO.setUserPoint(rset.getInt("USER_POINT"));
-	            userDTO.setPhone(rset.getString("PHONE"));
-	            userList.add(userDTO);
-//	            System.out.println(userList);		// 
-	         }
-	         
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      } finally {
-	         close(rset);
-	      }
-	      return userList;
->>>>>>> c841090d9ce374e0807cd2d55bf7d313ce756827
 	}
-
 	/* 전체 Category를 출력하는 메소드 */
 	public List<CategoryDTO> selectAllCategory(Connection con) {
 		/* 모든 카테고리 Select 후 반환 */
