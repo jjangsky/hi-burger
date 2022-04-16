@@ -17,6 +17,8 @@ public class OrderMenu {
 
 	public void displayMainMenu() {
 		Scanner sc = new Scanner(System.in);
+		
+		/* do~while문 밖에서도 사용해야 할 변수 */
 		int userNo = 0;
 		int gradeNo = 0;
 		int menuPrice = 0;
@@ -29,6 +31,7 @@ public class OrderMenu {
 		
 		do {
 			
+			/* BurgerHI 메인 주문 화면(첫 화면) */
 			System.out.println(">>>> 어서오세요 BurgerHI 입니다. <<<<");
 			System.out.println("================================");
 			System.out.println();
@@ -39,113 +42,100 @@ public class OrderMenu {
 			int num = sc.nextInt();
 			System.out.println("\n\n\n\n\n");
 			
-			if(num == 1) {
-				System.out.println(">>>>   BurgerHI 회원 주문하기   <<<<");
-				System.out.println("================================");
-				System.out.println();
-				System.out.print(">>>> ID를 입력해 주세요: ");
-				sc.nextLine();
-				String id = sc.nextLine();
-				System.out.print(">>>> PassWord를 입력해 주세요: ");
-				String pwd = sc.nextLine();
-				System.out.println("\n\n\n");
+			if(num == 1) {	// 회원 주문하기
+				/* loginResult 메소드에서 로그인 화면 출력 및 가공처리 */
+				UserDTO userDTO = clientController.loginResult();
 				
-				UserDTO userDTO = clientController.loginResult(id, pwd);
+				/* login이 정상적으로 처리되지 않았을 경우 continue로 while문 처음으로 돌아가도록 설정 */
+				if(userDTO.getUserNo() == 0) {
+					continue;
+				}
+				
+				/* 다른 메소드에서 필요한 user 정보는 전역변수에 미리 넣어놓고 사용 */
 				userNo = userDTO.getUserNo();
 				gradeNo = userDTO.getGradeNo();
 				
+				/* 회원 등급이 4일 경우 관리자로 분류되어 관리자 페이지로 이동 */
 				if(gradeNo == 4) {
-					admin.displayMainMenu();							// 관리자 view 클래스로 연동
+					admin.displayMainMenu();
 					break;
 				}
 				
+				/* 메뉴주문 while문 */
 				while(true) {
-					System.out.println("\n\n\n\n\n");
+					
+					/* 전체 Category 출력*/
 					System.out.println(">>>>    BurgerHI 카테고리 선택    <<<<");
 					System.out.println("===================================");
 					System.out.println();
-					List<CategoryDTO> categoryList = clientController.selectAllCategory();
+					clientController.selectAllCategory();	// Category 출력 메소드
 					
-					for(CategoryDTO cate : categoryList) {
-						System.out.println("▶ " + cate.getCode() + ". " + cate.getName());
-					}
-					System.out.println();
+					/* 메뉴 출력을 위해 필요한 category 번호 받기 */
 					System.out.print(">>>> 원하시는 카테고리의 번호를 입력해 주세요: ");
 					int categoryNo = sc.nextInt();
 					System.out.println("\n\n\n\n\n");
 					
+					/* 사용자가 선택한 Category의 전체 Menu 출력 */
 					System.out.println(">>>>     BurgerHI 메뉴 선택     <<<<");
 					System.out.println("===================================");
 					System.out.println();
-					List<MenuDTO> menuList = clientController.selectMenuBy(categoryNo);
+					List<MenuDTO> menuList = clientController.selectMenuBy(categoryNo);		// Menu 출력 메소드
 					for(MenuDTO menu : menuList) {
 						System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  " + menu.getPrice() + "원/n     " + menu.getExplain());
 						menuPrice = menu.getPrice();
 					}
-					
 					System.out.println();
+					
+					/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
 					System.out.print(">>>> 원하시는 메뉴의 번호를 입력해 주세요: ");
 					int inputMenuNo = sc.nextInt();
 					System.out.print(">>>> 선택한 메뉴의 수량을 입력해 주세요: ");
 					int inputAmount = sc.nextInt();
 					System.out.println("\n\n\n\n\n");
-					clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
+					clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);		// OrderMenu(장바구니) Insert 메소드
+					
+					/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
 					totalPrice += inputAmount * menuPrice;
 					
+					/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
 					System.out.println("\n\n\n");
 					System.out.println("     1       |      2     ");
-					System.out.println("  다시 주문하기  |  장바구니 보기 ");
+					System.out.println("  추가 주문하기  |  장바구니 보기 ");
 					System.out.println();
 					System.out.print(">>>> 번호를 선택해 주세요: ");
 					num = sc.nextInt();
-					if(num == 1) {
-						continue;
-					} else if(num == 2) {
-						List<OrderMenuDTO> orderMenuList = clientController.selectOrderMenu(userNo);
-						while(true) {
-							System.out.println("\n\n\n\n\n");
-							System.out.println(">>>>    BurgerHI 장바구니 확인    <<<<");
-							System.out.println("===================================");
-							System.out.println();
-							
-							for(OrderMenuDTO orderMenu : orderMenuList) {
-								MenuDTO menu = new MenuDTO();
-								if(menu.getMenuCode() == orderMenu.getMenuCode()) {
-									System.out.println("▶ 메뉴번호: " + orderMenu.getMenuCode());
-									System.out.println("▶ 메뉴명 : " + menu.getName());
-									System.out.println("▶ 주문수량: " + orderMenu.getOrderAmount());
-									System.out.println("▶ 금액: " + menu.getPrice() + " * " + orderMenu.getOrderAmount() + " = " + menu.getPrice() * orderMenu.getOrderAmount());
-								}
-							} System.out.println("▶ 총 금액: " + totalPrice);
-							
+					System.out.println("\n\n\n\n\n");
+					
+					if(num == 1) {	// 추가 주문하기
+						continue;	// while문의 처음으로 돌아가도록 설정
+					} else if(num == 2) {	// 장바구니 확인하기
+						List<OrderMenuDTO> orderMenuList = clientController.selectOrderMenu(userNo, totalPrice);	// OrderMenu(장바구니) 모두 출력되도록 하는 메소드
+						
+						/* 장바구니 while문 */
+						while(true) {	// 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
 							
 							System.out.println("\n\n\n");
 							System.out.println("     1       |     2      |     3   ");
-							System.out.println("  추가 주문하기  |  메뉴 삭제하기 |   결제하기 ");
+							System.out.println("  추가 주문하기  |  장바구니 수정 |   결제하기 ");
 							System.out.println();
 							System.out.print(">>>> 번호를 선택해 주세요: ");
 							num = sc.nextInt();
-							if(num == 1) {
-								break;
-							} else if(num ==2) {
-								System.out.println("\n\n\n\n\n");
-								System.out.println(">>>>    BurgerHI 장바구니 수정    <<<<");
-								System.out.println("===================================");
-								System.out.println();
-								System.out.print(">>>> 삭제하실 메뉴 번호를 입력해 주세요: ");
-								int deleteMenuCode = sc.nextInt();
-								clientController.deleteOrderMenu(deleteMenuCode);
-								
+							System.out.println("\n\n\n\n\n");
+							
+							if(num == 1) {			// 추가 주문하기
+								break;				// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
+							} else if(num ==2) {	// 장바구니에 있는 메뉴 수정하기
+								clientController.deleteOrderMenu();
 							} else if(num == 3) {
-								flag = false;
+								flag = false;		// 모든 while문을 빠져나가 최종 결제 화면이 뜨도록 함
 							} else {
 								System.out.println("번호를 잘못 입력하셨습니다! ");
 							}
-							
 						}// 장바구니 while문 종료
 					}
 				}//메뉴주문 while문 종료
-			} else if(num == 2) {
+				
+			} else if(num == 2) {	// 비회원 주문하기
 				nonMemberMenu.displayMainMenu();
 			}else {
 				System.out.println("번호를 잘못 입력하셨습니다. 다시 입력해 주세요!");
@@ -163,26 +153,32 @@ public class OrderMenu {
 			System.out.println();
 			System.out.print(">>>> 결제하실 수단을 선택해 주세요: ");
 			paymentBy = sc.nextInt();
-			if(paymentBy == 1) {
-				List<CardDTO> cardList = clientController.selectCard();
+			
+			if(paymentBy == 1) {	// 카드 결제
 				System.out.println("\n\n\n\n\n");
 				System.out.println("★★★★  제휴카드 중복 할인 Event!  ★★★★");
 				System.out.println("===================================");
+				
+				/* 할인 가능한 전체 제휴카드 리스트 출력 */
+				List<CardDTO> cardList = clientController.selectCard();
 				for(CardDTO card : cardList) {
 					System.out.println("▶ " +card.getBank() + "의 할인율 :" + card.getDiscount() + "%");
 				}
+				
+				/* 사용자가 결제 할 카드 입력받기 */
 				System.out.print(">>>> 결제하실 카드명을 입력해 주세요: ");
 				sc.nextLine();
 				String paymentCard = sc.nextLine();
-				
-				
 				for(CardDTO card : cardList) {
 					if(card.getBank().equals(paymentCard)) {
-						cardDiscount = 0.01;
+						cardDiscount = 0.1;
 						break;
 					}
 				}
-				cardDiscount = totalPrice * cardDiscount;
+				
+				cardDiscount = totalPrice * cardDiscount;	// 카드 할인: 10%이기 때문에 총 금액에서 10%가 얼마인지 계산 후 변수에 담기
+				
+				/* 할인 내역 및 결제 금액 모두 출력 */
 				System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 				int grade = clientController.selectGrade(gradeNo);
 				gradeDiscount = totalPrice * (grade * 0.01);
@@ -192,7 +188,7 @@ public class OrderMenu {
 				System.out.println();
 				System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
 				
-			} else {
+			} else {	// 현금과 기프티콘 결제
 				System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 				int grade = clientController.selectGrade(gradeNo);
 				gradeDiscount = totalPrice * (grade * 0.01);
@@ -201,6 +197,7 @@ public class OrderMenu {
 				System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
 			}
 			
+			/* 최종 모두 확정된 정보를 테이블에 Insert */
 			clientController.insertOrder(lastPayment);
 			clientController.insertPayment(userNo, totalPrice, gradeDiscount, cardDiscount, lastPayment, paymentBy);
 
