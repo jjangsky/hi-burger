@@ -113,7 +113,10 @@ public class AdminDAO {
 	}
 
 	public Map<String, Integer> selectMethodSales(Connection con) {
-		/* HashMap 형태로 결제방법 별 매출액 조회 key = 결제방법, value = 매출액 */
+		/* 
+		 * HashMap 형태로 결제방법 별 매출액 조회 key = 결제방법, value = 매출액
+		 * payment 테이블로 select 필요
+		 */
 		
 		return null;
 	}
