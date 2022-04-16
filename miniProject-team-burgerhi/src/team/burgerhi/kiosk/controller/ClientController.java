@@ -200,4 +200,17 @@ public class ClientController {
 		int insertResult = clientService.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
 	}
 
+	public int selectGifticonBy(String inputGiftNo) {
+		
+		int gifticonPrice = clientService.selectGifticonBy(inputGiftNo);
+		
+		return gifticonPrice;
+	}
+
+	public void updateGifticonPrice(String inputGiftNo, int gifticonPrice) {
+		
+		int result = clientService.updateGifticonPrice(inputGiftNo, gifticonPrice);
+		
+	}
+
 }
