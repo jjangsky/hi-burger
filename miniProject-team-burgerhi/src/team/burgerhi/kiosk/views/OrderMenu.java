@@ -160,32 +160,32 @@ public class OrderMenu {
 			System.out.print(">>>> 결제하실 수단을 선택해 주세요: ");
 			paymentBy = sc.nextInt();
 			
-			if(paymentBy == 1) {	// 카드 결제
+			if (paymentBy == 1) { // 카드 결제
 				System.out.println("\n\n\n\n\n");
 				System.out.println("★★★★  제휴카드 중복 할인 Event!  ★★★★");
 				System.out.println("===================================");
-				
+
 				/* 할인 가능한 전체 제휴카드 리스트 출력 */
 				List<CardDTO> cardList = clientController.selectCard();
-				for(CardDTO card : cardList) {
-					System.out.println("▶ " +card.getBank() + "의 할인율 :" + card.getDiscount() + "%");
+				for (CardDTO card : cardList) {
+					System.out.println("▶ " + card.getBank() + "의 할인율 :" + card.getDiscount() + "%");
 				}
-				
+
 				/* 사용자가 결제 할 카드 입력받기 */
 				System.out.print(">>>> 결제하실 카드명을 입력해 주세요: ");
 				sc.nextLine();
 				String paymentCard = sc.nextLine();
-				for(CardDTO card : cardList) {
-					if(card.getBank().equals(paymentCard)) {
+				for (CardDTO card : cardList) {
+					if (card.getBank().equals(paymentCard)) {
 						cardDiscount = 0.1;
 						break;
 					}
 				}
-				
+
 				cardCode = clientController.selectCardBy(paymentCard);
-				
-				cardDiscount = totalPrice * cardDiscount;	// 카드 할인: 10%이기 때문에 총 금액에서 10%가 얼마인지 계산 후 변수에 담기
-				
+
+				cardDiscount = totalPrice * cardDiscount; // 카드 할인: 10%이기 때문에 총 금액에서 10%가 얼마인지 계산 후 변수에 담기
+
 				/* 할인 내역 및 결제 금액 모두 출력 */
 				System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 				int grade = clientController.selectGrade(gradeNo);
@@ -195,8 +195,16 @@ public class OrderMenu {
 				lastPayment = totalPrice - gradeDiscount - cardDiscount;
 				System.out.println();
 				System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
+
+			} else if (paymentBy == 2) {	// 현금 결제
 				
-			} else {	// 현금과 기프티콘 결제
+				System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
+				int grade = clientController.selectGrade(gradeNo);
+				gradeDiscount = totalPrice * (grade * 0.01);
+				lastPayment = totalPrice - gradeDiscount;
+				System.out.println("▶ 등급 할인 금액: " + gradeDiscount + "원");
+				System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
+			} else if (paymentBy == 3) {	// 기프티콘 결제
 				System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 				int grade = clientController.selectGrade(gradeNo);
 				gradeDiscount = totalPrice * (grade * 0.01);
@@ -204,7 +212,7 @@ public class OrderMenu {
 				System.out.println("▶ 등급 할인 금액: " + gradeDiscount + "원");
 				System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
 			}
-			
+
 			/* 최종 모두 확정된 정보를 테이블에 Insert */
 			clientController.insertOrder(lastPayment);
 			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);

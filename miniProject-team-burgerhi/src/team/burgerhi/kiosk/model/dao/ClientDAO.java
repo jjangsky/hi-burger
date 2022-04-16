@@ -36,33 +36,32 @@ public class ClientDAO {
 		 * 지정하여 전달
 		 */
 		PreparedStatement pstmt = null;
-	      ResultSet rset = null;
-	      String query = prop.getProperty("loginResult");
-	      List<UserDTO> userList = new ArrayList<>();
-	      try {
-	         UserDTO userDTO = new UserDTO();
-	         pstmt = con.prepareStatement(query);
-	         pstmt.setString(1, id);
-	         pstmt.setString(2, pwd);
-	         rset = pstmt.executeQuery();
-	         if(rset.next()) {
-	            userDTO.setUserNo(rset.getInt("USER_NO"));
-	            userDTO.setName(rset.getString("USER_NAME"));
-	            userDTO.setId(rset.getString("USER_ID"));
-	            userDTO.setPwd(rset.getString("USER_PWD"));
-	            userDTO.setGradeNo(rset.getInt("GRADE_NO"));
-	            userDTO.setUserPoint(rset.getInt("USER_POINT"));
-	            userDTO.setPhone(rset.getString("PHONE"));
-	            userList.add(userDTO);
-//	            System.out.println(userList);		// 
-	         }
-	         
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      } finally {
-	         close(rset);
-	      }
-	      return userList;
+		ResultSet rset = null;
+		String query = prop.getProperty("loginResult");
+		List<UserDTO> userList = new ArrayList<>();
+		try {
+			UserDTO userDTO = new UserDTO();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				userDTO.setUserNo(rset.getInt("USER_NO"));
+				userDTO.setName(rset.getString("USER_NAME"));
+				userDTO.setId(rset.getString("USER_ID"));
+				userDTO.setPwd(rset.getString("USER_PWD"));
+				userDTO.setGradeNo(rset.getInt("GRADE_NO"));
+				userDTO.setUserPoint(rset.getInt("USER_POINT"));
+				userDTO.setPhone(rset.getString("PHONE"));
+				userList.add(userDTO);
+//	            System.out.println(userList);		// List에 잘 담기는지 확인차 출력
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+		}
+		return userList;
 	}
 
 	/* 전체 Category를 출력하는 메소드 */
@@ -222,5 +221,4 @@ public class ClientDAO {
 		}
 		return result;
 	}
-
 }
