@@ -50,7 +50,7 @@ public class ClientService {
 	public int insertOrderMenu(int userNo, int inputMenuNo, int inputAmount) {
 		Connection con = getConnection();
 		
-		int insertOrderMenu = clientDAO.insertOrderMenu(userNo, inputMenuNo, inputAmount);
+		int insertOrderMenu = clientDAO.insertOrderMenu(con, userNo, inputMenuNo, inputAmount);
 		
 		close(con);
 		
@@ -58,10 +58,10 @@ public class ClientService {
 	}
 	
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
-	public List<OrderMenuDTO> selectOrderMenu(int userNo) {
+	public List<OrderMenuDTO> selectOrderMenu() {
 		Connection con = getConnection();
 		
-		List<OrderMenuDTO> orderMenuList = clientDAO.selectOrderMenu(con, userNo);
+		List<OrderMenuDTO> orderMenuList = clientDAO.selectOrderMenu(con);
 		
 		close(con);
 		
@@ -72,7 +72,7 @@ public class ClientService {
 	public int deleteOrderMenu(int deleteMenuCode) {
 		Connection con = getConnection();
 		
-		int deleteResulte = clientDAO.deleteOrderMenu(deleteMenuCode);
+		int deleteResulte = clientDAO.deleteOrderMenu(con, deleteMenuCode);
 		
 		close(con);
 		
@@ -93,7 +93,7 @@ public class ClientService {
 	public List<CardDTO> selectCard() {
 		Connection con = getConnection();
 		
-		List<CardDTO> cardList = clientDAO.selectCard();
+		List<CardDTO> cardList = clientDAO.selectCard(con);
 		
 		close(con);
 		return cardList;

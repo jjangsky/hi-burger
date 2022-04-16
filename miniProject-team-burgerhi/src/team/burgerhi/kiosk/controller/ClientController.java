@@ -42,7 +42,6 @@ public class ClientController {
 		/* 사용자에게 받은 id와 pwd를 받아서 존재하는 회원인지 확인 */
 		List<UserDTO> userList = clientService.loginResult(id, pwd);
 		for(UserDTO user : userList) {
-			if(user.getId().equals(id) && user.getPwd().equals(pwd)) {
 				userDTO.setUserNo(user.getUserNo());
 				userDTO.setName(user.getName());
 				userDTO.setId(user.getId());
@@ -51,7 +50,6 @@ public class ClientController {
 				userDTO.setUserPoint(user.getUserPoint());
 				userDTO.setPhone(user.getPhone());
 				break;
-			}
 		}
 		
 		/* name에 들어있는 값이 있을 경우 로그인 성공 | 없을 경우(null) 로그인 실패로 간주 */
@@ -102,10 +100,10 @@ public class ClientController {
 	}
 
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
-	public List<OrderMenuDTO> selectOrderMenu(int userNo, int totalPrice) {
+	public List<OrderMenuDTO> selectOrderMenu(int totalPrice) {
 		
 		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
-		List<OrderMenuDTO> orderMenuList = clientService.selectOrderMenu(userNo);
+		List<OrderMenuDTO> orderMenuList = clientService.selectOrderMenu();
 		
 		System.out.println(">>>>    BurgerHI 장바구니 확인    <<<<");
 		System.out.println("===================================");
@@ -114,12 +112,10 @@ public class ClientController {
 		/* for each문으로 사용자에게 보여줄 내용 출력 */
 		for(OrderMenuDTO orderMenu : orderMenuList) {
 			MenuDTO menu = new MenuDTO();
-			if(menu.getMenuCode() == orderMenu.getMenuCode()) {
 				System.out.println("▶ 메뉴번호: " + orderMenu.getMenuCode());
 				System.out.println("▶ 메뉴명 : " + menu.getName());
 				System.out.println("▶ 주문수량: " + orderMenu.getOrderAmount());
 				System.out.println("▶ 금액: " + menu.getPrice() + " * " + orderMenu.getOrderAmount() + " = " + menu.getPrice() * orderMenu.getOrderAmount());
-			}
 		} System.out.println("▶ 총 금액: " + totalPrice);		// 메뉴가 여러 개 일수도 있어서 총 금액은 반복문이 종료된 후 출력되도록 설정
 		
 		return orderMenuList;
