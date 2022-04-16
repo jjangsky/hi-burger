@@ -10,6 +10,11 @@ public class OrderResultSet {
 			case "deleteOrderMenuFail" : System.out.println("죄송합니다. KIOSK 오류로 인해 메뉴가 삭제되지 않았습니다."); break;
 		}
 	}
+
+	public void closeDisplayMainMenu() {
+		/* 담님이 작성 한 종료 쓰레드 작성 메소드 */
+		
+	}
 	
 
 }

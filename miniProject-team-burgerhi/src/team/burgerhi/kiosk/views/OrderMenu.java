@@ -14,7 +14,8 @@ public class OrderMenu {
 	private ClientController clientController = new ClientController();
 	private NonMemberMenu nonMemberMenu = new NonMemberMenu();
 	private AdminMenu admin = new AdminMenu();
-
+	private OrderResultSet orderResultSet = new OrderResultSet();
+	
 	public void displayMainMenu() {
 		Scanner sc = new Scanner(System.in);
 		
@@ -30,6 +31,7 @@ public class OrderMenu {
 		double lastPayment = 0;
 		boolean flag = true;
 		
+		while(true) {
 		do {
 			
 			/* BurgerHI 메인 주문 화면(첫 화면) */
@@ -147,7 +149,8 @@ public class OrderMenu {
 		
 		
 		/* 결제 진행 */
-		while(true) {
+		flag = true;
+		while(flag) {
 			System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
 			System.out.println("===================================");
 			System.out.println();
@@ -207,7 +210,10 @@ public class OrderMenu {
 			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
 			/* 장바구니 delete */
 			
+			orderResultSet.closeDisplayMainMenu();
+			flag = false;
 		}
 
 	}
+}
 }
