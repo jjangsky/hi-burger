@@ -1,6 +1,6 @@
 package team.burgerhi.run;
 
-import team.burgerhi.kiosk.views.OrderMenu;  // PUSH-TEST
+import team.burgerhi.kiosk.views.OrderMenu;  // PUSH-TEST Ver2
 
 public class Application {
 	public static void main(String[] args) {
