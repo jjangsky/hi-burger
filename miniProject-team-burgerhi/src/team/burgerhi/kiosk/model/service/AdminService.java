@@ -51,6 +51,7 @@ public class AdminService {
 		
 		int insertResult = adminDAO.insertCategory(con, categoryName, refCategory);
 		
+		
 		close(con);
 		return insertResult;
 	}

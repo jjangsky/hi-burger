@@ -33,7 +33,7 @@ public class ClientController {
 		System.out.println("================================");
 		System.out.println();
 		System.out.print(">>>> ID를 입력해 주세요: ");
-		sc.nextLine();
+//		sc.nextLine();
 		String id = sc.nextLine();
 		System.out.print(">>>> PassWord를 입력해 주세요: ");
 		String pwd = sc.nextLine();
