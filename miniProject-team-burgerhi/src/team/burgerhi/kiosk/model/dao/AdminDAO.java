@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -76,20 +77,59 @@ public class AdminDAO {
 
 	public int insertCategory(Connection con, String categoryName, int refCategory) {
 		/* category테이블 insert */
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertCategory");
 		
-		return 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, categoryName);
+			pstmt.setInt(2, refCategory);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	public int updateCategory(Connection con, int categoryCode, String categoryName, int refCode) {
 		/* category테이블 Update */
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateCategory");
 		
-		return 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, categoryName);
+			pstmt.setInt(2, refCode);
+			pstmt.setInt(3, categoryCode);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public int deleteCategory(Connection con, String categoryName) {
 		/* category테이블 delete */
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteCategory");
 		
-		return 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, categoryName);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	public List<MenuDTO> selectAllMenu(Connection con) {

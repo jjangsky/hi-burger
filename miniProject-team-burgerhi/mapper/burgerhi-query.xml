@@ -89,4 +89,30 @@
         , ?
         );
 	</entry>
+	<entry key="insertCategory">
+	    INSERT
+	      INTO CATEGORY_TABLE
+	    (
+	      CATEGORY_CODE
+	    , CATEGORY_NAME
+	    , REF_CATEGORY_CODE
+	    )
+	    VALUES
+	    (
+	      SEQ_CATEGORY_CODE.NEXTVAL
+	    , ?
+	    , ?
+	    )
+	</entry>
+	<entry key="updateCategory">
+		UPDATE CATEGORY_TABLE
+		   SET CATEGORY_NAME = ?
+		     , REF_CATEGORY_CODE = ?
+		 WHERE CATEGORY_CODE = ?
+	</entry>
+	<entry key="deleteCategory">
+	    DELETE 
+	      FROM CATEGORY_TABLE
+	     WHERE CATEGORY_NAME = ?
+	</entry>
 </properties>

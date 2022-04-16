@@ -71,6 +71,12 @@ public class AdminController {
 		System.out.println("\n\n\n\n\n");
 		
 		int insertResult = adminService.insertCategory(categoryName, refCategory);
+		
+		if(insertResult == 0) {
+			System.out.println("INSERT 실패");
+		} else {
+			System.out.println("INSERT 성공");
+		}
 	}
 
 	public void updateCategory() {
@@ -87,6 +93,12 @@ public class AdminController {
 		System.out.println("\n\n\n\n\n");
 		
 		int updateResult = adminService.updateCategory(categoryCode, categoryName, refCode);
+		
+		if(updateResult == 0) {
+			System.out.println("UPDATE 실패");
+		} else {
+			System.out.println("UPDATE 성공");
+		}
 	}
 
 	public void deleteCategory() {
@@ -99,6 +111,12 @@ public class AdminController {
 		System.out.println("\n\n\n\n\n");
 		
 		int deleteResult = adminService.deleteCategory(categoryName);
+		
+		if(deleteResult == 0) {
+			System.out.println("DELETE 실패");
+		} else {
+			System.out.println("DELETE 성공");
+		}
 	}
 
 	public List<MenuDTO> selectAllMenu() {
