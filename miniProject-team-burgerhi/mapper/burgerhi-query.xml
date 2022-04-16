@@ -54,7 +54,7 @@
  		    , A.CARD_BANK
  		    , A.CARD_DISCOUNT
  		    , A.CARDABLE
-		  FROM CARD_TABLE A;
+		  FROM CARD_TABLE A
 	</entry>
 	
 	<entry key="insertOrder">
@@ -70,7 +70,7 @@
           SEQ_ORDER_CODE.NEXTVAL
         , ?
         , ?
-        );
+        )
 	</entry>
 	<entry key="selectLastOrderCode">
         SELECT
@@ -98,7 +98,19 @@
         , ?
         , ?
         , ?
-        );
+        )
+	</entry>
+	<entry key ="selectGifticonBy">
+	    SELECT
+   	           A.GIFTICON_NO
+  	         , A.GIFTICON_PRICE
+  	      FROM GIFTICON_TABLE A
+ 	     WHERE A.GIFTICON_NO = ?
+	</entry>
+	<entry key="updateGifticonPrice">
+	    UPDATE GIFTICON_TABLE A
+   	       SET A.GIFTICON_PRICE = ?
+	     WHERE A.GIFTICON_NO = ?
 	</entry>
 	<entry key="insertCategory">
 	    INSERT
