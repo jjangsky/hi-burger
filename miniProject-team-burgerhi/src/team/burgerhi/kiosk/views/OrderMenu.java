@@ -14,7 +14,8 @@ public class OrderMenu {
 	private ClientController clientController = new ClientController();
 	private NonMemberMenu nonMemberMenu = new NonMemberMenu();
 	private AdminMenu admin = new AdminMenu();
-
+	private OrderResultSet orderResultSet = new OrderResultSet();
+	
 	public void displayMainMenu() {
 		Scanner sc = new Scanner(System.in);
 
@@ -30,6 +31,7 @@ public class OrderMenu {
 		double lastPayment = 0;
 		boolean flag = true;
 		
+		while(true) {
 		do {
 
 			/* BurgerHI 메인 주문 화면(첫 화면) */
@@ -144,7 +146,12 @@ public class OrderMenu {
 		} while (flag);
 
 		/* 결제 진행 */
+<<<<<<< .merge_file_a31236
 		while (true) {
+=======
+		flag = true;
+		while(flag) {
+>>>>>>> .merge_file_a24800
 			System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
 			System.out.println("===================================");
 			System.out.println();
@@ -208,8 +215,18 @@ public class OrderMenu {
 
 			/* 장바구니 delete */
 			
+<<<<<<< .merge_file_a31236
 		
+=======
+			orderResultSet.closeDisplayMainMenu();
+			flag = false;
+>>>>>>> .merge_file_a24800
 		}
 	}
+<<<<<<< .merge_file_a31236
 
 }
+=======
+}
+}
+>>>>>>> .merge_file_a24800

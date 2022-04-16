@@ -3,6 +3,7 @@
 <properties>
 	<entry key="loginResult">
 		SELECT
+<<<<<<< HEAD
 		       A.USER_NO
 		     , A.USER_NAME
 		     , A.USER_ID
@@ -13,6 +14,18 @@
 		  FROM USER_TABLE A
 		 WHERE A.USER_ID = ?
 		   AND A.USER_PWD = ?
+=======
+               A.USER_NO
+               , A.USER_NAME
+               , A.USER_ID
+               , A.USER_PWD
+               , A.GRADE_NO
+               , A.USER_POINT
+               , A.PHONE
+        FROM USER_TABLE A
+       WHERE USER_ID = ?
+         AND USER_PWD = ?
+>>>>>>> c841090d9ce374e0807cd2d55bf7d313ce756827
 	</entry>
 	
 	<entry key="selectAllCategory">
@@ -21,6 +34,7 @@
 		     , CATEGORY_NAME
 		     , REF_CATEGORY_CODE
 		  FROM CATEGORY_TABLE
+		 ORDER BY 1
 	</entry>
 	
 	<entry key="selectMenuBy">

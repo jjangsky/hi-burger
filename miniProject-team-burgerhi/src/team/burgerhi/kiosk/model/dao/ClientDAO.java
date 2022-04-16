@@ -30,10 +30,10 @@ public class ClientDAO {
 	}
 	
 	/* Login 진행 메소드 */
-	public List<UserDTO>  loginResult(Connection con, String id, String pwd) {
+	public List<UserDTO> loginResult(Connection con, String id, String pwd) {
 		/*
-		 * id와 pwd가 일치할 경우 회원의 이름과 등급번호 List에 담아 전달
-		 * 일치하는 id와 pwd가 없을 경우 name = null값으로 지정하여 전달
+		 * id와 pwd가 일치할 경우 회원의 이름과 등급번호 List에 담아 전달 일치하는 id와 pwd가 없을 경우 name = null값으로
+		 * 지정하여 전달
 		 */
 		  PreparedStatement pstmt = null;
 	      ResultSet rset = null;
@@ -55,6 +55,7 @@ public class ClientDAO {
 	            userDTO.setPhone(rset.getString("PHONE"));
 	            userList.add(userDTO);
 	            System.out.println(userList);
+//	            System.out.println(userList);		// 
 	         }
 	         
 	      } catch (SQLException e) {
