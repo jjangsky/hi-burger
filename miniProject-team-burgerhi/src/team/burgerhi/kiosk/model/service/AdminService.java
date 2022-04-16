@@ -67,6 +67,7 @@ public class AdminService {
 		
 		int deleteResult = adminDAO.deleteCategory(con, categoryName);
 		
+		close(con);
 		return deleteResult;
 	}
 	public List<MenuDTO> selectAllMenu() {

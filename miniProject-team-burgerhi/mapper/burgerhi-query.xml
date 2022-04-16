@@ -11,6 +11,7 @@
 		     , CATEGORY_NAME
 		     , REF_CATEGORY_CODE
 		  FROM CATEGORY_TABLE
+		 ORDER BY 1
 	</entry>
 	
 	<entry key="selectMenuBy">
