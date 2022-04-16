@@ -2,7 +2,17 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	<entry key="loginResult">
-		
+		SELECT
+		       A.USER_NO
+		     , A.USER_NAME
+		     , A.USER_ID
+		     , A.USER_PWD
+		     , A.GRADE_NO
+		     , A.USER_POINT
+		     , A.PHONE
+		  FROM USER_TABLE A
+		 WHERE A.USER_ID = ?
+		   AND A.USER_PWD = ?
 	</entry>
 	
 	<entry key="selectAllCategory">

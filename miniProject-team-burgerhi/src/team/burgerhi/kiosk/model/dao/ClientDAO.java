@@ -35,10 +35,34 @@ public class ClientDAO {
 		 * id와 pwd가 일치할 경우 회원의 이름과 등급번호 List에 담아 전달
 		 * 일치하는 id와 pwd가 없을 경우 name = null값으로 지정하여 전달
 		 */
-		
-		
-		
-		return null;
+		  PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      String query = prop.getProperty("loginResult");
+	      List<UserDTO> userList = new ArrayList<>();
+	      try {
+	         UserDTO userDTO = new UserDTO();
+	         pstmt = con.prepareStatement(query);
+	         pstmt.setString(1, id);
+	         pstmt.setString(2, pwd);
+	         rset = pstmt.executeQuery();
+	         if(rset.next()) {
+	            userDTO.setUserNo(rset.getInt("USER_NO"));
+	            userDTO.setName(rset.getString("USER_NAME"));
+	            userDTO.setId(rset.getString("USER_ID"));
+	            userDTO.setPwd(rset.getString("USER_PWD"));
+	            userDTO.setGradeNo(rset.getInt("GRADE_NO"));
+	            userDTO.setUserPoint(rset.getInt("USER_POINT"));
+	            userDTO.setPhone(rset.getString("PHONE"));
+	            userList.add(userDTO);
+	            System.out.println(userList);
+	         }
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	      }
+	      return userList;
 	}
 
 	/* 전체 Category를 출력하는 메소드 */

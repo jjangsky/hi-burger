@@ -33,7 +33,7 @@ public class ClientController {
 		System.out.println("================================");
 		System.out.println();
 		System.out.print(">>>> ID를 입력해 주세요: ");
-		sc.nextLine();
+//		sc.nextLine();
 		String id = sc.nextLine();
 		System.out.print(">>>> PassWord를 입력해 주세요: ");
 		String pwd = sc.nextLine();
@@ -42,6 +42,7 @@ public class ClientController {
 		/* 사용자에게 받은 id와 pwd를 받아서 존재하는 회원인지 확인 */
 		List<UserDTO> userList = clientService.loginResult(id, pwd);
 		for(UserDTO user : userList) {
+			if(user.getId().equals(id) && user.getPwd().equals(pwd)) {
 				userDTO.setUserNo(user.getUserNo());
 				userDTO.setName(user.getName());
 				userDTO.setId(user.getId());
@@ -50,6 +51,7 @@ public class ClientController {
 				userDTO.setUserPoint(user.getUserPoint());
 				userDTO.setPhone(user.getPhone());
 				break;
+			}
 		}
 		
 		/* name에 들어있는 값이 있을 경우 로그인 성공 | 없을 경우(null) 로그인 실패로 간주 */
@@ -60,7 +62,8 @@ public class ClientController {
 			System.out.println("회원정보가 일치하지 않습니다. 다시 입력해 주세요!");
 			System.out.println("\n\n\n\n\n");
 		}
-		
+//		userDTO.getName();
+//		System.out.println(userDTO.getName());
 		/* 화면단에서 필요한 user 정보들을 보내기 위해 List 형태로 전달 */
 		return userDTO;
 	}

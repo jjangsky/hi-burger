@@ -64,7 +64,7 @@ public class AdminController {
 		System.out.println("================================");
 		System.out.println();
 		System.out.print(">>>> 추가할 카테고리명을 입력해 주세요: ");
-		sc.nextLine();
+//		sc.nextLine();
 		String categoryName = sc.nextLine();
 		System.out.print(">>>> 추천 카테고리 번호를 입력해 주세요: ");
 		int refCategory = sc.nextInt();
