@@ -3,7 +3,6 @@
 <properties>
 	<entry key="loginResult">
 		SELECT
-<<<<<<< HEAD
 		       A.USER_NO
 		     , A.USER_NAME
 		     , A.USER_ID
@@ -14,18 +13,6 @@
 		  FROM USER_TABLE A
 		 WHERE A.USER_ID = ?
 		   AND A.USER_PWD = ?
-=======
-               A.USER_NO
-               , A.USER_NAME
-               , A.USER_ID
-               , A.USER_PWD
-               , A.GRADE_NO
-               , A.USER_POINT
-               , A.PHONE
-        FROM USER_TABLE A
-       WHERE USER_ID = ?
-         AND USER_PWD = ?
->>>>>>> c841090d9ce374e0807cd2d55bf7d313ce756827
 	</entry>
 	
 	<entry key="selectAllCategory">
@@ -38,19 +25,48 @@
 	</entry>
 	
 	<entry key="selectMenuBy">
-		
+		SELECT
+		       A.MENU_CODE
+		     , A.MENU_NAME
+		     , A.PRICE
+		     , A.MENU_EXPLAIN
+		     , A.CATEGORY_CODE
+		     , A.ORDERABLE
+		  FROM MENU_TABLE A
+		 WHERE A.CATEGORY_CODE = ?
 	</entry>
 	
 	<entry key="insertOrderMenu">
-		
+		INSERT
+		  INTO ORDER_MENU_TABLE
+		(
+		  ORDER_MENU_NO
+		, USER_NO
+		, MENU_CODE
+		, ORDER_AMOUNT
+		)
+		VALUES
+		(
+		  SEQ_ORDER_MENU_NO.NEXTVAL
+		, ?
+		, ?
+		, ?
+		)
 	</entry>
 	
 	<entry key="selectOrderMenu">
-		
+		SELECT
+		       A.ORDER_MENU_NO
+		     , A.USER_NO
+		     , A.MENU_CODE
+		     , A.ORDER_AMOUNT
+		  FROM ORDER_MENU_TABLE A
 	</entry>
 	
 	<entry key="deleteOrderMenu">
- 		
+ 		DELETE
+ 		  FROM ORDER_MENU_TABLE A
+ 		 WHERE A.MENU_CODE = ?
 	</entry>
 	
 	<entry key="selectGrade">

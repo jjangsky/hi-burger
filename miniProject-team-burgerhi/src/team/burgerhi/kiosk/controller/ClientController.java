@@ -29,10 +29,7 @@ public class ClientController {
 		System.out.println("================================");
 		System.out.println();
 		System.out.print(">>>> ID를 입력해 주세요: ");
-<<<<<<< HEAD
 //		sc.nextLine();
-=======
->>>>>>> c841090d9ce374e0807cd2d55bf7d313ce756827
 		String id = sc.nextLine();
 		System.out.print(">>>> PassWord를 입력해 주세요: ");
 		String pwd = sc.nextLine();
@@ -40,13 +37,8 @@ public class ClientController {
 
 		/* 회원 정보 dto로 담아서 return */
 		List<UserDTO> userList = clientService.loginResult(id, pwd);
-<<<<<<< HEAD
 		for(UserDTO user : userList) {
 			if(user.getId().equals(id) && user.getPwd().equals(pwd)) {
-=======
-		for (UserDTO user : userList) {
-//			if(user.getId().equals(id) && user.getPwd().equals(pwd)) {
->>>>>>> c841090d9ce374e0807cd2d55bf7d313ce756827
 				userDTO.setUserNo(user.getUserNo());
 				userDTO.setName(user.getName());
 				userDTO.setId(user.getId());
@@ -54,12 +46,9 @@ public class ClientController {
 				userDTO.setGradeNo(user.getGradeNo());
 				userDTO.setUserPoint(user.getUserPoint());
 				userDTO.setPhone(user.getPhone());
-<<<<<<< HEAD
 				break;
 			}
-=======
 //			}
->>>>>>> c841090d9ce374e0807cd2d55bf7d313ce756827
 		}
 
 		/* name에 들어있는 값이 있을 경우 로그인 성공 | 없을 경우(null) 로그인 실패로 간주 */

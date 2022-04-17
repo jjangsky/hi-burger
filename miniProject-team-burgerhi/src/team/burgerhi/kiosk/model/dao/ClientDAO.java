@@ -55,7 +55,6 @@ public class ClientDAO {
 	            userDTO.setPhone(rset.getString("PHONE"));
 	            userList.add(userDTO);
 	            System.out.println(userList);
-//	            System.out.println(userList);		// 
 	         }
 	         
 	      } catch (SQLException e) {
@@ -69,39 +68,141 @@ public class ClientDAO {
 	/* 전체 Category를 출력하는 메소드 */
 	public List<CategoryDTO> selectAllCategory(Connection con) {
 		/* 모든 카테고리 Select 후 반환 */
+		Statement stmt = null;
+		ResultSet rset = null;
 		
+		List<CategoryDTO> categoryList = new ArrayList<>();
+		String query = prop.getProperty("selectAllCategory");
 		
-		return null;
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				CategoryDTO category = new CategoryDTO();
+				category.setCode(rset.getInt("CATEGORY_CODE"));
+				category.setName(rset.getString("CATEGORY_NAME"));
+				category.setRefCode(rset.getInt("REF_CATEGORY_CODE"));
+				
+				categoryList.add(category);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return categoryList;
 	}
 
 	/* 사용자가 선택한 Category의 전체 Menu를 출력하기 위한 메소드 */
 	public List<MenuDTO> selectMenuBy(Connection con, int categoryNo) {
 		/* 카테고리 번호에 해당하는 메뉴만 Select 후 반환 */
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		
+		List<MenuDTO> menuList = new ArrayList<>();
+		String query = prop.getProperty("selectMenuBy");
 		
-		return null;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, categoryNo);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				MenuDTO menu = new MenuDTO();
+				menu.setMenuCode(rset.getInt("MENU_CODE"));
+				menu.setName(rset.getString("MENU_NAME"));
+				menu.setPrice(rset.getInt("PRICE"));
+				menu.setExplain(rset.getString("MENU_EXPLAIN"));
+				menu.setCategoryCode(rset.getInt("CATEGORY_CODE"));
+				menu.setOrderable(rset.getString("ORDERABLE"));
+				
+				menuList.add(menu);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return menuList;
 	}
 
 	/* 사용자가 선택한 Menu를 장바구니에 Insert 하는 메소드 */
 	public int insertOrderMenu(Connection con, int userNo, int inputMenuNo, int inputAmount) {
 		/* OrderMenu 테이블에 지금까지 입력한 내용을 모두 insert */
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
-		return 0;
+		String query = prop.getProperty("insertOrderMenu");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, inputMenuNo);
+			pstmt.setInt(3, inputAmount);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
 	public List<OrderMenuDTO> selectOrderMenu(Connection con) {
 		/* 전체select  */
+		Statement stmt = null;
+		ResultSet rset = null;
 		
+		List<OrderMenuDTO> orderMenuList = new ArrayList<>();
+		String query = prop.getProperty("selectOrderMenu");
 		
-		return null;
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				OrderMenuDTO orderMenu = new OrderMenuDTO();
+				orderMenu.setOrderMenuNo(rset.getInt("ORDER_MENU_NO"));
+				orderMenu.setUserNo(rset.getInt("USER_NO"));
+				orderMenu.setMenuCode(rset.getInt("MENU_CODE"));
+				orderMenu.setOrderAmount(rset.getInt("ORDER_AMOUNT"));
+				
+				orderMenuList.add(orderMenu);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return orderMenuList;
 	}
 
 	/* 장바구니 내용 수정 | OrderMenu 테이블에서 원하지 않는 메뉴 삭제 후 최종 결제할 메뉴만 남기도록 설정 */
 	public int deleteOrderMenu(Connection con, int deleteMenuCode) {
 		/* where = deleteMenuCode */
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
-		return 0;
+		String query = prop.getProperty("deleteOrderMenu");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, deleteMenuCode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 	/* 등급에 따른 할인율 확인 */

@@ -146,12 +146,9 @@ public class OrderMenu {
 		} while (flag);
 
 		/* 결제 진행 */
-<<<<<<< .merge_file_a31236
 		while (true) {
-=======
 		flag = true;
 		while(flag) {
->>>>>>> .merge_file_a24800
 			System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
 			System.out.println("===================================");
 			System.out.println();
@@ -215,18 +212,12 @@ public class OrderMenu {
 
 			/* 장바구니 delete */
 			
-<<<<<<< .merge_file_a31236
 		
-=======
 			orderResultSet.closeDisplayMainMenu();
 			flag = false;
->>>>>>> .merge_file_a24800
 		}
 	}
-<<<<<<< .merge_file_a31236
 
 }
-=======
 }
 }
->>>>>>> .merge_file_a24800
