@@ -64,6 +64,20 @@ public class OrderMenu {
 					break;
 				}
 				
+				System.out.println(">>>>    BurgerHI 메뉴 선택    <<<<");
+				System.out.println("================================");
+				System.out.println();
+				System.out.println("     1       |      2       ");
+				System.out.println("  메뉴 주문하기  |  회원 정보 확인 ");
+				System.out.println();
+				System.out.print(">>>> 번호를 선택해 주세요: ");
+				num = sc.nextInt();
+				System.out.println("\n\n\n\n\n");
+				if(num == 2) {
+					clientController.userInfoSelect(userNo);
+				}
+				
+				
 				/* 메뉴주문 while문 */
 				while(true) {
 					

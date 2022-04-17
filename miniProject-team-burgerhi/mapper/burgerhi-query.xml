@@ -214,4 +214,17 @@
               FROM MENU_TABLE
              WHERE MENU_NAME = ?
 	</entry>
+	<entry key="selectHambergerRanking">
+	    SELECT 
+ 	           A.MENU_CODE
+ 	         , A.MENU_NAME 
+ 	         , B.PAYMENT_PRICE
+ 	         , RANK() OVER (ORDER BY B.PAYMENT_PRICE DESC) 매출순위
+ 	      FROM MENU_TABLE A
+ 	      JOIN SALES_AMOUNT_TABLE C ON (A.MENU_CODE = C.MENU_CODE)
+ 	      JOIN PAYMENT_TABLE B ON (B.ORDER_CODE = C.ORDER_CODE)
+ 	     WHERE A.CATEGORY_CODE = 1
+ 	     ORDER BY MENU_CODE ASC;
+	</entry>
+	
 </properties>

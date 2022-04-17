@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -31,8 +32,25 @@ public class AdminDAO {
 
 	public Map<Integer, String> selectHambergerRanking(Connection con) {
 		/* hashMap 형태로 순위 담아서 넘기기 / key에는 숫자 순위 담기*/
-		
-		return null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		Map<Integer, String> hamberger = new HashMap<Integer, String>();
+		String query = prop.getProperty("selectHambergerRanking");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			for(int i = 1; rset.next(); i++) {
+				hamberger.put(i, rset.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return hamberger;
 	}
 
 	public Map<Integer, String> selectDrinkRanking(Connection con) {
