@@ -196,9 +196,9 @@ public class AdminController {		// 혜진 TEST
 		int date = sc.nextInt();
 		
 		if(date > 0) {
-			int sales = adminService.selectMonthSales(month);
+			int monthSales = adminService.selectMonthSales(month);
 		} else {
-			int sales = adminService.selectDateSales(month, date);
+			int monthSales = adminService.selectDateSales(month, date);
 		}
 		
 	}

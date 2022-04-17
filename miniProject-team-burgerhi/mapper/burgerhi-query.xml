@@ -224,7 +224,13 @@
  	      JOIN SALES_AMOUNT_TABLE C ON (A.MENU_CODE = C.MENU_CODE)
  	      JOIN PAYMENT_TABLE B ON (B.ORDER_CODE = C.ORDER_CODE)
  	     WHERE A.CATEGORY_CODE = 1
- 	     ORDER BY MENU_CODE ASC;
+ 	     ORDER BY MENU_CODE ASC
+	</entry>
+	<entry key="selectMonthSales">
+	    SELECT
+ 	          SUM(TOTAL_ORDER_PRICE)
+ 	     FROM TBL_ORDER
+ 	    WHERE ORDER_DATE LIKE '22/' || ? || '/%'
 	</entry>
 	
 </properties>

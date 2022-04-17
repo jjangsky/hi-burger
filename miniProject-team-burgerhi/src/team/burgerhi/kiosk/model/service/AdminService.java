@@ -76,13 +76,14 @@ public class AdminService {
 		List<MenuDTO> menuList = adminDAO.selectAllMenu(con);
 		
 		close(con);
-		
 		return menuList;
 	}
 	public int insertMenu(String menuName, int menuPrice, String menuExplain, int categoryCode, String orderable) {
 		Connection con = getConnection();
 		
 		int insertMenu = adminDAO.insertMenu(con, menuName, menuPrice, menuExplain, categoryCode, orderable);
+		
+		close(con);
 		
 		return insertMenu;
 	}
@@ -91,6 +92,7 @@ public class AdminService {
 		
 		int updateMenu = adminDAO.updateMenu(con, menuNum, menuName, menuPrice, menuExplain, categoryCode, orderable);
 		
+		close(con);
 		return updateMenu;
 	}
 	public int deleteMenu(String menuName) {
@@ -98,20 +100,23 @@ public class AdminService {
 		
 		int deleteMenu = adminDAO.deleteMenu(con, menuName);
 		
+		close(con);
 		return deleteMenu;
 	}
 	public int selectMonthSales(int month) {
 		Connection con = getConnection();
 		
-		int selectSales = adminDAO.selectMonthSales(con, month);
+		int monthSales = adminDAO.selectMonthSales(con, month);
 		
-		return selectSales;
+		close(con);
+		return monthSales;
 	}
 	public int selectDateSales(int month, int date) {
 		Connection con = getConnection();
 		
 		int selectSales = adminDAO.selectDateSales(con, month, date);
 		
+		close(con);
 		return selectSales;
 	}
 	public int selectAllSales() {
@@ -119,6 +124,7 @@ public class AdminService {
 		
 		int selectSales = adminDAO.selectAllSales(con);
 		
+		close(con);
 		return selectSales;
 	}
 	public Map<String, Integer> selectGradeSales() {
@@ -126,6 +132,7 @@ public class AdminService {
 		
 		Map<String, Integer> gradeSales = adminDAO.selectGradeSales(con);
 		
+		close(con);
 		return gradeSales;	
 	}
 	public Map<String, Integer> selectMethodSales() {
@@ -133,6 +140,7 @@ public class AdminService {
 		
 		Map<String, Integer> methodSales = adminDAO.selectMethodSales(con);
 		
+		close(con);
 		return methodSales;	
 	}
 
