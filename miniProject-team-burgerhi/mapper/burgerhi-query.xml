@@ -2,31 +2,17 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	<entry key="loginResult">
-<<<<<<< HEAD
-		SELECT 
-		       USER_NO
-		     , USER_NAME
-		     , USER_ID
-		     , USER_PWD
-		     , GRADE_NO
-		     , USER_POINT
-		     , PHONE
-		  FROM USER_TABLE
-		 WHERE USER_ID = ?
-		   AND USER_PWD = ?
-=======
 		SELECT
-               A.USER_NO
-               , A.USER_NAME
-               , A.USER_ID
-               , A.USER_PWD
-               , A.GRADE_NO
-               , A.USER_POINT
-               , A.PHONE
-        FROM USER_TABLE A
-       WHERE USER_ID = ?
-         AND USER_PWD = ?
->>>>>>> c841090d9ce374e0807cd2d55bf7d313ce756827
+		       A.USER_NO
+		     , A.USER_NAME
+		     , A.USER_ID
+		     , A.USER_PWD
+		     , A.GRADE_NO
+		     , A.USER_POINT
+		     , A.PHONE
+		  FROM USER_TABLE A
+		 WHERE A.USER_ID = ?
+		   AND A.USER_PWD = ?
 	</entry>
 	
 	<entry key="selectAllCategory">
@@ -39,19 +25,48 @@
 	</entry>
 	
 	<entry key="selectMenuBy">
-		
+		SELECT
+		       A.MENU_CODE
+		     , A.MENU_NAME
+		     , A.PRICE
+		     , A.MENU_EXPLAIN
+		     , A.CATEGORY_CODE
+		     , A.ORDERABLE
+		  FROM MENU_TABLE A
+		 WHERE A.CATEGORY_CODE = ?
 	</entry>
 	
 	<entry key="insertOrderMenu">
-		
+		INSERT
+		  INTO ORDER_MENU_TABLE
+		(
+		  ORDER_MENU_NO
+		, USER_NO
+		, MENU_CODE
+		, ORDER_AMOUNT
+		)
+		VALUES
+		(
+		  SEQ_ORDER_MENU_NO.NEXTVAL
+		, ?
+		, ?
+		, ?
+		)
 	</entry>
 	
 	<entry key="selectOrderMenu">
-		
+		SELECT
+		       A.ORDER_MENU_NO
+		     , A.USER_NO
+		     , A.MENU_CODE
+		     , A.ORDER_AMOUNT
+		  FROM ORDER_MENU_TABLE A
 	</entry>
 	
 	<entry key="deleteOrderMenu">
- 		
+ 		DELETE
+ 		  FROM ORDER_MENU_TABLE A
+ 		 WHERE A.MENU_CODE = ?
 	</entry>
 	
 	<entry key="selectGrade">
@@ -128,11 +143,11 @@
 	</entry>
 	<entry key="insertCategory">
 	    INSERT
-	      INTO CATEGORY_TABLE
+	      INTO CATEGORY_TABLE A
 	    (
-	      CATEGORY_CODE
-	    , CATEGORY_NAME
-	    , REF_CATEGORY_CODE
+	      A.CATEGORY_CODE
+	    , A.CATEGORY_NAME
+	    , A.REF_CATEGORY_CODE
 	    )
 	    VALUES
 	    (
@@ -142,14 +157,14 @@
 	    )
 	</entry>
 	<entry key="updateCategory">
-		UPDATE CATEGORY_TABLE
-		   SET CATEGORY_NAME = ?
-		     , REF_CATEGORY_CODE = ?
-		 WHERE CATEGORY_CODE = ?
+		UPDATE CATEGORY_TABLE A
+		   SET A.CATEGORY_NAME = ?
+		     , A.REF_CATEGORY_CODE = ?
+		 WHERE A.CATEGORY_CODE = ?
 	</entry>
 	<entry key="deleteCategory">
 	    DELETE 
-	      FROM CATEGORY_TABLE
-	     WHERE CATEGORY_NAME = ?
+	      FROM CATEGORY_TABLE A
+	     WHERE A.CATEGORY_NAME = ?
 	</entry>
 </properties>

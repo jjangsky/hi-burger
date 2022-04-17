@@ -37,8 +37,8 @@ public class ClientController {
 
 		/* 회원 정보 dto로 담아서 return */
 		List<UserDTO> userList = clientService.loginResult(id, pwd);
-		for (UserDTO user : userList) {
-//			if(user.getId().equals(id) && user.getPwd().equals(pwd)) {
+		for(UserDTO user : userList) {
+			if(user.getId().equals(id) && user.getPwd().equals(pwd)) {
 				userDTO.setUserNo(user.getUserNo());
 				userDTO.setName(user.getName());
 				userDTO.setId(user.getId());
@@ -46,6 +46,8 @@ public class ClientController {
 				userDTO.setGradeNo(user.getGradeNo());
 				userDTO.setUserPoint(user.getUserPoint());
 				userDTO.setPhone(user.getPhone());
+				break;
+			}
 //			}
 		}
 
@@ -57,7 +59,8 @@ public class ClientController {
 			System.out.println("회원정보가 일치하지 않습니다. 다시 입력해 주세요!");
 			System.out.println("\n\n\n\n\n");
 		}
-		
+//		userDTO.getName();
+//		System.out.println(userDTO.getName());
 		/* 화면단에서 필요한 user 정보들을 보내기 위해 List 형태로 전달 */
 		return userDTO;
 	}
