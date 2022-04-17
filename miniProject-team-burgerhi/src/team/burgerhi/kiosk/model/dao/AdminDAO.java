@@ -62,7 +62,7 @@ public class AdminDAO {
 				cate.setCode(rset.getInt("CATEGORY_CODE"));
 				cate.setName(rset.getString("CATEGORY_NAME"));
 				cate.setRefCode(rset.getInt("REF_CATEGORY_CODE"));
-				
+				cate.setRefName(rset.getString(4));
 				categoryList.add(cate);
 			}
 		} catch (SQLException e) {
