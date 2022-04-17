@@ -234,11 +234,10 @@
 	</entry>
 	<entry key="selectGradeSales">
 	    SELECT  
-	           GRADE_NO
-   	         , PAYMENT_PRICE
-  	         , RANK() OVER (ORDER BY PAYMENT_PRICE DESC) 매출순위
+   	           SUM(PAYMENT_PRICE)
  	      FROM PAYMENT_TABLE
- 	     ORDER BY GRADE_NO ASC; 
+ 	     GROUP BY GRADE_NO
+ 	     ORDER BY GRADE_NO ASC
 	</entry>
 	
 </properties>

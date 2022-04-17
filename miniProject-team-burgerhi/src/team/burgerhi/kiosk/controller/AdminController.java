@@ -219,9 +219,9 @@ public class AdminController {		// 혜진 TEST
 			System.out.println(sdfm.format(now) + "기준 총 매출액은 " + totalSales + "원 입니다.");
 		} else if(salesNum == 2) {
 			Map<Integer, Integer> gadeSales = adminService.selectGradeSales();
-			System.out.println(gadeSales.get(""));
-			System.out.println(gadeSales.get(""));
-			System.out.println(gadeSales.get(""));
+			System.out.println("▶ Family등급 매출액: " + gadeSales.get(1) + "원");
+			System.out.println("▶ Silver등급 매출액: " + gadeSales.get(2) + "원");
+			System.out.println("▶ Gold등급 매출액: " + gadeSales.get(3) + "원");
 			
 		} else if(salesNum == 3) {
 			Map<String, Integer> methodSales = adminService.selectMethodSales();
