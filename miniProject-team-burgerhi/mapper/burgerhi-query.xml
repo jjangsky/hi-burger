@@ -167,4 +167,50 @@
 	      FROM CATEGORY_TABLE
 	     WHERE CATEGORY_NAME = ?
 	</entry>
+	<entry key="selectAllMenu">
+	    	SELECT 
+                   MENU_CODE
+                 , MENU_NAME
+                 , PRICE
+                 , MENU_EXPLAIN
+                 , CATEGORY_CODE
+                 , ORDERABLE
+              FROM MENU_TABLE
+	</entry>
+	<entry key="insertMenu">
+	    	INSERT
+              INTO MENU_TABLE
+            ( 
+              MENU_CODE
+            , MENU_NAME
+            , PRICE
+            , MENU_EXPLAIN
+            , CATEGORY_CODE
+            , ORDERABLE
+            )
+            VALUES
+            (
+              SEQ_MENU_CODE.NEXTVAL
+            , ?                      
+            , ?                      
+            , ?                      
+            , ?                      
+            , ?                      
+            )
+	</entry>
+	<entry key="updateMenu">
+	    	UPDATE
+              MENU_TABLE
+               SET MENU_NAME = ?
+                 , PRICE = ?
+                 , MENU_EXPLAIN = ?
+                 , CATEGORY_CODE = ?
+                 , ORDERABLE = ?
+              WHERE MENU_CODE = ?
+	</entry>
+	<entry key="deleteMenu">
+	    	DELETE
+              FROM MENU_TABLE
+             WHERE MENU_NAME = ?
+	</entry>
 </properties>

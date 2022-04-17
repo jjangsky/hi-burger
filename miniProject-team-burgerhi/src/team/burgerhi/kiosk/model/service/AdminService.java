@@ -86,10 +86,10 @@ public class AdminService {
 		
 		return insertMenu;
 	}
-	public int updateMenu(String menuName, int menuPrice, String menuExplain, int categoryCode, String orderable) {
+	public int updateMenu(int menuNum, String menuName, int menuPrice, String menuExplain, int categoryCode, String orderable) {
 		Connection con = getConnection();
 		
-		int updateMenu = adminDAO.updateMenu(con, menuName, menuPrice, menuExplain, categoryCode, orderable);
+		int updateMenu = adminDAO.updateMenu(con, menuNum, menuName, menuPrice, menuExplain, categoryCode, orderable);
 		
 		return updateMenu;
 	}

@@ -134,28 +134,106 @@ public class AdminDAO {
 
 	public List<MenuDTO> selectAllMenu(Connection con) {
 		/* List에 메뉴 모두 담아서 출력하기 */
+		Statement stmt = null;
+		ResultSet rset = null;
 		
-		return null;
+		List<MenuDTO> menuList = new ArrayList<>();
+		
+		String Query = prop.getProperty("selectAllMenu");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(Query);
+			
+			while(rset.next()) {
+				MenuDTO menu = new MenuDTO();
+				menu.setMenuCode(rset.getInt("MENU_CODE"));
+				menu.setName(rset.getString("MENU_NAME"));
+				menu.setPrice(rset.getInt("PRICE"));
+				menu.setExplain(rset.getString("MENU_EXPLAIN"));
+				menu.setCategoryCode(rset.getInt("CATEGORY_CODE"));
+				menu.setOrderable(rset.getString("ORDERABLE"));
+				
+				menuList.add(menu);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		
+		return menuList;
 	}
 
 	public int insertMenu(Connection con, String menuName, int menuPrice, String menuExplain, int categoryCode,
 			String orderable) {
 		/* Menu insert */
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
-		return 0;
+		String query = prop.getProperty("insertMenu");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, menuName);
+			pstmt.setInt(2, menuPrice);
+			pstmt.setString(3, menuExplain);
+			pstmt.setInt(4, categoryCode);
+			pstmt.setString(5, orderable);	
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
-	public int updateMenu(Connection con, String menuName, int menuPrice, String menuExplain, int categoryCode,
+	public int updateMenu(Connection con, int menuNum, String menuName, int menuPrice, String menuExplain, int categoryCode,
 			String orderable) {
 		/* Menu update */
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateMenu");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, menuName);
+			pstmt.setInt(2, menuPrice);
+			pstmt.setString(3, menuExplain);
+			pstmt.setInt(4, categoryCode);
+			pstmt.setString(5, orderable);
+			pstmt.setInt(6, menuNum);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
 		
-		return 0;
+		return result;
 	}
 
 	public int deleteMenu(Connection con, String menuName) {
 		/* Menu delete */
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteMenu");
 		
-		return 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, menuName);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	public int selectMonthSales(Connection con, int month) {

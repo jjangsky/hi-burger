@@ -152,6 +152,8 @@ public class AdminController {		// 혜진 TEST
 		System.out.println(">>>>  BurgerHI 메뉴 수정 시스템  <<<<");
 		System.out.println("================================");
 		System.out.println();
+		System.out.print(">>>> 수정할 메뉴의 번호를 입력해 주세요: ");
+		int menuNum = sc.nextInt();
 		System.out.print(">>>> 수정할 메뉴명을 입력해 주세요: ");
 		sc.nextLine();
 		String menuName = sc.nextLine();
@@ -167,7 +169,7 @@ public class AdminController {		// 혜진 TEST
 		String orderable = sc.nextLine();
 		System.out.println("\n\n\n\n\n");
 		
-		int updateResult = adminService.updateMenu(menuName, menuPrice, menuExplain, categoryCode, orderable);
+		int updateResult = adminService.updateMenu(menuNum, menuName, menuPrice, menuExplain, categoryCode, orderable);
 	}
 
 	public void deleteMenu() {
