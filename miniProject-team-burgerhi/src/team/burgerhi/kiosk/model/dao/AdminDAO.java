@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -31,8 +32,25 @@ public class AdminDAO {
 
 	public Map<Integer, String> selectHambergerRanking(Connection con) {
 		/* hashMap 형태로 순위 담아서 넘기기 / key에는 숫자 순위 담기*/
-		
-		return null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		Map<Integer, String> hamberger = new HashMap<Integer, String>();
+		String query = prop.getProperty("selectHambergerRanking");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			for(int i = 1; rset.next(); i++) {
+				hamberger.put(i, rset.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return hamberger;
 	}
 
 	public Map<Integer, String> selectDrinkRanking(Connection con) {
@@ -62,7 +80,7 @@ public class AdminDAO {
 				cate.setCode(rset.getInt("CATEGORY_CODE"));
 				cate.setName(rset.getString("CATEGORY_NAME"));
 				cate.setRefCode(rset.getInt("REF_CATEGORY_CODE"));
-				
+				cate.setRefName(rset.getString(4));
 				categoryList.add(cate);
 			}
 		} catch (SQLException e) {
@@ -134,34 +152,135 @@ public class AdminDAO {
 
 	public List<MenuDTO> selectAllMenu(Connection con) {
 		/* List에 메뉴 모두 담아서 출력하기 */
+		Statement stmt = null;
+		ResultSet rset = null;
 		
-		return null;
+		List<MenuDTO> menuList = new ArrayList<>();
+		
+		String Query = prop.getProperty("selectAllMenu");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(Query);
+			
+			while(rset.next()) {
+				MenuDTO menu = new MenuDTO();
+				menu.setMenuCode(rset.getInt("MENU_CODE"));
+				menu.setName(rset.getString("MENU_NAME"));
+				menu.setPrice(rset.getInt("PRICE"));
+				menu.setExplain(rset.getString("MENU_EXPLAIN"));
+				menu.setCategoryCode(rset.getInt("CATEGORY_CODE"));
+				menu.setOrderable(rset.getString("ORDERABLE"));
+				
+				menuList.add(menu);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		
+		return menuList;
 	}
 
 	public int insertMenu(Connection con, String menuName, int menuPrice, String menuExplain, int categoryCode,
 			String orderable) {
 		/* Menu insert */
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
-		return 0;
+		String query = prop.getProperty("insertMenu");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, menuName);
+			pstmt.setInt(2, menuPrice);
+			pstmt.setString(3, menuExplain);
+			pstmt.setInt(4, categoryCode);
+			pstmt.setString(5, orderable);	
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
-	public int updateMenu(Connection con, String menuName, int menuPrice, String menuExplain, int categoryCode,
+	public int updateMenu(Connection con, int menuNum, String menuName, int menuPrice, String menuExplain, int categoryCode,
 			String orderable) {
 		/* Menu update */
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateMenu");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, menuName);
+			pstmt.setInt(2, menuPrice);
+			pstmt.setString(3, menuExplain);
+			pstmt.setInt(4, categoryCode);
+			pstmt.setString(5, orderable);
+			pstmt.setInt(6, menuNum);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
 		
-		return 0;
+		return result;
 	}
 
 	public int deleteMenu(Connection con, String menuName) {
 		/* Menu delete */
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteMenu");
 		
-		return 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, menuName);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	public int selectMonthSales(Connection con, int month) {
 		/* 보고싶은 월의 매출 조회 */
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int monthSales = 0;
+		String query = prop.getProperty("selectMonthSales");
 		
-		return 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			if(month <10) {
+				pstmt.setString(1, "0" + month);
+			} else {
+				pstmt.setString(2, "" + month);
+			}
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				monthSales = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return monthSales;
 	}
 
 	public int selectDateSales(Connection con, int month, int date) {
@@ -175,10 +294,27 @@ public class AdminDAO {
 		return 0;
 	}
 
-	public Map<String, Integer> selectGradeSales(Connection con) {
+	public Map<Integer, Integer> selectGradeSales(Connection con) {
 		/* HashMap 형태로 등급별 매출액 조회 key = 등급명, value = 매출액 */
+		Statement stmt = null;
+		ResultSet rset = null;
+		Map<Integer, Integer> gradeSales = new HashMap<Integer, Integer>();
+		String query = prop.getProperty("selectGradeSales");
 		
-		return null;
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			for(int i = 1; rset.next(); i++) {
+				gradeSales.put(i, rset.getInt(2));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return gradeSales;
 	}
 
 	public Map<String, Integer> selectMethodSales(Connection con) {

@@ -10,7 +10,7 @@ import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.service.AdminService;
 
-public class AdminController {
+public class AdminController {		// 혜진 TEST
 	private AdminService adminService = new AdminService();
 	Scanner sc = new Scanner(System.in);
 	
@@ -152,6 +152,8 @@ public class AdminController {
 		System.out.println(">>>>  BurgerHI 메뉴 수정 시스템  <<<<");
 		System.out.println("================================");
 		System.out.println();
+		System.out.print(">>>> 수정할 메뉴의 번호를 입력해 주세요: ");
+		int menuNum = sc.nextInt();
 		System.out.print(">>>> 수정할 메뉴명을 입력해 주세요: ");
 		sc.nextLine();
 		String menuName = sc.nextLine();
@@ -167,7 +169,7 @@ public class AdminController {
 		String orderable = sc.nextLine();
 		System.out.println("\n\n\n\n\n");
 		
-		int updateResult = adminService.updateMenu(menuName, menuPrice, menuExplain, categoryCode, orderable);
+		int updateResult = adminService.updateMenu(menuNum, menuName, menuPrice, menuExplain, categoryCode, orderable);
 	}
 
 	public void deleteMenu() {
@@ -194,9 +196,9 @@ public class AdminController {
 		int date = sc.nextInt();
 		
 		if(date > 0) {
-			int sales = adminService.selectMonthSales(month);
+			int monthSales = adminService.selectMonthSales(month);
 		} else {
-			int sales = adminService.selectDateSales(month, date);
+			int monthSales = adminService.selectDateSales(month, date);
 		}
 		
 	}
@@ -216,7 +218,7 @@ public class AdminController {
 			int totalSales = adminService.selectAllSales();
 			System.out.println(sdfm.format(now) + "기준 총 매출액은 " + totalSales + "원 입니다.");
 		} else if(salesNum == 2) {
-			Map<String, Integer> gadeSales = adminService.selectGradeSales();
+			Map<Integer, Integer> gadeSales = adminService.selectGradeSales();
 			System.out.println(gadeSales.get(""));
 			System.out.println(gadeSales.get(""));
 			System.out.println(gadeSales.get(""));

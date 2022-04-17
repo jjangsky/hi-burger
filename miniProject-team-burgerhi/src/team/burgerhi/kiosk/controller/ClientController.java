@@ -64,7 +64,17 @@ public class ClientController {
 		/* 화면단에서 필요한 user 정보들을 보내기 위해 List 형태로 전달 */
 		return userDTO;
 	}
-
+	
+	/* 본인 정보 확인 및 수정 탈퇴 메소드 */
+	public void userInfoSelect(int userNo) {
+		System.out.println(">>>> 어서오세요 BurgerHI 입니다. <<<<");
+		System.out.println("================================");
+		System.out.println();
+		
+		
+	}
+	
+	
 	/* 전체 Category를 출력하는 메소드 */
 	public void selectAllCategory() {
 		
@@ -216,5 +226,7 @@ public class ClientController {
 		int result = clientService.updateGifticonPrice(inputGiftNo, gifticonPrice);
 		
 	}
+
+
 
 }

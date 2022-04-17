@@ -16,11 +16,12 @@
 	</entry>
 	
 	<entry key="selectAllCategory">
-		SELECT
-		       CATEGORY_CODE
-		     , CATEGORY_NAME
-		     , REF_CATEGORY_CODE
-		  FROM CATEGORY_TABLE
+		SELECT A.CATEGORY_CODE
+		     , A.CATEGORY_NAME
+		     , A.REF_CATEGORY_CODE
+		     , B.CATEGORY_NAME
+		  FROM CATEGORY_TABLE A
+		  LEFT JOIN CATEGORY_TABLE B ON(A.REF_CATEGORY_CODE = B.CATEGORY_CODE)
 		 ORDER BY 1
 	</entry>
 	
@@ -167,4 +168,77 @@
 	      FROM CATEGORY_TABLE A
 	     WHERE A.CATEGORY_NAME = ?
 	</entry>
+	<entry key="selectAllMenu">
+	    	SELECT 
+                   MENU_CODE
+                 , MENU_NAME
+                 , PRICE
+                 , MENU_EXPLAIN
+                 , CATEGORY_CODE
+                 , ORDERABLE
+              FROM MENU_TABLE
+	</entry>
+	<entry key="insertMenu">
+	    	INSERT
+              INTO MENU_TABLE
+            ( 
+              MENU_CODE
+            , MENU_NAME
+            , PRICE
+            , MENU_EXPLAIN
+            , CATEGORY_CODE
+            , ORDERABLE
+            )
+            VALUES
+            (
+              SEQ_MENU_CODE.NEXTVAL
+            , ?                      
+            , ?                      
+            , ?                      
+            , ?                      
+            , ?                      
+            )
+	</entry>
+	<entry key="updateMenu">
+	    	UPDATE
+              MENU_TABLE
+               SET MENU_NAME = ?
+                 , PRICE = ?
+                 , MENU_EXPLAIN = ?
+                 , CATEGORY_CODE = ?
+                 , ORDERABLE = ?
+              WHERE MENU_CODE = ?
+	</entry>
+	<entry key="deleteMenu">
+	    	DELETE
+              FROM MENU_TABLE
+             WHERE MENU_NAME = ?
+	</entry>
+	<entry key="selectHambergerRanking">
+	    SELECT 
+ 	           A.MENU_CODE
+ 	         , A.MENU_NAME 
+ 	         , B.PAYMENT_PRICE
+ 	         , RANK() OVER (ORDER BY B.PAYMENT_PRICE DESC) 매출순위
+ 	      FROM MENU_TABLE A
+ 	      JOIN SALES_AMOUNT_TABLE C ON (A.MENU_CODE = C.MENU_CODE)
+ 	      JOIN PAYMENT_TABLE B ON (B.ORDER_CODE = C.ORDER_CODE)
+ 	     WHERE A.CATEGORY_CODE = 1
+ 	     ORDER BY MENU_CODE ASC
+	</entry>
+	<entry key="selectMonthSales">
+	    SELECT
+ 	          SUM(TOTAL_ORDER_PRICE)
+ 	     FROM TBL_ORDER
+ 	    WHERE ORDER_DATE LIKE '22/' || ? || '/%'
+	</entry>
+	<entry key="selectGradeSales">
+	    SELECT  
+	           GRADE_NO
+   	         , PAYMENT_PRICE
+  	         , RANK() OVER (ORDER BY PAYMENT_PRICE DESC) 매출순위
+ 	      FROM PAYMENT_TABLE
+ 	     ORDER BY GRADE_NO ASC; 
+	</entry>
+	
 </properties>
