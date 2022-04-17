@@ -149,6 +149,7 @@ public class OrderMenu {
 		
 		
 		/* 결제 진행 */
+		while (true) {
 		flag = true;
 		while(flag) {
 			System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
@@ -253,10 +254,13 @@ public class OrderMenu {
 			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
 			/* 장바구니 delete */
 			
+		
 			orderResultSet.closeDisplayMainMenu();
 			flag = false;
 		}
+	}
 
 	}
 }
 }
+
