@@ -232,5 +232,13 @@
  	     FROM TBL_ORDER
  	    WHERE ORDER_DATE LIKE '22/' || ? || '/%'
 	</entry>
+	<entry key="selectGradeSales">
+	    SELECT  
+	           GRADE_NO
+   	         , PAYMENT_PRICE
+  	         , RANK() OVER (ORDER BY PAYMENT_PRICE DESC) 매출순위
+ 	      FROM PAYMENT_TABLE
+ 	     ORDER BY GRADE_NO ASC; 
+	</entry>
 	
 </properties>

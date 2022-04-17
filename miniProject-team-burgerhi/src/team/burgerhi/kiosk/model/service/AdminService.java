@@ -127,10 +127,10 @@ public class AdminService {
 		close(con);
 		return selectSales;
 	}
-	public Map<String, Integer> selectGradeSales() {
+	public Map<Integer, Integer> selectGradeSales() {
 		Connection con = getConnection();
 		
-		Map<String, Integer> gradeSales = adminDAO.selectGradeSales(con);
+		Map<Integer, Integer> gradeSales = adminDAO.selectGradeSales(con);
 		
 		close(con);
 		return gradeSales;	

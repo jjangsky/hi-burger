@@ -218,7 +218,7 @@ public class AdminController {		// 혜진 TEST
 			int totalSales = adminService.selectAllSales();
 			System.out.println(sdfm.format(now) + "기준 총 매출액은 " + totalSales + "원 입니다.");
 		} else if(salesNum == 2) {
-			Map<String, Integer> gadeSales = adminService.selectGradeSales();
+			Map<Integer, Integer> gadeSales = adminService.selectGradeSales();
 			System.out.println(gadeSales.get(""));
 			System.out.println(gadeSales.get(""));
 			System.out.println(gadeSales.get(""));

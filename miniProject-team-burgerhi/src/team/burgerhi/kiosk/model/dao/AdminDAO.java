@@ -294,10 +294,27 @@ public class AdminDAO {
 		return 0;
 	}
 
-	public Map<String, Integer> selectGradeSales(Connection con) {
+	public Map<Integer, Integer> selectGradeSales(Connection con) {
 		/* HashMap 형태로 등급별 매출액 조회 key = 등급명, value = 매출액 */
+		Statement stmt = null;
+		ResultSet rset = null;
+		Map<Integer, Integer> gradeSales = new HashMap<Integer, Integer>();
+		String query = prop.getProperty("selectGradeSales");
 		
-		return null;
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			for(int i = 1; rset.next(); i++) {
+				gradeSales.put(i, rset.getInt(2));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return gradeSales;
 	}
 
 	public Map<String, Integer> selectMethodSales(Connection con) {
