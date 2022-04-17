@@ -10,7 +10,7 @@ import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.service.AdminService;
 
-public class AdminController {
+public class AdminController {		// 혜진 TEST
 	private AdminService adminService = new AdminService();
 	Scanner sc = new Scanner(System.in);
 	
