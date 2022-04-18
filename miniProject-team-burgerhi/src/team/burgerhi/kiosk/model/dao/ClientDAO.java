@@ -393,7 +393,7 @@ public class ClientDAO {
 			rset = stmt.executeQuery(query);
 			
 			if(rset.next()) {
-				lastCode = rset.getInt("CURRVAL");
+				lastCode = rset.getInt(1);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

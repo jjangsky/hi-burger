@@ -209,7 +209,7 @@ public class OrderMenu {
 				System.out.println();
 				System.out.println("고객님의 " + paymentCard + "로 총"  + lastPayment + "원이 결제 되었습니다!");
 				System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
-				break;
+				flag2 = false;
 
 			} else if (paymentBy == 2) {	// 현금 결제
 				System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
@@ -264,13 +264,13 @@ public class OrderMenu {
 			}
 
 			/* 최종 모두 확정된 정보를 테이블에 Insert */
-//			clientController.insertOrder(lastPayment);
-//			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
-//			/* 장바구니 delete */
-//			clientController.deleteAllOrderMenu();
-//		
-//			/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
-//			orderResultSet.closeDisplayMainMenu();
+			clientController.insertOrder(lastPayment);
+			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
+			/* 장바구니 delete */
+			clientController.deleteAllOrderMenu();
+		
+			/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
+			orderResultSet.closeDisplayMainMenu();
 			flag2 = false;
 		}
 	}
