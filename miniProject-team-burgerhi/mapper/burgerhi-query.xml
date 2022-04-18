@@ -113,8 +113,8 @@
 	</entry>
 	<entry key="selectLastOrderCode">
         SELECT
-               SEQ_ORDER_CODE.CURRVAL
-          FROM DUAL;
+     		   MAX(A.ORDER_CODE)
+ 		  FROM ORDER_TABLE A
 	</entry>
 	<entry key="insertPayment">
         INSERT
@@ -250,7 +250,7 @@
 	</entry>
 	<entry key="deleteAllOrderMenu">
 	    DELETE
-	      FROM ORDER_MENU_TABLE;
+	      FROM ORDER_MENU_TABLE
 	</entry>
 	
 	<entry key="selectUserBy">

@@ -261,7 +261,7 @@ public class ClientController {
 	}
 	
 	/* 결제까지 완료 된 확정 정보를 Order 테이블에 Insert */
-	public void insertOrder(double lastPayment) {
+	public void insertOrder(int lastPayment) {
 		Date now = new Date();
 		SimpleDateFormat smdf = new SimpleDateFormat("yyyy/MM/dd");
 		String date = smdf.format(now);
@@ -287,7 +287,10 @@ public class ClientController {
 		case 2: payment = "현금";
 		case 3: payment = "기프티콘";
 		}
-		int insertResult = clientService.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
+		
+		int orderCode = clientService.selectLastOrderCode();
+		
+		int insertResult = clientService.insertPayment(orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
 	}
 
 	public int selectGifticonBy(String inputGiftNo) {
@@ -307,7 +310,7 @@ public class ClientController {
 	public void deleteAllOrderMenu() {
 		
 		int result = clientService.deleteAllOrderMenu();
-		
+//		System.out.println("장바구니 삭제 완료"); 	// 장바구니 삭제 확인
 	}
 
 	public int selectOrderMenuPrice(int inputMenuNo) {

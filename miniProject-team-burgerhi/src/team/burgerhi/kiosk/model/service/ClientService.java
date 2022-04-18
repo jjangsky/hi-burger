@@ -152,7 +152,7 @@ public class ClientService {
 	}
 	
 	/* 결제까지 완료 된 확정 정보를 Order 테이블에 Insert */
-	public int insertOrder(String date, double lastPayment) {
+	public int insertOrder(String date, int lastPayment) {
 		Connection con = getConnection();
 		
 		int insertResult = clientDAO.insertOrder(con, date, lastPayment);
@@ -162,13 +162,21 @@ public class ClientService {
 		return insertResult;
 	}
 	
-	/* 결제까지 완료 된 확정 정보를 Payment 테이블에 Insert */
-	public int insertPayment(int userNo, int totalPrice, int gradeNo, int cardCode, double lastPayment,
-			String payment) {
-		
+	/* 주문번호의 마지막 시퀀스 번호 확인Select */
+	public int selectLastOrderCode() {
 		Connection con = getConnection();
 		
 		int orderCode = clientDAO.selectLastOrderCode(con);
+		
+		close(con);
+		return orderCode;
+	}
+	
+	/* 결제까지 완료 된 확정 정보를 Payment 테이블에 Insert */
+	public int insertPayment(int orderCode, int userNo, int totalPrice, int gradeNo, int cardCode, double lastPayment,
+			String payment) {
+		
+		Connection con = getConnection();
 		
 		int inserResult = clientDAO.insertPayment(con, orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
 		
@@ -202,6 +210,8 @@ public class ClientService {
 		close(con);
 		return result;
 	}
+
+
 
 
 

@@ -358,7 +358,7 @@ public class ClientDAO {
 	}
 	
 	/* 결제까지 완료 된 확정 정보를 Order 테이블에 Insert */
-	public int insertOrder(Connection con, String date, double lastPayment) {
+	public int insertOrder(Connection con, String date, int lastPayment) {
 		/* order테이블 insert */
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -367,7 +367,7 @@ public class ClientDAO {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, date);
-			pstmt.setInt(2, (int)lastPayment);
+			pstmt.setInt(2, lastPayment);
 			
 			result = pstmt.executeUpdate();
 			
