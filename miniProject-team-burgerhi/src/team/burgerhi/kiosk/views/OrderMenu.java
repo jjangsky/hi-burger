@@ -39,8 +39,8 @@ public class OrderMenu {
 			System.out.println(">>>> 어서오세요 BurgerHI 입니다. <<<<");
 			System.out.println("================================");
 			System.out.println();
-			System.out.println("     1       |      2       ");
-			System.out.println("  회원 주문하기  |  비회원 주문하기  ");
+			System.out.println("     1        |      2        |      3       ");
+			System.out.println("  회원 주문하기  |  비회원 주문하기  |   회원가입 ");
 			System.out.println();
 			System.out.print(">>>> 번호를 선택해 주세요: ");
 			int num = sc.nextInt();
@@ -152,6 +152,8 @@ public class OrderMenu {
 				
 			} else if(num == 2) {	// 비회원 주문하기
 				nonMemberMenu.displayMainMenu();
+			}else if(num == 3){ // 회원가입 넘어가기
+				nonMemberMenu.createUserInfo();
 			}else {
 				System.out.println("번호를 잘못 입력하셨습니다. 다시 입력해 주세요!");
 			}
