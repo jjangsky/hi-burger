@@ -64,17 +64,10 @@ public class OrderMenu {
 					break;
 				}
 				
-				System.out.println(">>>>    BurgerHI 메뉴 선택    <<<<");
-				System.out.println("================================");
-				System.out.println();
-				System.out.println("     1       |      2       ");
-				System.out.println("  메뉴 주문하기  |  회원 정보 확인 ");
-				System.out.println();
-				System.out.print(">>>> 번호를 선택해 주세요: ");
-				num = sc.nextInt();
-				System.out.println("\n\n\n\n\n");
-				if(num == 2) {
-					clientController.userInfoSelect(userNo);
+				/* 메뉴 선택 or 회원 정보 조회, 수정, 탈퇴 메소드 */
+				int userInfo = clientController.userInfoSelect(userNo);
+				if(userInfo == 2) {
+					continue;		// 회원 탈퇴로 인해 회원으로 주문 불가능 메뉴 첫 화면으로 돌아가도록 설정
 				}
 				
 				
@@ -98,8 +91,7 @@ public class OrderMenu {
 					System.out.println();
 					List<MenuDTO> menuList = clientController.selectMenuBy(categoryNo);		// Menu 출력 메소드
 					for(MenuDTO menu : menuList) {
-						System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  " + menu.getPrice() + "원/n     " + menu.getExplain());
-						menuPrice = menu.getPrice();
+						System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  " + menu.getPrice() + "원\n     " + menu.getExplain());
 					}
 					System.out.println();
 					
@@ -112,7 +104,8 @@ public class OrderMenu {
 					clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);		// OrderMenu(장바구니) Insert 메소드
 					
 					/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
-					totalPrice += inputAmount * menuPrice;
+					menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
+					totalPrice += (inputAmount * menuPrice);
 					
 					
 					
@@ -128,7 +121,7 @@ public class OrderMenu {
 					if(num == 1) {	// 추가 주문하기
 						continue;	// while문의 처음으로 돌아가도록 설정
 					} else if(num == 2) {	// 장바구니 확인하기
-						List<OrderMenuDTO> orderMenuList = clientController.selectOrderMenu(totalPrice);	// OrderMenu(장바구니) 모두 출력되도록 하는 메소드
+						clientController.selectOrderMenu(totalPrice);	// OrderMenu(장바구니) 모두 출력되도록 하는 메소드
 						
 						/* 장바구니 while문 */
 						while(true) {	// 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
@@ -267,8 +260,9 @@ public class OrderMenu {
 			clientController.insertOrder(lastPayment);
 			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
 			/* 장바구니 delete */
-			
+			clientController.deleteAllOrderMenu();
 		
+			/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
 			orderResultSet.closeDisplayMainMenu();
 			flag = false;
 		}

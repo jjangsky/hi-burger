@@ -55,13 +55,21 @@
 		)
 	</entry>
 	
+	<entry key="selectOrderMenuPrice">
+	    SELECT
+     	       A.PRICE
+ 	      FROM MENU_TABLE A
+ 	     WHERE A.MENU_CODE = ?
+	</entry>
+	
 	<entry key="selectOrderMenu">
 		SELECT
-		       A.ORDER_MENU_NO
-		     , A.USER_NO
-		     , A.MENU_CODE
-		     , A.ORDER_AMOUNT
-		  FROM ORDER_MENU_TABLE A
+		  	   A.ORDER_MENU_NO
+    		 , B.MENU_NAME
+    		 , A.ORDER_AMOUNT
+    		 , B.PRICE
+  		  FROM ORDER_MENU_TABLE A
+          JOIN MENU_TABLE B ON (A.MENU_CODE = B.MENU_CODE)
 	</entry>
 	
 	<entry key="deleteOrderMenu">
@@ -238,6 +246,24 @@
  	      FROM PAYMENT_TABLE
  	     GROUP BY GRADE_NO
  	     ORDER BY GRADE_NO ASC
+	</entry>
+	<entry key="deleteAllOrderMenu">
+	    DELETE
+	      FROM ORDER_MENU_TABLE;
+	</entry>
+	
+	<entry key="selectUserBy">
+	    SELECT
+   	           A.USER_NO
+   	         , A.USER_NAME
+    	     , A.USER_ID
+   	 		 , A.USER_PWD
+   	 		 , B.GRADE_NAME
+ 	         , A.USER_POINT
+ 	         , A.PHONE
+  	     FROM USER_TABLE A
+  	     JOIN GRADE_TABLE B ON (A.GRADE_NO = B.GRADE_NO)
+ 	     WHERE A.USER_NO = ?
 	</entry>
 	
 </properties>

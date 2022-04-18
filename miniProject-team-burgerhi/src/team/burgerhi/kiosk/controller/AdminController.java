@@ -207,7 +207,7 @@ public class AdminController {		// 혜진 TEST
 		System.out.println(">>>> BurgerHI 카테고리 별 매출  <<<<");
 		System.out.println("================================");
 		System.out.println();
-		System.out.println("　   1     |    　 2     |      3      ");
+		System.out.println("　   1   　 |    　 2   　  |      3      ");
 		System.out.println(" 총 누적 매출 | 회원 등급별 매출 | 결제 종류별 매출 ");
 		int salesNum = sc.nextInt();
 		
