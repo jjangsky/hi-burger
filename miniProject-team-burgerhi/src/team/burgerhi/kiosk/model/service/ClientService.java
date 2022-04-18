@@ -203,6 +203,17 @@ public class ClientService {
 		return result;
 	}
 
+	public int creatUserInfo(UserDTO userDTO) {
+		/* 비회원 회원가입 절차 */
+		Connection con = getConnection();
+		
+		int result = clientDAO.creatUserInfo(con, userDTO);
+		
+		close(con);
+		
+		return result;
+	}
+
 
 
 	
