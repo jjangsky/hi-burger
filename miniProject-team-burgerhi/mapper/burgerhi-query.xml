@@ -65,6 +65,7 @@
 	<entry key="selectOrderMenu">
 		SELECT
 		  	   A.ORDER_MENU_NO
+		  	 , A.MENU_CODE
     		 , B.MENU_NAME
     		 , A.ORDER_AMOUNT
     		 , B.PRICE

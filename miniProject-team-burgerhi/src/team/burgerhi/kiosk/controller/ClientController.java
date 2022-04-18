@@ -192,16 +192,17 @@ public class ClientController {
 		System.out.println();
 		
 		/* for문으로 사용자에게 보여줄 내용 출력 */
-		for(int i = 0; (i/4) < (orderMenuList.size() / 4); i++) {
-			String price = orderMenuList.get(i + 3); 
-			String amount = orderMenuList.get(i + 2);
+		for(int i = 0; (i/5) < (orderMenuList.size() / 5); i++) {
+			String price = orderMenuList.get(i + 4); 
+			String amount = orderMenuList.get(i + 3);
 //			System.out.println(i + "번째" + orderMenuList.get(i));
 			System.out.println("▶ 주문번호: " + orderMenuList.get(i));
-			System.out.println("▶ 메뉴명 : " + orderMenuList.get(i + 1));
-			System.out.println("▶ 주문수량: " + orderMenuList.get(i + 2));
-			System.out.println("▶ 금액: " + orderMenuList.get(i + 3) + " * " + orderMenuList.get(i + 2) + " = " + Integer.valueOf(price) *  Integer.valueOf(amount));
+			System.out.println("▶ 메뉴번호: " + orderMenuList.get(i + 1));			
+			System.out.println("▶ 메뉴명 : " + orderMenuList.get(i + 2));
+			System.out.println("▶ 주문수량: " + orderMenuList.get(i + 3));
+			System.out.println("▶ 금액: " + orderMenuList.get(i + 4) + " * " + orderMenuList.get(i + 3) + " = " + Integer.valueOf(price) *  Integer.valueOf(amount));
 			System.out.println();
-			i += 3;
+			i += 4;
 		}
 		System.out.println("▶ 총 금액: " + totalPrice);		
 	}

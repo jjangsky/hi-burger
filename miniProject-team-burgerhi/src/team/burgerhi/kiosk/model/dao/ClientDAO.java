@@ -240,9 +240,10 @@ public class ClientDAO {
 			
 			while(rset.next()) {
 				orderMenuList.add("" + rset.getInt(1));
-				orderMenuList.add(rset.getString(2));
-				orderMenuList.add("" + rset.getInt(3));
+				orderMenuList.add("" + rset.getInt(2));
+				orderMenuList.add(rset.getString(3));
 				orderMenuList.add("" + rset.getInt(4));
+				orderMenuList.add("" + rset.getInt(5));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
