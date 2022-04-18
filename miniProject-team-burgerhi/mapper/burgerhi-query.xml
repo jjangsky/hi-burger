@@ -282,5 +282,24 @@
  	      FROM GRADE_TABLE A
   	     WHERE A.GRADE_NO = ?
 	</entry>
+	<entry key="insertUser">
+	    INSERT
+          INTO USER_TABLE
+        (
+          USER_NO
+        , USER_NAME
+        , USER_ID
+        , USER_PWD
+        , PHONE
+        )
+        VALUES
+        (
+          SEQ_USER_NO.NEXTVAL
+        , ?
+        , ?
+        , ?
+        , ?
+        )
+	</entry>
 	
 </properties>
