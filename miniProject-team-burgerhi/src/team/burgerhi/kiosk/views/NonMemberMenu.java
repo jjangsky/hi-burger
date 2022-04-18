@@ -3,6 +3,7 @@ package team.burgerhi.kiosk.views;
 import java.util.List;
 import java.util.Scanner;
 
+import oracle.sql.ConcreteProxyUtil;
 import team.burgerhi.kiosk.controller.ClientController;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
@@ -50,8 +51,27 @@ public class NonMemberMenu {
 	public void createUserInfo(){
 		
 		Scanner sc = new Scanner(System.in);
+		/* 비회원 회원가입 절차 */
+			
+			System.out.println(">>>>   BurgerHI 회원가입 안내  <<<<");
+			System.out.println("================================");
+			System.out.println();  
+			System.out.print(">>>> 본인의 성함을 입력해 주세요. ");
+			String name = sc.nextLine();
+			System.out.print(">>>> 사용하실 아이디를 입력해 주세요. ");
+			String userId = sc.nextLine();
+			System.out.print(">>>> 사용하실 비밀번호를 입력해 주세요. ");
+			String userPwd = sc.nextLine();
+			System.out.print(">>>> 사용하시는 휴대폰 번호를 입력해 주세요.('-' 포함) ");
+			String userPhone = sc.nextLine();
 		
-	
+		int result = clientController.createUserInfo(name, userId, userPwd, userPhone);
+		
+		if(result > 0) {
+			System.out.println(" 회원가입이 정상적으로 처리되었습니다.");
+		}else {
+			System.out.println(" 회원가입에 실패하셨습니다.");
+		}
 		
 	
 	}

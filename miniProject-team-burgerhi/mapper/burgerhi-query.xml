@@ -153,11 +153,11 @@
 	</entry>
 	<entry key="insertCategory">
 	    INSERT
-	      INTO CATEGORY_TABLE
+	      INTO CATEGORY_TABLE A
 	    (
-	      CATEGORY_CODE
-	    , CATEGORY_NAME
-	    , REF_CATEGORY_CODE
+	      A.CATEGORY_CODE
+	    , A.CATEGORY_NAME
+	    , A.REF_CATEGORY_CODE
 	    )
 	    VALUES
 	    (
@@ -167,15 +167,15 @@
 	    )
 	</entry>
 	<entry key="updateCategory">
-		UPDATE CATEGORY_TABLE
-		   SET CATEGORY_NAME = ?
-		     , REF_CATEGORY_CODE = ?
-		 WHERE CATEGORY_CODE = ?
+		UPDATE CATEGORY_TABLE A
+		   SET A.CATEGORY_NAME = ?
+		     , A.REF_CATEGORY_CODE = ?
+		 WHERE A.CATEGORY_CODE = ?
 	</entry>
 	<entry key="deleteCategory">
 	    DELETE 
-	      FROM CATEGORY_TABLE
-	     WHERE CATEGORY_NAME = ?
+	      FROM CATEGORY_TABLE A
+	     WHERE A.CATEGORY_NAME = ?
 	</entry>
 	<entry key="selectAllMenu">
 	    	SELECT 
@@ -281,6 +281,25 @@
   	           A.DISCOUNT
  	      FROM GRADE_TABLE A
   	     WHERE A.GRADE_NO = ?
+	</entry>
+	<entry key="insertUser">
+	    INSERT
+          INTO USER_TABLE
+        (
+          USER_NO
+        , USER_NAME
+        , USER_ID
+        , USER_PWD
+        , PHONE
+        )
+        VALUES
+        (
+          SEQ_USER_NO.NEXTVAL
+        , ?
+        , ?
+        , ?
+        , ?
+        )
 	</entry>
 	
 </properties>

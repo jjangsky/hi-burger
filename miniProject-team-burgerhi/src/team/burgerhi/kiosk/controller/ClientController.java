@@ -320,6 +320,19 @@ public class ClientController {
 		return menuPrice;
 	}
 
+	public int createUserInfo(String name, String userId, String userPwd, String userPhone) {
+		/* 비회원 회원가입 절차, View 에서 받은 Scanner 값을 DTO에 담아서 Service 계층으로 전송 */
+		UserDTO userDTO = new UserDTO();
+		userDTO.setName(name);
+		userDTO.setId(userId);
+		userDTO.setPwd(userPwd);
+		userDTO.setPhone(userPhone);
+		
+		int result = clientService.creatUserInfo(userDTO);
+		
+		return result;
+	}
+
 
 
 }

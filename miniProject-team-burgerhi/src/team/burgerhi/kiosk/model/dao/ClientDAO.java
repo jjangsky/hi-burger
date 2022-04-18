@@ -496,6 +496,29 @@ public class ClientDAO {
 		return result;
 	}
 
+	public int creatUserInfo(Connection con, UserDTO userDTO) {
+		/* 비회원 회원가입 절차 */
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String qeury = prop.getProperty("insertUser");
+		try {
+			pstmt = con.prepareStatement(qeury);
+			pstmt.setString(1, userDTO.getName());
+			pstmt.setString(2, userDTO.getId());
+			pstmt.setString(3, userDTO.getPwd());
+			pstmt.setString(4, userDTO.getPhone());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 
 
 

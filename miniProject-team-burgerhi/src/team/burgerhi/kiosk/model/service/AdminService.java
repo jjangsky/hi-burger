@@ -26,7 +26,7 @@ public class AdminService {
 		
 		Map<Integer, String> drink = adminDAO.selectDrinkRanking(con);
 		
-		close(con);
+		close(con); 
 		return drink;
 	}
 	public Map<Integer, String> selectSideRanking() {
@@ -50,6 +50,7 @@ public class AdminService {
 		Connection con = getConnection();
 		
 		int insertResult = adminDAO.insertCategory(con, categoryName, refCategory);
+		
 		
 		close(con);
 		return insertResult;
