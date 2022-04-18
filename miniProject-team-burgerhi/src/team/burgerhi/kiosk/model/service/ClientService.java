@@ -2,6 +2,7 @@ package team.burgerhi.kiosk.model.service;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import team.burgerhi.kiosk.model.dao.ClientDAO;
 import team.burgerhi.kiosk.model.dto.CardDTO;
@@ -25,6 +26,37 @@ public class ClientService {
 		close(con);
 		
 		return userList;
+	}
+	
+	/* 로그인 한 회원의 정보 조회 */
+	public List<Object> selectUserBy(int userNo, String gradeName) {
+		Connection con = getConnection();
+		
+		List<Object> user = clientDAO.selectUserBy(con, userNo, gradeName);
+		
+		close(con);
+		return user;
+	}
+	
+	/* 로그인 한 회원의 정보 수정 */
+	public int UpdateUserInfo(int userNo, String pwd, int phone) {
+		Connection con = getConnection();
+		
+		int result = clientDAO.UpdateUserInfo(con, userNo, pwd, phone);
+		
+		close(con);
+		return result;
+		
+	}
+	
+	/* 로그인 한 회원의 정보 삭제 */
+	public int deleteUserBy(int userNo) {
+		Connection con = getConnection();
+		
+		int result = clientDAO.deleteUserBy(con, userNo);
+		
+		close(con);
+		return result;
 	}
 	
 	/* 전체 Category를 출력하는 메소드 */
@@ -57,11 +89,21 @@ public class ClientService {
 		return insertOrderMenu;
 	}
 	
-	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
-	public List<OrderMenuDTO> selectOrderMenu() {
+	/* 최종 금액을 구하기 위한 하나의 메뉴 금액 select 하는 메소드 */
+	public int selectOrderMenuPrice(int inputMenuNo) {
 		Connection con = getConnection();
 		
-		List<OrderMenuDTO> orderMenuList = clientDAO.selectOrderMenu(con);
+		int menuPrice = clientDAO.selectOrderMenuPrice(con, inputMenuNo);
+		
+		close(con);
+		return menuPrice;
+	}
+	
+	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
+	public List<String> selectOrderMenu() {
+		Connection con = getConnection();
+		
+		List<String> orderMenuList = clientDAO.selectOrderMenu(con);
 		
 		close(con);
 		
@@ -80,13 +122,13 @@ public class ClientService {
 	}
 	
 	/* 등급에 따른 할인율 확인 */
-	public String selectGrade(int gradeNo) {
+	public int selectGrade(int gradeNo) {
 		Connection con = getConnection();
 		
-		String selectResult = clientDAO.selectGrade(con, gradeNo);
+		int gradediscount = clientDAO.selectGrade(con, gradeNo);
 		
 		close(con);
-		return selectResult;
+		return gradediscount;
 	}
 	
 	/* 카드 할인 가능한 전체 제휴 카드 리스트 출력 */
@@ -151,5 +193,20 @@ public class ClientService {
 		
 		return result;
 	}
+
+	public int deleteAllOrderMenu() {
+		Connection con = getConnection();
+		
+		int result  = clientDAO.deleteAllOrderMenu(con);
+		
+		close(con);
+		return result;
+	}
+
+
+
+	
+
+	
 
 }

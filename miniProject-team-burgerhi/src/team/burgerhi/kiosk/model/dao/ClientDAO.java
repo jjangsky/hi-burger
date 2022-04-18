@@ -14,7 +14,6 @@ import java.util.Properties;
 import team.burgerhi.kiosk.model.dto.CardDTO;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
-import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 import static team.burgerhi.common.JDBCTemplate.close;
 
@@ -55,7 +54,7 @@ public class ClientDAO {
 	            userDTO.setUserPoint(rset.getInt("USER_POINT"));
 	            userDTO.setPhone(rset.getString("PHONE"));
 	            userList.add(userDTO);
-	            System.out.println(userList);
+//	            System.out.println(userList);		// 메소드 실행 확인
 	         }
 	         
 	      } catch (SQLException e) {
@@ -64,6 +63,52 @@ public class ClientDAO {
 	         close(rset);
 	      }
 	      return userList;
+	}
+	
+	/* 로그인 한 회원의 정보 조회 */
+	public List<Object> selectUserBy(Connection con, int userNo, String gradeName) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Object> userList = new ArrayList<Object>();
+		String query = prop.getProperty("selectUserBy");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				userList.add(rset.getInt("USER_NO"));
+				userList.add(rset.getString("USER_NAME"));
+				userList.add(rset.getString("USER_ID"));
+				userList.add(rset.getString(4));
+				userList.add(rset.getString("GRADE_NAME"));
+				userList.add(rset.getInt("USER_POINT"));
+				userList.add(rset.getString("PHONE"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return userList;
+	}
+	
+	/* 로그인 한 회원의 정보 수정(pwd, phone) */
+	public int UpdateUserInfo(Connection con, int userNo, String pwd, int phone) {
+		/* where = userNo | set = pwd, phone */
+		
+		
+		
+		return 0;
+	}
+
+	/* 로그인 한 회원의 정보 삭제('Y' → 'N') */
+	public int deleteUserBy(Connection con, int userNo) {
+		/* USER_YN 컬럼의 데이터만 Y → N (즉, Update문 사용) */
+		
+		
+		return 0;
 	}
 
 	/* 전체 Category를 출력하는 메소드 */
@@ -153,14 +198,37 @@ public class ClientDAO {
 		}
 		return result;
 	}
+	
+	/* 최종 금액을 구하기 위한 하나의 메뉴 금액 select 하는 메소드 */
+	public int selectOrderMenuPrice(Connection con, int inputMenuNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int menuPrice = 0;
+		String query = prop.getProperty("selectOrderMenuPrice");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, inputMenuNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				menuPrice = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt); 
+		}
+		return menuPrice;
+	}
 
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
-	public List<OrderMenuDTO> selectOrderMenu(Connection con) {
+	public List<String> selectOrderMenu(Connection con) {
 		/* 전체select  */
 		Statement stmt = null;
 		ResultSet rset = null;
 		
-		List<OrderMenuDTO> orderMenuList = new ArrayList<>();
+		List<String> orderMenuList = new ArrayList<>();
 		String query = prop.getProperty("selectOrderMenu");
 		
 		try {
@@ -168,13 +236,11 @@ public class ClientDAO {
 			rset = stmt.executeQuery(query);
 			
 			while(rset.next()) {
-				OrderMenuDTO orderMenu = new OrderMenuDTO();
-				orderMenu.setOrderMenuNo(rset.getInt("ORDER_MENU_NO"));
-				orderMenu.setUserNo(rset.getInt("USER_NO"));
-				orderMenu.setMenuCode(rset.getInt("MENU_CODE"));
-				orderMenu.setOrderAmount(rset.getInt("ORDER_AMOUNT"));
-				
-				orderMenuList.add(orderMenu);
+				orderMenuList.add("" + rset.getInt(1));
+				orderMenuList.add("" + rset.getInt(2));
+				orderMenuList.add(rset.getString(3));
+				orderMenuList.add("" + rset.getInt(4));
+				orderMenuList.add("" + rset.getInt(5));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -207,17 +273,58 @@ public class ClientDAO {
 	}
 
 	/* 등급에 따른 할인율 확인 */
-	public String selectGrade(Connection con, int gradeNo) {
+	public int selectGrade(Connection con, int gradeNo) {
 		/* where = gradNo */
-		
-		return null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int gradediscount = 0;
+		String query = prop.getProperty("selectGrade");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, gradeNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				gradediscount = rset.getInt("DISCOUNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return gradediscount;
 	}
 
 	/* 카드 할인 가능한 전체 제휴 카드 리스트 출력 */
 	public List<CardDTO> selectCard(Connection con) {
 		/* card 테이블 where = cardAble - Y */
+		Statement stmt = null;
+		ResultSet rset = null;
+		List<CardDTO> cardList = new ArrayList<CardDTO>();
+		String query = prop.getProperty("selectCard");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				CardDTO card = new CardDTO();
+				card.setCode(rset.getInt("CARD_CODE"));
+				card.setBank(rset.getString("CARD_BANK"));
+				card.setDiscount(rset.getNString("CARD_DISCOUNT"));
+				card.setCardable(rset.getString("CARDABLE"));
+				
+				cardList.add(card);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
 		
-		return null;
+		return cardList;
 	}
 
 	/* Payment 테이블에 필요한 카드 번호 Select */
@@ -368,4 +475,30 @@ public class ClientDAO {
 		}
 		return result;
 	}
+
+	/* 결제 한 장바구니속 메뉴는 모두 삭제 */
+	public int deleteAllOrderMenu(Connection con) {
+		Statement stmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteAllOrderMenu");
+		
+		try {
+			stmt = con.createStatement();
+			result = stmt.executeUpdate(query);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+		}
+		
+		return result;
+	}
+
+
+
+
+
+	
 }

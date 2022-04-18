@@ -47,5 +47,13 @@ public class NonMemberMenu {
 		} while(true);
 		
 	}
+	public void createUserInfo(){
+		
+		Scanner sc = new Scanner(System.in);
+		
+	
+		
+	
+	}
 
 }

@@ -3,6 +3,7 @@ package team.burgerhi.kiosk.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import team.burgerhi.kiosk.model.dto.CardDTO;
@@ -66,12 +67,84 @@ public class ClientController {
 	}
 	
 	/* 본인 정보 확인 및 수정 탈퇴 메소드 */
-	public void userInfoSelect(int userNo) {
-		System.out.println(">>>> 어서오세요 BurgerHI 입니다. <<<<");
-		System.out.println("================================");
-		System.out.println();
+	public int userInfoSelect(int userNo) {
+		String gradeName = null;
+		int MenuPageNum = 0;
 		
+		while(true) {
+			System.out.println(">>>>    BurgerHI 메뉴 선택    <<<<");
+			System.out.println("================================");
+			System.out.println();
+			System.out.println("     1       |      2       ");
+			System.out.println("  메뉴 주문하기  |  회원 정보 확인 ");
+			System.out.println();
+			System.out.print(">>>> 번호를 선택해 주세요: ");
+			int firstInput = sc.nextInt();
+			System.out.println("\n\n\n\n\n");
+			
+			if(firstInput == 1) {
+				MenuPageNum = 1;
+				break;
+			} else if(firstInput ==2) {
+				System.out.println(">>>>  BurgerHI 회원 정보 조회  <<<<");
+				System.out.println("================================");
+				System.out.println();
+				List<Object> user = clientService.selectUserBy(userNo, gradeName);
+				
+				System.out.println("▶ 회원번호: " + user.get(0));
+				System.out.println("▶ 회원이름: " + user.get(1));
+				System.out.println("▶ 회원ID: " + user.get(2));
+				System.out.println("▶ 회원PWD: " + user.get(3));
+				System.out.println("▶ 등급: " + user.get(4));
+				System.out.println("▶ 보유포인트: " + user.get(5));
+				System.out.println("▶ 전화번호: " + user.get(6));
+				System.out.println();
+				System.out.println(">>>> 회원 정보를 수정하시려면 1번을 눌러주세요.");
+				System.out.println(">>>> 회원 탈퇴를 하시려면 2번을 눌러주세요.");
+				System.out.println(">>>> 이전 화면으로 돌아가시려면 3번을 눌러주세요.");
+				int num = sc.nextInt();
+				if(num == 1) {
+					System.out.println(">>>>  BurgerHI 회원 정보 수정  <<<<");
+					System.out.println("================================");
+					System.out.println();
+					System.out.println(">>>> 수정하실 회원 pwd를 입력해 주세요: ");
+					sc.nextLine();
+					String pwd = sc.nextLine();
+					System.out.println(">>>> 수정하실 전화번호를 입력해 주세요: ");
+					int phone = sc.nextInt();
+					
+					int result = clientService.UpdateUserInfo(userNo, pwd, phone);
+					
+					if(result > 0) {
+						code = "updateUserInfoSuccess";
+					} else {
+						code = "updateUserInfoFail";
+					}
+					
+				} else if(num == 2) {
+					System.out.println(">>>>    BurgerHI 회원 탈퇴    <<<<");
+					System.out.println("================================");
+					System.out.println();
+					System.out.println("★ 고객님의 모든 정보가 사라집니다. 모든 정보는 복구되지 않습니다. ★ \n 그래도 진행 하시겠습니까?");
+					System.out.println("1. 회원 탈퇴 진행   |   2. 취소");
+					int inputdelete = sc.nextInt();
+					if(inputdelete == 1) {
+						int result = clientService.deleteUserBy(userNo);
+						if(result > 0) {
+							code = "deleteUserInfoSuccess";
+						} else {
+							code = "deleteUserInfoFail";
+						}
+						orderResultSet.displayDmlResult(code);
+						MenuPageNum = 2;
+						break;
+					}
+				}
+			}
+			
+		}
 		
+		return MenuPageNum;
 	}
 	
 	
@@ -110,25 +183,29 @@ public class ClientController {
 	}
 
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
-	public List<OrderMenuDTO> selectOrderMenu(int totalPrice) {
+	public void selectOrderMenu(int totalPrice) {
 		
 		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
-		List<OrderMenuDTO> orderMenuList = clientService.selectOrderMenu();
+		List<String> orderMenuList = clientService.selectOrderMenu();
 		
 		System.out.println(">>>>    BurgerHI 장바구니 확인    <<<<");
 		System.out.println("===================================");
 		System.out.println();
 		
-		/* for each문으로 사용자에게 보여줄 내용 출력 */
-		for(OrderMenuDTO orderMenu : orderMenuList) {
-			MenuDTO menu = new MenuDTO();
-				System.out.println("▶ 메뉴번호: " + orderMenu.getMenuCode());
-				System.out.println("▶ 메뉴명 : " + menu.getName());
-				System.out.println("▶ 주문수량: " + orderMenu.getOrderAmount());
-				System.out.println("▶ 금액: " + menu.getPrice() + " * " + orderMenu.getOrderAmount() + " = " + menu.getPrice() * orderMenu.getOrderAmount());
-		} System.out.println("▶ 총 금액: " + totalPrice);		// 메뉴가 여러 개 일수도 있어서 총 금액은 반복문이 종료된 후 출력되도록 설정
-		
-		return orderMenuList;
+		/* for문으로 사용자에게 보여줄 내용 출력 */
+		for(int i = 0; (i/5) < (orderMenuList.size() / 5); i++) {
+			String price = orderMenuList.get(i + 4); 
+			String amount = orderMenuList.get(i + 3);
+//			System.out.println(i + "번째" + orderMenuList.get(i));
+			System.out.println("▶ 주문번호: " + orderMenuList.get(i));
+			System.out.println("▶ 메뉴번호: " + orderMenuList.get(i + 1));			
+			System.out.println("▶ 메뉴명 : " + orderMenuList.get(i + 2));
+			System.out.println("▶ 주문수량: " + orderMenuList.get(i + 3));
+			System.out.println("▶ 금액: " + orderMenuList.get(i + 4) + " * " + orderMenuList.get(i + 3) + " = " + Integer.valueOf(price) *  Integer.valueOf(amount));
+			System.out.println();
+			i += 4;
+		}
+		System.out.println("▶ 총 금액: " + totalPrice);		
 	}
 
 	/* 장바구니 내용 수정 | OrderMenu 테이블에서 원하지 않는 메뉴 삭제 후 최종 결제할 메뉴만 남기도록 설정 */
@@ -154,11 +231,10 @@ public class ClientController {
 
 	/* 등급에 따른 할인율 확인 */
 	public int selectGrade(int gradeNo) {
-		/* 여기서 String -> int로 가공 처리 */
-		int gradeDiscount = 0;
-		String gradeResult = clientService.selectGrade(gradeNo);
 		
-		return gradeDiscount;
+		int gradediscount = clientService.selectGrade(gradeNo);
+		
+		return gradediscount;
 	}
 
 	/* 카드 할인 가능한 전체 제휴 카드 리스트 출력 */
@@ -225,6 +301,20 @@ public class ClientController {
 		
 		int result = clientService.updateGifticonPrice(inputGiftNo, gifticonPrice);
 		
+	}
+
+	/* 장바구니에서 결제한 메뉴의 경우 전체 Delete */
+	public void deleteAllOrderMenu() {
+		
+		int result = clientService.deleteAllOrderMenu();
+		
+	}
+
+	public int selectOrderMenuPrice(int inputMenuNo) {
+		
+		int menuPrice = clientService.selectOrderMenuPrice(inputMenuNo);
+		
+		return menuPrice;
 	}
 
 

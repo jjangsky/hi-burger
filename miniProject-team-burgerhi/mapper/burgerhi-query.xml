@@ -55,13 +55,22 @@
 		)
 	</entry>
 	
+	<entry key="selectOrderMenuPrice">
+	    SELECT
+     	       A.PRICE
+ 	      FROM MENU_TABLE A
+ 	     WHERE A.MENU_CODE = ?
+	</entry>
+	
 	<entry key="selectOrderMenu">
 		SELECT
-		       A.ORDER_MENU_NO
-		     , A.USER_NO
-		     , A.MENU_CODE
-		     , A.ORDER_AMOUNT
-		  FROM ORDER_MENU_TABLE A
+		  	   A.ORDER_MENU_NO
+		  	 , A.MENU_CODE
+    		 , B.MENU_NAME
+    		 , A.ORDER_AMOUNT
+    		 , B.PRICE
+  		  FROM ORDER_MENU_TABLE A
+          JOIN MENU_TABLE B ON (A.MENU_CODE = B.MENU_CODE)
 	</entry>
 	
 	<entry key="deleteOrderMenu">
@@ -234,11 +243,44 @@
 	</entry>
 	<entry key="selectGradeSales">
 	    SELECT  
-	           GRADE_NO
-   	         , PAYMENT_PRICE
-  	         , RANK() OVER (ORDER BY PAYMENT_PRICE DESC) 매출순위
+   	           SUM(PAYMENT_PRICE)
  	      FROM PAYMENT_TABLE
- 	     ORDER BY GRADE_NO ASC; 
+ 	     GROUP BY GRADE_NO
+ 	     ORDER BY GRADE_NO ASC
+	</entry>
+	<entry key="deleteAllOrderMenu">
+	    DELETE
+	      FROM ORDER_MENU_TABLE;
+	</entry>
+	
+	<entry key="selectUserBy">
+	    SELECT
+   	           A.USER_NO
+   	         , A.USER_NAME
+    	     , A.USER_ID
+   	 		 , RPAD(SUBSTR(A.USER_PWD,1, 4), 10 , '#')
+   	 		 , B.GRADE_NAME
+ 	         , A.USER_POINT
+ 	         , A.PHONE
+  	     FROM USER_TABLE A
+  	     JOIN GRADE_TABLE B ON (A.GRADE_NO = B.GRADE_NO)
+ 	     WHERE A.USER_NO = ?
+	</entry>
+	
+	<entry key="selectCard">
+	    SELECT
+	    	   A.CARD_CODE
+	    	 , A.CARD_BANK
+	    	 , A.CARD_DISCOUNT
+	    	 , A.CARDABLE
+	      FROM CARD_TABLE A
+	     WHERE A.CARDABLE = 'Y'
+	</entry>
+	<entry key="selectGrade">
+	    SELECT
+  	           A.DISCOUNT
+ 	      FROM GRADE_TABLE A
+  	     WHERE A.GRADE_NO = ?
 	</entry>
 	
 </properties>

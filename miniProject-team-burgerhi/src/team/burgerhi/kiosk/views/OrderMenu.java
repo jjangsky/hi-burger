@@ -26,10 +26,11 @@ public class OrderMenu {
 		int totalPrice = 0;
 		int paymentBy = 0;
 		int cardCode = 0;
+		int lastPayment = 0;
 		double gradeDiscount = 0;
 		double cardDiscount = 0;
-		double lastPayment = 0;
 		boolean flag = true;
+		boolean flag1 = true;
 		
 		while(true) {
 		do {
@@ -38,8 +39,8 @@ public class OrderMenu {
 			System.out.println(">>>> 어서오세요 BurgerHI 입니다. <<<<");
 			System.out.println("================================");
 			System.out.println();
-			System.out.println("     1       |      2       ");
-			System.out.println("  회원 주문하기  |  비회원 주문하기  ");
+			System.out.println("     1        |      2        |      3       ");
+			System.out.println("  회원 주문하기  |  비회원 주문하기  |   회원가입 ");
 			System.out.println();
 			System.out.print(">>>> 번호를 선택해 주세요: ");
 			int num = sc.nextInt();
@@ -64,22 +65,15 @@ public class OrderMenu {
 					break;
 				}
 				
-				System.out.println(">>>>    BurgerHI 메뉴 선택    <<<<");
-				System.out.println("================================");
-				System.out.println();
-				System.out.println("     1       |      2       ");
-				System.out.println("  메뉴 주문하기  |  회원 정보 확인 ");
-				System.out.println();
-				System.out.print(">>>> 번호를 선택해 주세요: ");
-				num = sc.nextInt();
-				System.out.println("\n\n\n\n\n");
-				if(num == 2) {
-					clientController.userInfoSelect(userNo);
+				/* 메뉴 선택 or 회원 정보 조회, 수정, 탈퇴 메소드 */
+				int userInfo = clientController.userInfoSelect(userNo);
+				if(userInfo == 2) {
+					continue;		// 회원 탈퇴로 인해 회원으로 주문 불가능 메뉴 첫 화면으로 돌아가도록 설정
 				}
 				
 				
 				/* 메뉴주문 while문 */
-				while(true) {
+				while(flag1) {
 					
 					/* 전체 Category 출력*/
 					System.out.println(">>>>    BurgerHI 카테고리 선택    <<<<");
@@ -98,8 +92,7 @@ public class OrderMenu {
 					System.out.println();
 					List<MenuDTO> menuList = clientController.selectMenuBy(categoryNo);		// Menu 출력 메소드
 					for(MenuDTO menu : menuList) {
-						System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  " + menu.getPrice() + "원/n     " + menu.getExplain());
-						menuPrice = menu.getPrice();
+						System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  " + menu.getPrice() + "원\n     " + menu.getExplain());
 					}
 					System.out.println();
 					
@@ -112,7 +105,8 @@ public class OrderMenu {
 					clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);		// OrderMenu(장바구니) Insert 메소드
 					
 					/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
-					totalPrice += inputAmount * menuPrice;
+					menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
+					totalPrice += (inputAmount * menuPrice);
 					
 					
 					
@@ -128,7 +122,7 @@ public class OrderMenu {
 					if(num == 1) {	// 추가 주문하기
 						continue;	// while문의 처음으로 돌아가도록 설정
 					} else if(num == 2) {	// 장바구니 확인하기
-						List<OrderMenuDTO> orderMenuList = clientController.selectOrderMenu(totalPrice);	// OrderMenu(장바구니) 모두 출력되도록 하는 메소드
+						clientController.selectOrderMenu(totalPrice);	// OrderMenu(장바구니) 모두 출력되도록 하는 메소드
 						
 						/* 장바구니 while문 */
 						while(true) {	// 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
@@ -147,15 +141,19 @@ public class OrderMenu {
 								clientController.deleteOrderMenu();
 							} else if(num == 3) {
 								flag = false;		// 모든 while문을 빠져나가 최종 결제 화면이 뜨도록 함
+								flag1 = false;
+								break;
 							} else {
 								System.out.println("번호를 잘못 입력하셨습니다! ");
 							}
 						}// 장바구니 while문 종료
-					}
+					} 
 				}//메뉴주문 while문 종료
 				
 			} else if(num == 2) {	// 비회원 주문하기
 				nonMemberMenu.displayMainMenu();
+			}else if(num == 3){ // 회원가입 넘어가기
+				nonMemberMenu.createUserInfo();
 			}else {
 				System.out.println("번호를 잘못 입력하셨습니다. 다시 입력해 주세요!");
 			}
@@ -164,8 +162,8 @@ public class OrderMenu {
 		
 		/* 결제 진행 */
 		while (true) {
-		flag = true;
-		while(flag) {
+		boolean flag2 = true;
+		while(flag2) {
 			System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
 			System.out.println("===================================");
 			System.out.println();
@@ -207,15 +205,19 @@ public class OrderMenu {
 				gradeDiscount = totalPrice * (grade * 0.01);
 				System.out.println("▶ 등급 할인 금액: " + gradeDiscount + "원");
 				System.out.println("▶ 카드사 할인 금액: " + cardDiscount + "원");
-				lastPayment = totalPrice - gradeDiscount - cardDiscount;
+				lastPayment = (int)(totalPrice - gradeDiscount - cardDiscount);
 				System.out.println();
 				System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
+				System.out.println();
+				System.out.println("고객님의 " + paymentCard + "로 총"  + lastPayment + "원이 결제 되었습니다!");
+				System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+				break;
 
 			} else if (paymentBy == 2) {	// 현금 결제
 				System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 				int grade = clientController.selectGrade(gradeNo);
 				gradeDiscount = totalPrice * (grade * 0.01);
-				lastPayment = totalPrice - gradeDiscount;
+				lastPayment = (int)(totalPrice - gradeDiscount);
 				System.out.println("▶ 등급 할인 금액: " + gradeDiscount + "원");
 				System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
 				System.out.println();
@@ -237,8 +239,8 @@ public class OrderMenu {
 			} else if (paymentBy == 3) {	// 기프티콘 결제
 				System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 				int grade = clientController.selectGrade(gradeNo);
-				gradeDiscount = totalPrice * (grade * 0.01);
-				lastPayment = totalPrice - gradeDiscount;
+				gradeDiscount = totalPrice * (gradeNo * 0.01);
+				lastPayment = (int)(totalPrice - gradeDiscount);
 				System.out.println("▶ 등급 할인 금액: " + gradeDiscount + "원");
 				System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
 				System.out.println();
@@ -264,13 +266,14 @@ public class OrderMenu {
 			}
 
 			/* 최종 모두 확정된 정보를 테이블에 Insert */
-			clientController.insertOrder(lastPayment);
-			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
-			/* 장바구니 delete */
-			
-		
-			orderResultSet.closeDisplayMainMenu();
-			flag = false;
+//			clientController.insertOrder(lastPayment);
+//			clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
+//			/* 장바구니 delete */
+//			clientController.deleteAllOrderMenu();
+//		
+//			/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
+//			orderResultSet.closeDisplayMainMenu();
+			flag2 = false;
 		}
 	}
 
