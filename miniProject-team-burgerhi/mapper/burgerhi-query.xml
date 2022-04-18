@@ -258,7 +258,7 @@
    	           A.USER_NO
    	         , A.USER_NAME
     	     , A.USER_ID
-   	 		 , A.USER_PWD
+   	 		 , RPAD(SUBSTR(A.USER_PWD,1, 4), 10 , '#')
    	 		 , B.GRADE_NAME
  	         , A.USER_POINT
  	         , A.PHONE

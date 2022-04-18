@@ -84,7 +84,7 @@ public class ClientDAO {
 				userList.add(rset.getInt("USER_NO"));
 				userList.add(rset.getString("USER_NAME"));
 				userList.add(rset.getString("USER_ID"));
-				userList.add(rset.getString("USER_PWD"));
+				userList.add(rset.getString(4));
 				userList.add(rset.getString("GRADE_NAME"));
 				userList.add(rset.getInt("USER_POINT"));
 				userList.add(rset.getString("PHONE"));

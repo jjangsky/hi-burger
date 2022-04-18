@@ -95,8 +95,9 @@ public class ClientController {
 				System.out.println("▶ 회원이름: " + user.get(1));
 				System.out.println("▶ 회원ID: " + user.get(2));
 				System.out.println("▶ 회원PWD: " + user.get(3));
-				System.out.println("▶ 등급번호: " + user.get(4));
-				System.out.println("▶ 전화번호: " + user.get(5));
+				System.out.println("▶ 등급: " + user.get(4));
+				System.out.println("▶ 보유포인트: " + user.get(5));
+				System.out.println("▶ 전화번호: " + user.get(6));
 				System.out.println();
 				System.out.println(">>>> 회원 정보를 수정하시려면 1번을 눌러주세요.");
 				System.out.println(">>>> 회원 탈퇴를 하시려면 2번을 눌러주세요.");
