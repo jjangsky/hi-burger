@@ -122,13 +122,13 @@ public class ClientService {
 	}
 	
 	/* 등급에 따른 할인율 확인 */
-	public String selectGrade(int gradeNo) {
+	public int selectGrade(int gradeNo) {
 		Connection con = getConnection();
 		
-		String selectResult = clientDAO.selectGrade(con, gradeNo);
+		int gradediscount = clientDAO.selectGrade(con, gradeNo);
 		
 		close(con);
-		return selectResult;
+		return gradediscount;
 	}
 	
 	/* 카드 할인 가능한 전체 제휴 카드 리스트 출력 */

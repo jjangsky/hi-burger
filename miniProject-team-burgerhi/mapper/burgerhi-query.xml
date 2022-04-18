@@ -267,4 +267,20 @@
  	     WHERE A.USER_NO = ?
 	</entry>
 	
+	<entry key="selectCard">
+	    SELECT
+	    	   A.CARD_CODE
+	    	 , A.CARD_BANK
+	    	 , A.CARD_DISCOUNT
+	    	 , A.CARDABLE
+	      FROM CARD_TABLE A
+	     WHERE A.CARDABLE = 'Y'
+	</entry>
+	<entry key="selectGrade">
+	    SELECT
+  	           A.DISCOUNT
+ 	      FROM GRADE_TABLE A
+  	     WHERE A.GRADE_NO = ?
+	</entry>
+	
 </properties>

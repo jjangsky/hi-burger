@@ -231,11 +231,10 @@ public class ClientController {
 
 	/* 등급에 따른 할인율 확인 */
 	public int selectGrade(int gradeNo) {
-		/* 여기서 String -> int로 가공 처리 */
-		int gradeDiscount = 0;
-		String gradeResult = clientService.selectGrade(gradeNo);
 		
-		return gradeDiscount;
+		int gradediscount = clientService.selectGrade(gradeNo);
+		
+		return gradediscount;
 	}
 
 	/* 카드 할인 가능한 전체 제휴 카드 리스트 출력 */

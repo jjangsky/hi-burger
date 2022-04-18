@@ -8,15 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import team.burgerhi.kiosk.model.dto.CardDTO;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
-import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 import static team.burgerhi.common.JDBCTemplate.close;
 
@@ -276,17 +273,58 @@ public class ClientDAO {
 	}
 
 	/* 등급에 따른 할인율 확인 */
-	public String selectGrade(Connection con, int gradeNo) {
+	public int selectGrade(Connection con, int gradeNo) {
 		/* where = gradNo */
-		
-		return null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int gradediscount = 0;
+		String query = prop.getProperty("selectGrade");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, gradeNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				gradediscount = rset.getInt("DISCOUNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return gradediscount;
 	}
 
 	/* 카드 할인 가능한 전체 제휴 카드 리스트 출력 */
 	public List<CardDTO> selectCard(Connection con) {
 		/* card 테이블 where = cardAble - Y */
+		Statement stmt = null;
+		ResultSet rset = null;
+		List<CardDTO> cardList = new ArrayList<CardDTO>();
+		String query = prop.getProperty("selectCard");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				CardDTO card = new CardDTO();
+				card.setCode(rset.getInt("CARD_CODE"));
+				card.setBank(rset.getString("CARD_BANK"));
+				card.setDiscount(rset.getNString("CARD_DISCOUNT"));
+				card.setCardable(rset.getString("CARDABLE"));
+				
+				cardList.add(card);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
 		
-		return null;
+		return cardList;
 	}
 
 	/* Payment 테이블에 필요한 카드 번호 Select */
