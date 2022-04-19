@@ -7,7 +7,7 @@ public class Application {
 		
 		/* view 화면이 보여지도록 인스턴스 생성 및 메소드 호출 */
 		OrderMenu orderMenu = new OrderMenu();
-		orderMenu.displayMainMenu();
+		orderMenu.displayMainMenu(); 
 	}
 }
 /* 김유찬 테스트 */
