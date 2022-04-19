@@ -196,14 +196,14 @@ public class ClientController {
 		
 		/* for문으로 사용자에게 보여줄 내용 출력 */
 		for(int i = 0; (i/5) < (orderMenuList.size() / 5); i++) {
-			String price = orderMenuList.get(i + 4); 
-			String amount = orderMenuList.get(i + 3);
-//			System.out.println(i + "번째" + orderMenuList.get(i));
+			int price = Integer.valueOf(orderMenuList.get(i + 4)); 
+			int amount = Integer.valueOf(orderMenuList.get(i + 3));
+//			System.out.println(i + "번째" + orderMenuList.get(i));		// 값이 제대로 담겨 출력 되는지 확인
 			System.out.println("▶ 주문번호: " + orderMenuList.get(i));
 			System.out.println("▶ 메뉴번호: " + orderMenuList.get(i + 1));			
 			System.out.println("▶ 메뉴명 : " + orderMenuList.get(i + 2));
 			System.out.println("▶ 주문수량: " + orderMenuList.get(i + 3));
-			System.out.println("▶ 금액: " + orderMenuList.get(i + 4) + " * " + orderMenuList.get(i + 3) + " = " + Integer.valueOf(price) *  Integer.valueOf(amount));
+			System.out.println("▶ 금액: " + price + " * " + amount + " = " + (price *  amount));
 			System.out.println();
 			i += 4;
 		}
