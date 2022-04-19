@@ -109,7 +109,7 @@ public class ClientController {
 					sc.nextLine();
 					String pwd = sc.nextLine();
 					System.out.println(">>>> 수정하실 전화번호를 입력해 주세요: ");
-					int phone = sc.nextInt();
+					String phone = sc.nextLine();
 					
 					int result = clientService.UpdateUserInfo(userNo, pwd, phone);
 					

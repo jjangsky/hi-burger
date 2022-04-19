@@ -267,6 +267,21 @@
  	     WHERE A.USER_NO = ?
 	</entry>
 	
+	<entry key="updateUserInfo">
+	    UPDATE
+	           USER_TABLE A
+	       SET A.USER_PWD = ?
+	         , A.PHONE = ?
+	     WHERE A.USER_NO = ?
+	</entry>
+	
+	<entry key="deleteUserBy">
+	    UPDATE
+	           USER_TABLE A
+	       SET A.USER_YN = 'N'
+	     WHERE A.USER_NO = ?
+	</entry>
+	
 	<entry key="selectCard">
 	    SELECT
 	    	   A.CARD_CODE
