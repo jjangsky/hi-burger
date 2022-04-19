@@ -322,8 +322,30 @@ public class AdminDAO {
 		 * HashMap 형태로 결제방법 별 매출액 조회 key = 결제방법, value = 매출액
 		 * payment 테이블로 select 필요
 		 */
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectMethodSales");
 		
-		return null;
+		Map<String, Integer> map = new HashMap<>();
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			List list = new ArrayList();
+			while(rset.next()) {
+				list.add(rset.getInt(1));
+			}
+			map.put("기프티콘", (Integer)list.get(0));
+			map.put("카드", (Integer)list.get(1));
+			map.put("현금", (Integer)list.get(2));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return map;
 	}
 
 

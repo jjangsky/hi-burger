@@ -225,9 +225,9 @@ public class AdminController {		// 혜진 TEST
 			
 		} else if(salesNum == 3) {
 			Map<String, Integer> methodSales = adminService.selectMethodSales();
-			System.out.println(methodSales.get("카드"));
-			System.out.println(methodSales.get("현금"));
-			System.out.println(methodSales.get("기프티콘"));
+			System.out.println("\n기프티콘 결제의 총 매출: " + methodSales.get("기프티콘")+ "원" + "\n");
+			System.out.println("카드 결제의 총 매출: " + methodSales.get("카드")+ "원" + "\n");
+			System.out.println("현금 결제의 총 매출: " + methodSales.get("현금")+ "원" + "\n");
 		}
 		
 		

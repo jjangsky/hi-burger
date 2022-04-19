@@ -372,4 +372,10 @@
 	      FROM SALES_AMOUNT_TABLE A
 	     WHERE A.MENU_CODE = ?
 	</entry>
+	<entry key="selectMethodSales">
+	    SELECT SUM(PAYMENT_PRICE)
+	      FROM PAYMENT_TABLE
+	     GROUP BY PAYMENT_BY
+	     ORDER BY PAYMENT_BY
+	</entry>
 </properties>
