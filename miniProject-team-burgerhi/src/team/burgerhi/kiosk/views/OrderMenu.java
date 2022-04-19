@@ -5,9 +5,7 @@ import java.util.Scanner;
 
 import team.burgerhi.kiosk.controller.ClientController;
 import team.burgerhi.kiosk.model.dto.CardDTO;
-import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
-import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 
 public class OrderMenu {
@@ -35,13 +33,15 @@ public class OrderMenu {
 		while(true) {
 			do {
 				/* BurgerHI 메인 주문 화면(첫 화면) */
-				System.out.println(">>>> 어서오세요 BurgerHI 입니다. <<<<");
-				System.out.println("================================");
 				System.out.println();
-				System.out.println("     1       |      2        |      3   ");
-				System.out.println("  회원 주문하기  |  비회원 주문하기  |   회원가입 ");
-				System.out.println();
-				System.out.print(">>>> 번호를 선택해 주세요: ");
+				System.out.println(">>>>    어서오세요 BurgerHI 입니다.   <<<<");
+				System.out.println("==========================================");
+				System.out.println("|                                        |");
+				System.out.println("|     1       |      2        |     3    |");
+				System.out.println("|회원 주문하기|비회원 주문하기|  회원가입|");
+				System.out.println("|                                        |");
+				System.out.println("------------------------------------------");
+				System.out.print("  >>>> 번호를 선택해 주세요: ");
 				int num = sc.nextInt();
 				System.out.println("\n\n\n\n\n");
 
@@ -82,7 +82,7 @@ public class OrderMenu {
 						/* 메뉴 출력을 위해 필요한 category 번호 받기 */
 						System.out.print(">>>> 원하시는 카테고리의 번호를 입력해 주세요: ");
 						int categoryNo = sc.nextInt();
-						System.out.println("\n\n\n\n\n");
+						System.out.println("\n\n\n");
 
 						/* 사용자가 선택한 Category의 전체 Menu 출력 */
 						System.out.println(">>>>     BurgerHI 메뉴 선택     <<<<");
@@ -101,8 +101,10 @@ public class OrderMenu {
 						System.out.print(">>>> 선택한 메뉴의 수량을 입력해 주세요: ");
 						int inputAmount = sc.nextInt();
 						System.out.println("\n\n\n\n\n");
-						clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount); // OrderMenu(장바구니) Insert
-																							// 메소드
+						
+						/* OrderMenu(장바구니) Insert 메소드 */
+						clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
+																							
 
 						/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
 						menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
@@ -114,7 +116,7 @@ public class OrderMenu {
 						System.out.println("===================================");
 						System.out.println();
 						System.out.println("     1       |      2     ");
-						System.out.println("  추가 주문하기  |  장바구니 보기 ");
+						System.out.println("추가 주문하기|장바구니 보기");
 						System.out.println();
 						System.out.print(">>>> 번호를 선택해 주세요: ");
 						num = sc.nextInt();
@@ -132,8 +134,8 @@ public class OrderMenu {
 								System.out.println(">>>>     BurgerHI 메뉴 선택     <<<<");
 								System.out.println("===================================");
 								System.out.println();
-								System.out.println("     1       |     2      |     3   ");
-								System.out.println("  추가 주문하기  |  장바구니 수정 |   결제하기 ");
+								System.out.println("     1       |      2      |     3   ");
+								System.out.println("추가 주문하기|장바구니 수정| 결제하기 ");
 								System.out.println();
 								System.out.print(">>>> 번호를 선택해 주세요: ");
 								num = sc.nextInt();
@@ -166,11 +168,11 @@ public class OrderMenu {
 			/* 결제 진행 */
 			boolean flag2 = true;
 			while (flag2) {
-					System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
-					System.out.println("===================================");
+					System.out.println(">>>>      BurgerHI 장바구니 결제      <<<<");
+					System.out.println("=========================================");
 					System.out.println();
-					System.out.println("    1 　　|     2　　 |     3   ");
-					System.out.println("   카 드　 |    현 금   |   기프티콘 ");
+					System.out.println("    1 　　|     2　　 |     3     ");
+					System.out.println("   카 드  |   현 금   |  기프티콘 ");
 					System.out.println();
 					System.out.print(">>>> 결제하실 수단을 선택해 주세요: ");
 					paymentBy = sc.nextInt();
@@ -263,7 +265,7 @@ public class OrderMenu {
 							System.out.println("===================================");
 							System.out.println();
 							System.out.println("    1 　　|     2　　  ");
-							System.out.println("   카 드　 |    현 금  ");
+							System.out.println("  카 드　 |   현 금  ");
 							System.out.println();
 							System.out.print(">>>> 결제하실 수단을 선택해 주세요: ");
 							paymentBy = sc.nextInt();
@@ -295,6 +297,7 @@ public class OrderMenu {
 					/* 최종 모두 확정된 정보를 테이블에 Insert */
 					clientController.insertOrder(lastPayment);
 					clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
+					clientController.insertSalesAmount();
 					/* 장바구니 delete */
 					clientController.deleteAllOrderMenu();
 

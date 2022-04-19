@@ -34,7 +34,6 @@ public class ClientDAO {
 		 * id와 pwd가 일치할 경우 회원의 이름과 등급번호 List에 담아 전달 일치하는 id와 pwd가 없을 경우 name = null값으로
 		 * 지정하여 전달
 		 */
-
 		  PreparedStatement pstmt = null;
 	      ResultSet rset = null;
 	      String query = prop.getProperty("loginResult");
@@ -56,7 +55,6 @@ public class ClientDAO {
 	            userList.add(userDTO);
 //	            System.out.println(userList);		// 메소드 실행 확인
 	         }
-	         
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      } finally {
@@ -433,6 +431,7 @@ public class ClientDAO {
 		return result;
 	}
 
+	/* 사용자가 입력 한 기프티콘 번호를 입력받아 기프티콘 테이블에서 Select */
 	public int selectGifticonBy(Connection con, String inputGiftNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -456,6 +455,7 @@ public class ClientDAO {
 		return gifticonPrice;
 	}
 
+	/* 사용한 기프티콘의 경우 사용 후 금액 테이블에 Update */
 	public int updateGifticonPrice(Connection con, String inputGiftNo, int gifticonPrice) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -496,8 +496,8 @@ public class ClientDAO {
 		return result;
 	}
 
+	/* 비회원 회원가입 절차 */
 	public int creatUserInfo(Connection con, UserDTO userDTO) {
-		/* 비회원 회원가입 절차 */
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -519,9 +519,88 @@ public class ClientDAO {
 		return result;
 	}
 
+	/* 등급 변동사항이 있을 수도 있기 때문에 혹시 몰라서 할인율이 0인 비회원 등급번호 조회 */
+	public int selectNonMemberGradeNo(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int gradeNo = 0;
+		String query = prop.getProperty("selectNonMemberGradeNo");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				gradeNo = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return gradeNo;
+	}
 
+	/* 비회원과 회원 sequence 공유로 중복 값 없도록 insert */
+	public int insertNonMemberUser(Connection con, int gradeNo) {
+		/* 비회원 user_table insert */
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertNonMemberUser");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, gradeNo);
+			pstmt.setString(2, "0");
+			pstmt.setString(3, "N");
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
+	/* orderMenu(장바구니)에 필요한 비회원 userNo 조회 */
+	public int selectNonMemberUserNo(Connection con) {
+		/* orderMenu(장바구니)에 필요한 비회원 userNo 조회 */
+		Statement stmt = null;
+		ResultSet rset = null;
+		int userNo = 0;
+		String query = prop.getProperty("selectNonMemberUserNo");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				userNo = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return userNo;
+	}
+	
 
-
+	/* AdminMenu의 매출 조회를 위한 SalesAmount테이블 Insert */
+	public int insertSalesAmount(Connection con, int orderCode, int menuCode, int amount, int price) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertSalesAmount");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, orderCode);
+			pstmt.setInt(2, menuCode);
+			pstmt.setInt(3, amount);
+			pstmt.setInt(4, price);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 }

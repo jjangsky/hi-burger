@@ -3,13 +3,11 @@ package team.burgerhi.kiosk.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import team.burgerhi.kiosk.model.dto.CardDTO;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
-import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 import team.burgerhi.kiosk.model.service.ClientService;
 import team.burgerhi.kiosk.views.OrderResultSet;
@@ -75,8 +73,8 @@ public class ClientController {
 			System.out.println(">>>>    BurgerHI 메뉴 선택    <<<<");
 			System.out.println("================================");
 			System.out.println();
-			System.out.println("     1       |      2       ");
-			System.out.println("  메뉴 주문하기  |  회원 정보 확인 ");
+			System.out.println("     1        |      2       ");
+			System.out.println("메뉴 주문하기 |회원 정보 확인 ");
 			System.out.println();
 			System.out.print(">>>> 번호를 선택해 주세요: ");
 			int firstInput = sc.nextInt();
@@ -293,6 +291,7 @@ public class ClientController {
 		int insertResult = clientService.insertPayment(orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
 	}
 
+	/* 사용자가 입력 한 기프티콘 번호를 입력받아 기프티콘 테이블에서 Select */
 	public int selectGifticonBy(String inputGiftNo) {
 		
 		int gifticonPrice = clientService.selectGifticonBy(inputGiftNo);
@@ -300,6 +299,7 @@ public class ClientController {
 		return gifticonPrice;
 	}
 
+	/* 사용한 기프티콘의 경우 사용 후 금액 테이블에 Update */
 	public void updateGifticonPrice(String inputGiftNo, int gifticonPrice) {
 		
 		int result = clientService.updateGifticonPrice(inputGiftNo, gifticonPrice);
@@ -313,6 +313,7 @@ public class ClientController {
 //		System.out.println("장바구니 삭제 완료"); 	// 장바구니 삭제 확인
 	}
 
+	/* 사용자가 선택한 메뉴의 단가 Select */
 	public int selectOrderMenuPrice(int inputMenuNo) {
 		
 		int menuPrice = clientService.selectOrderMenuPrice(inputMenuNo);
@@ -320,8 +321,8 @@ public class ClientController {
 		return menuPrice;
 	}
 
+	/* 비회원 회원가입 절차, View 에서 받은 Scanner 값을 DTO에 담아서 Service 계층으로 전송 */
 	public int createUserInfo(String name, String userId, String userPwd, String userPhone) {
-		/* 비회원 회원가입 절차, View 에서 받은 Scanner 값을 DTO에 담아서 Service 계층으로 전송 */
 		UserDTO userDTO = new UserDTO();
 		userDTO.setName(name);
 		userDTO.setId(userId);
@@ -333,6 +334,39 @@ public class ClientController {
 		return result;
 	}
 
+	/* 비회원의 경우 회원번호와 중복되지 않도록 시퀀스 공유하여 Insert + 비회원 번호 Select */
+	public int insertNonMemberUser(int gradeNo) {
+		
+		int result = clientService.insertNonMemberUser(gradeNo);
+//		System.out.println("NullPointException Test2");		// 오류 여부 확인 구문
+		
+		int userNo = clientService.selectNonMemberUserNo();
+//		System.out.println("NullPointException Test3");		// Service getConnection 오류 찾음
+		
+		return userNo;
+	}
 
+	/* 비회원의 등급(nonMember|할인율 0) 번호 Select */
+	public int selectNonMemberGradeNo() {
+		
+		int gradeNo = clientService.selectNonMemberGradeNo();
+		
+		return gradeNo;
+	}
 
+	public void insertSalesAmount() {
+		
+		int orderCode = clientService.selectLastOrderCode();
+		int menuCode = 0;
+		int amount = 0;
+		int price = 0;
+		List<String> orderMenuList = clientService.selectOrderMenu();
+		for(int i = 0; (i/5) < (orderMenuList.size() / 5); i++) {
+			menuCode = Integer.valueOf(orderMenuList.get(i + 1));
+			amount = Integer.valueOf(orderMenuList.get(i + 3));
+			price = Integer.valueOf(orderMenuList.get(i + 4));
+		}
+		
+		int result = clientService.insertSalesAmount(orderCode, menuCode, amount, price);
+	}
 }

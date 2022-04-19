@@ -301,5 +301,52 @@
         , ?
         )
 	</entry>
+	<entry key="selectNonMemberGradeNo">
+	    SELECT
+	           A.GRADE_NO
+	      FROM GRADE_TABLE A
+	     WHERE A.DISCOUNT = 0
+	</entry>
+	<entry key="insertNonMemberUser">
+	    INSERT
+	      INTO USER_TABLE
+	    (
+	      USER_NO
+	    , GRADE_NO
+	    , USER_POINT
+	    , USER_YN
+	    )
+	    VALUES
+	    (
+	      SEQ_USER_NO.NEXTVAL
+	    , ?
+	    , ?
+	    , ?
+	    )
+	</entry>
 	
+	<entry key="selectNonMemberUserNo">
+	    SELECT
+      	       MAX(A.USER_NO)
+  	      FROM USER_TABLE A
+	</entry>
+	<entry key="insertSalesAmount">
+	    INSERT
+ 	     INTO SALES_AMOUNT_TABLE
+	    (
+ 	      SALES_AMOUNT_NO
+	    , ORDER_CODE
+	    , MENU_CODE
+	    , MENU_AMOUNT
+	    , MENU_PRICE
+	    )
+	    VALUES
+	    (
+	      SEQ_SALES_AMOUNT_NO.NEXTVAL
+	    , ?
+	    , ?
+	    , ?
+	    , ?
+	    )
+	</entry>
 </properties>
