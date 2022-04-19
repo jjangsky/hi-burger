@@ -10,9 +10,11 @@
 		     , A.GRADE_NO
 		     , A.USER_POINT
 		     , A.PHONE
+		     , A.USER_YN
 		  FROM USER_TABLE A
 		 WHERE A.USER_ID = ?
 		   AND A.USER_PWD = ?
+		   AND A.USER_YN = 'Y'
 	</entry>
 	
 	<entry key="selectAllCategory">
