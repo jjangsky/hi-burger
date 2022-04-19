@@ -235,6 +235,30 @@
  	     WHERE A.CATEGORY_CODE = 1
  	     ORDER BY MENU_CODE ASC
 	</entry>
+	<entry key="selectDrinkRanking">
+	    SELECT 
+ 	           A.MENU_CODE
+ 	         , A.MENU_NAME 
+ 	         , B.PAYMENT_PRICE
+ 	         , RANK() OVER (ORDER BY B.PAYMENT_PRICE DESC) 매출순위
+ 	      FROM MENU_TABLE A
+ 	      JOIN SALES_AMOUNT_TABLE C ON (A.MENU_CODE = C.MENU_CODE)
+ 	      JOIN PAYMENT_TABLE B ON (B.ORDER_CODE = C.ORDER_CODE)
+ 	     WHERE A.CATEGORY_CODE = 2
+ 	     ORDER BY MENU_CODE ASC
+	</entry>
+	<entry key="selectSideRanking">
+	    SELECT 
+ 	           A.MENU_CODE
+ 	         , A.MENU_NAME 
+ 	         , B.PAYMENT_PRICE
+ 	         , RANK() OVER (ORDER BY B.PAYMENT_PRICE DESC) 매출순위
+ 	      FROM MENU_TABLE A
+ 	      JOIN SALES_AMOUNT_TABLE C ON (A.MENU_CODE = C.MENU_CODE)
+ 	      JOIN PAYMENT_TABLE B ON (B.ORDER_CODE = C.ORDER_CODE)
+ 	     WHERE A.CATEGORY_CODE = 3
+ 	     ORDER BY MENU_CODE ASC
+ 	</entry> 
 	<entry key="selectMonthSales">
 	    SELECT
  	          SUM(TOTAL_ORDER_PRICE)
