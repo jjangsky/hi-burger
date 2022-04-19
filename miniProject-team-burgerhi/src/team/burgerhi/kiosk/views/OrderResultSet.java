@@ -1,7 +1,9 @@
 package team.burgerhi.kiosk.views;
 
+import java.util.Scanner;
+
 public class OrderResultSet {
-	
+	Scanner sc = new Scanner(System.in);
 	public void displayDmlResult(String code) {
 		switch(code) {
 			case "updateUserInfoSuccess" : System.out.println("입력하신 회원 정보 수정이 모두 완료 되었습니다!"

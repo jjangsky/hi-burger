@@ -21,6 +21,7 @@ public class NonMemberMenu {
 		int gradeNo = 0;
 		double cardDiscount = 0;
 		boolean flag = true;
+		boolean flag2 = true;
 		
 		while(flag){
 			System.out.println(">>>>        BurgerHI 비회원 주문하기         <<<<");
@@ -33,6 +34,7 @@ public class NonMemberMenu {
 			
 			System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
 			System.out.println("=================================================");
+			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 			System.out.println();
 			List<MenuDTO> menuList = clientController.selectMenuBy(categoryNo); // Menu 출력 메소드
 			for (MenuDTO menu : menuList) {
@@ -44,6 +46,10 @@ public class NonMemberMenu {
 			/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
 			System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
 			int inputMenuNo = sc.nextInt();
+			if(inputMenuNo == 0) {
+				flag2 = false;
+				flag = false;
+			}
 			System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
 			int inputAmount = sc.nextInt();
 			System.out.println("\n\n\n\n\n");
@@ -63,15 +69,21 @@ public class NonMemberMenu {
 			System.out.println("           1           |           2           ");
 			System.out.println("      추가 주문하기    |     장바구니 보기     ");
 			System.out.println("                       |                       ");
+			System.out.println("=================================================");
+			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 			System.out.print("\n → 번호를 선택해 주세요: ");
 			int num = sc.nextInt();
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			/* 추가 주문하기 */
-			if(num == 1) { 
+			if(num == 0) {
+				clientController.deleteAllOrderMenu();
+				flag2 = false;
+				flag = false;
+			} else if(num == 1) { 
 				continue; // while문의 처음으로 돌아가도록 설정
 			  /* 장바구니 확인하기 */
 			} else if (num == 2) { 
-				clientController.selectOrderMenu(totalPrice); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
+				totalPrice = clientController.selectOrderMenu(totalPrice); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
 				
 			/* 장바구니 while문 */
 				while(true) { // 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
@@ -81,14 +93,24 @@ public class NonMemberMenu {
 					System.out.println("      1 　   　|      2　　    |       3       ");
 					System.out.println(" 추가 주문하기 | 장바구니 수정 |   결제 하기   ");
 					System.out.println("               |               |               ");
+					System.out.println("=================================================z");
+					System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 				System.out.print("\n →번호를 선택해 주세요: ");
+				int num2 = sc.nextInt();
 				System.out.println("\n\n\n\n\n");
 
-				if(num == 1) { // 추가 주문하기
+				if(num2 == 0) {
+					clientController.deleteAllOrderMenu();
+					flag = false;
+					flag2 = false;
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+					break;
+				} else if(num == 1) { // 추가 주문하기
 					break;// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
-				} else if(num == 2) { // 장바구니에 있는 메뉴 수정하기
+				} else if(num2 == 2) { // 장바구니에 있는 메뉴 수정하기
 					clientController.deleteOrderMenu();
-				} else if(num == 3) {
+					totalPrice = clientController.selectOrderMenu(totalPrice);
+				} else if(num2 == 3) {
 					flag = false;
 					break;
 				} else {
@@ -101,7 +123,6 @@ public class NonMemberMenu {
 	} // 메뉴주문 while문 종료
 
 		/* 결제 진행 */
-		boolean flag2 = true;
 		while (flag2) {
 			System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
 			System.out.println("=================================================");
@@ -109,10 +130,15 @@ public class NonMemberMenu {
 			System.out.println("       1 　  　|        2　　  |       3      ");
 			System.out.println("     카 드     |      현 금    |    기프티콘  ");
 			System.out.println("               |               |              ");
+			System.out.println("=================================================z");
+			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 			System.out.print("\n → 결제하실 수단을 선택해 주세요: ");
 				paymentBy = sc.nextInt();
 
-				if (paymentBy == 1) { // 카드 결제
+				if(paymentBy == 0) {
+					clientController.deleteAllOrderMenu();
+					flag2 = false;
+				} else if(paymentBy == 1) { // 카드 결제
 					System.out.println("\n\n\n\n\n");
 					System.out.println("★★★★    제휴카드 중복 할인 Event!    ★★★★");
 					System.out.println("=================================================");
@@ -236,16 +262,18 @@ public class NonMemberMenu {
 		System.out.println(">>>>         BurgerHI 회원가입 안내         <<<<");
 		System.out.println("=================================================");
 		System.out.println();  
-		System.out.print("\n →  본인의 성함을 입력해 주세요. ");
+		System.out.print("\n →  본인의 성함을 입력해 주세요: ");
 		String name = sc.nextLine();
-		System.out.print("\n →  사용하실 아이디를 입력해 주세요. ");
+		System.out.print("\n →  사용하실 아이디를 입력해 주세요: ");
 		String userId = sc.nextLine();
-		System.out.print("\n →  사용하실 비밀번호를 입력해 주세요. ");
+		System.out.print("\n →  사용하실 비밀번호를 입력해 주세요: ");
 		String userPwd = sc.nextLine();
-		System.out.print("\n →  사용하시는 휴대폰 번호를 입력해 주세요.('-' 포함) ");
+		System.out.print("\n →  사용하시는 휴대폰 번호를 입력해 주세요: ");
 		String userPhone = sc.nextLine();
+		String formatUserPhone = clientController.phoneFormat(userPhone);		// 휴대폰 번호의 경우 일정한 format으로 가공하여 DB Insert
+//		System.out.println(formatUserPhone);									// 제대로 적용 되는지 확인 차 출력
 		System.out.println("\n\n\n\n\n\n\n\n\n\n");
-		int result = clientController.createUserInfo(name, userId, userPwd, userPhone);
+		int result = clientController.createUserInfo(name, userId, userPwd, formatUserPhone);
 		
 		if(result > 0) {
 			System.out.println(" 회원가입이 정상적으로 처리되었습니다.");
