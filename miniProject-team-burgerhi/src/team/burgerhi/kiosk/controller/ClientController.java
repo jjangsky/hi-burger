@@ -286,9 +286,9 @@ public class ClientController {
 			int paymentBy) {
 		String payment = "";
 		switch(paymentBy) {
-		case 1: payment = "카드";
-		case 2: payment = "현금";
-		case 3: payment = "기프티콘";
+		case 1: payment = "카드"; break;
+		case 2: payment = "현금"; break;
+		case 3: payment = "기프티콘"; break;
 		}
 		
 		int orderCode = clientService.selectLastOrderCode();
