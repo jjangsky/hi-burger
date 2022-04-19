@@ -23,17 +23,16 @@ public class NonMemberMenu {
 		boolean flag = true;
 		
 		while(flag){
-			System.out.println(">>>>   BurgerHI 비회원 주문하기   <<<<");
-			System.out.println("================================");
+			System.out.println(">>>>        BurgerHI 비회원 주문하기         <<<<");
+			System.out.println("=================================================");
 			System.out.println();   
 			clientController.selectAllCategory(); // Category 출력 메소드
-			System.out.println();
-			System.out.print(">>>> 원하시는 카테고리의 번호를 입력해 주세요: ");
+			System.out.print("\n →  원하시는 카테고리의 번호를 입력해 주세요: ");
 			int categoryNo = sc.nextInt();
-			System.out.println("\n\n");
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			
-			System.out.println(">>>>    BurgerHI 메뉴 선택    <<<<");
-			System.out.println("================================");
+			System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
+			System.out.println("=================================================");
 			System.out.println();
 			List<MenuDTO> menuList = clientController.selectMenuBy(categoryNo); // Menu 출력 메소드
 			for (MenuDTO menu : menuList) {
@@ -43,9 +42,9 @@ public class NonMemberMenu {
 			System.out.println();
 			
 			/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
-			System.out.print(">>>> 원하시는 메뉴의 번호를 입력해 주세요: ");
+			System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
 			int inputMenuNo = sc.nextInt();
-			System.out.print(">>>> 선택한 메뉴의 수량을 입력해 주세요: ");
+			System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
 			int inputAmount = sc.nextInt();
 			System.out.println("\n\n\n\n\n");
 			gradeNo = clientController.selectNonMemberGradeNo();
@@ -58,16 +57,15 @@ public class NonMemberMenu {
 			totalPrice += (inputAmount * menuPrice);
 
 			/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
-			System.out.println("\n\n\n");
-			System.out.println(">>>>     BurgerHI 메뉴 선택     <<<<");
-			System.out.println("===================================");
-			System.out.println();
-			System.out.println("     1       |      2     ");
-			System.out.println("  추가 주문하기  |  장바구니 보기 ");
-			System.out.println();
-			System.out.print(">>>> 번호를 선택해 주세요: ");
+			System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
+			System.out.println("=================================================");
+			System.out.println("                       |                       ");
+			System.out.println("           1           |           2           ");
+			System.out.println("      추가 주문하기    |     장바구니 보기     ");
+			System.out.println("                       |                       ");
+			System.out.print("\n → 번호를 선택해 주세요: ");
 			int num = sc.nextInt();
-			System.out.println("\n\n\n\n\n");
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			/* 추가 주문하기 */
 			if(num == 1) { 
 				continue; // while문의 처음으로 돌아가도록 설정
@@ -77,15 +75,13 @@ public class NonMemberMenu {
 				
 			/* 장바구니 while문 */
 				while(true) { // 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
-				System.out.println("\n\n\n");
-				System.out.println(">>>>     BurgerHI 메뉴 선택     <<<<");
-				System.out.println("===================================");
-				System.out.println();
-				System.out.println("     1       |     2      |     3   ");
-				System.out.println("  추가 주문하기  |  장바구니 수정 |   결제하기 ");
-				System.out.println();
-				System.out.print(">>>> 번호를 선택해 주세요: ");
-				num = sc.nextInt();
+					System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
+					System.out.println("=================================================");
+					System.out.println("               |               |               ");
+					System.out.println("      1 　   　|      2　　    |       3       ");
+					System.out.println(" 추가 주문하기 | 장바구니 수정 |   결제 하기   ");
+					System.out.println("               |               |               ");
+				System.out.print("\n →번호를 선택해 주세요: ");
 				System.out.println("\n\n\n\n\n");
 
 				if(num == 1) { // 추가 주문하기
@@ -97,6 +93,7 @@ public class NonMemberMenu {
 					break;
 				} else {
 					System.out.println("번호를 잘못 입력하셨습니다! ");
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 				}
 			} // 장바구니 while문 종료
 
@@ -106,19 +103,19 @@ public class NonMemberMenu {
 		/* 결제 진행 */
 		boolean flag2 = true;
 		while (flag2) {
-				System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
-				System.out.println("===================================");
-				System.out.println();
-				System.out.println("    1 　　|     2　　 |     3   ");
-				System.out.println("   카 드　 |    현 금   |   기프티콘 ");
-				System.out.println();
-				System.out.print(">>>> 결제하실 수단을 선택해 주세요: ");
+			System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
+			System.out.println("=================================================");
+			System.out.println("               |               |               ");
+			System.out.println("       1 　  　|        2　　  |       3      ");
+			System.out.println("     카 드     |      현 금    |    기프티콘  ");
+			System.out.println("               |               |              ");
+			System.out.print("\n → 결제하실 수단을 선택해 주세요: ");
 				paymentBy = sc.nextInt();
 
 				if (paymentBy == 1) { // 카드 결제
 					System.out.println("\n\n\n\n\n");
-					System.out.println("★★★★  제휴카드 중복 할인 Event!  ★★★★");
-					System.out.println("===================================");
+					System.out.println("★★★★    제휴카드 중복 할인 Event!    ★★★★");
+					System.out.println("=================================================");
 
 					/* 할인 가능한 전체 제휴카드 리스트 출력 */
 					List<CardDTO> cardList = clientController.selectCard();
@@ -127,7 +124,7 @@ public class NonMemberMenu {
 					}
 
 					/* 사용자가 결제 할 카드 입력받기 */
-					System.out.print(">>>> 결제하실 카드명을 입력해 주세요: ");
+					System.out.print("\n → 결제하실 카드명을 입력해 주세요: ");
 					sc.nextLine();
 					String paymentCard = sc.nextLine();
 					for (CardDTO card : cardList) {
@@ -154,7 +151,7 @@ public class NonMemberMenu {
 				} else if (paymentBy == 2) { // 현금 결제
 					System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
 					System.out.println();
-					System.out.print(">>>> 결제하실 금액을 입력해 주세요: ");
+					System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
 					int inputPrice = sc.nextInt();
 					if (inputPrice == lastPayment) {
 						System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
@@ -171,7 +168,7 @@ public class NonMemberMenu {
 				} else if (paymentBy == 3) { // 기프티콘 결제
 					System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
 					System.out.println();
-					System.out.println(">>>> 사용하실 기프티콘 번호를 입력해 주세요: ");
+					System.out.println("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
 					sc.next();
 					String inputGiftNo = sc.nextLine();
 					int gifticonPrice = clientController.selectGifticonBy(inputGiftNo);
@@ -186,23 +183,23 @@ public class NonMemberMenu {
 						System.out.println("기프티콘 사용이 완료 되었습니다!");
 						System.out.println("추가 금액 " + (lastPayment - gifticonPrice) + "원을 결제해 주세요!");
 						gifticonPrice = 0;
-						System.out.println(">>>>    BurgerHI 장바구니 결제    <<<<");
-						System.out.println("===================================");
-						System.out.println();
-						System.out.println("    1 　　|     2　　  ");
-						System.out.println("   카 드　 |    현 금  ");
-						System.out.println();
-						System.out.print(">>>> 결제하실 수단을 선택해 주세요: ");
+						System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
+						System.out.println("=================================================");
+						System.out.println("                       |                        ");
+						System.out.println("           1           |            2           ");
+						System.out.println("        카  드      　 |         현  금         ");
+						System.out.println("                       |                        ");
+						System.out.print("\n → 결제하실 수단을 선택해 주세요: ");
 						paymentBy = sc.nextInt();
 						if(paymentBy == 1) {
-							System.out.print(">>>> 결제하실 카드명을 입력해 주세요: ");
+							System.out.print("\n →  결제하실 카드명을 입력해 주세요: ");
 							sc.nextLine();
 							String paymentCard = sc.nextLine();
 							System.out.println(
 									"고객님의 " + paymentCard + "로 총" + (lastPayment - gifticonPrice) + "원이 결제 되었습니다!");
 							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 						}else if (paymentBy == 2) {
-							System.out.print(">>>> 결제하실 금액을 입력해 주세요: ");
+							System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
 							int inputPrice = sc.nextInt();
 							if (inputPrice == (lastPayment - gifticonPrice)) {
 								System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
@@ -220,9 +217,11 @@ public class NonMemberMenu {
 
 				/* 최종 모두 확정된 정보를 테이블에 Insert */
 				clientController.insertOrder(lastPayment);
-				clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
+				int orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
 				/* 장바구니 delete */
+				clientController.insertSalesAmount(orderCode);
 				clientController.deleteAllOrderMenu();
+				
 
 				/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
 				orderResultSet.closeDisplayMainMenu();
@@ -234,18 +233,18 @@ public class NonMemberMenu {
 	public void createUserInfo(){
 		
 		/* 비회원 회원가입 절차 */
-			System.out.println(">>>>   BurgerHI 회원가입 안내  <<<<");
-			System.out.println("================================");
-			System.out.println();  
-			System.out.print(">>>> 본인의 성함을 입력해 주세요. ");
-			String name = sc.nextLine();
-			System.out.print(">>>> 사용하실 아이디를 입력해 주세요. ");
-			String userId = sc.nextLine();
-			System.out.print(">>>> 사용하실 비밀번호를 입력해 주세요. ");
-			String userPwd = sc.nextLine();
-			System.out.print(">>>> 사용하시는 휴대폰 번호를 입력해 주세요.('-' 포함) ");
-			String userPhone = sc.nextLine();
-		
+		System.out.println(">>>>         BurgerHI 회원가입 안내         <<<<");
+		System.out.println("=================================================");
+		System.out.println();  
+		System.out.print("\n →  본인의 성함을 입력해 주세요. ");
+		String name = sc.nextLine();
+		System.out.print("\n →  사용하실 아이디를 입력해 주세요. ");
+		String userId = sc.nextLine();
+		System.out.print("\n →  사용하실 비밀번호를 입력해 주세요. ");
+		String userPwd = sc.nextLine();
+		System.out.print("\n →  사용하시는 휴대폰 번호를 입력해 주세요.('-' 포함) ");
+		String userPhone = sc.nextLine();
+		System.out.println("\n\n\n\n\n\n\n\n\n\n");
 		int result = clientController.createUserInfo(name, userId, userPwd, userPhone);
 		
 		if(result > 0) {
