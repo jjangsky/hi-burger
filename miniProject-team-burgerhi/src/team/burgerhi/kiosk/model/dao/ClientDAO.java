@@ -93,20 +93,47 @@ public class ClientDAO {
 	}
 	
 	/* 로그인 한 회원의 정보 수정(pwd, phone) */
-	public int UpdateUserInfo(Connection con, int userNo, String pwd, int phone) {
+	public int UpdateUserInfo(Connection con, int userNo, String pwd, String phone) {
 		/* where = userNo | set = pwd, phone */
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
+		String query = prop.getProperty("updateUserInfo");
 		
-		
-		return 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, phone);
+			pstmt.setInt(3, userNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 	/* 로그인 한 회원의 정보 삭제('Y' → 'N') */
 	public int deleteUserBy(Connection con, int userNo) {
 		/* USER_YN 컬럼의 데이터만 Y → N (즉, Update문 사용) */
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
+		String query = prop.getProperty("deleteUserBy");
 		
-		return 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 	/* 전체 Category를 출력하는 메소드 */

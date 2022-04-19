@@ -10,9 +10,11 @@
 		     , A.GRADE_NO
 		     , A.USER_POINT
 		     , A.PHONE
+		     , A.USER_YN
 		  FROM USER_TABLE A
 		 WHERE A.USER_ID = ?
 		   AND A.USER_PWD = ?
+		   AND A.USER_YN = 'Y'
 	</entry>
 	
 	<entry key="selectAllCategory">
@@ -265,6 +267,21 @@
   	     FROM USER_TABLE A
   	     JOIN GRADE_TABLE B ON (A.GRADE_NO = B.GRADE_NO)
  	     WHERE A.USER_NO = ?
+	</entry>
+	
+	<entry key="updateUserInfo">
+	    UPDATE
+	           USER_TABLE A
+	       SET A.USER_PWD = ?
+	         , A.PHONE = ?
+	     WHERE A.USER_NO = ?
+	</entry>
+	
+	<entry key="deleteUserBy">
+	    UPDATE
+	           USER_TABLE A
+	       SET A.USER_YN = 'N'
+	     WHERE A.USER_NO = ?
 	</entry>
 	
 	<entry key="selectCard">

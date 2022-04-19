@@ -34,7 +34,7 @@ public class ClientService {
 	}
 	
 	/* 로그인 한 회원의 정보 수정 */
-	public int UpdateUserInfo(int userNo, String pwd, int phone) {
+	public int UpdateUserInfo(int userNo, String pwd, String phone) {
 		Connection con = getConnection();
 		int result = clientDAO.UpdateUserInfo(con, userNo, pwd, phone);
 		close(con);
