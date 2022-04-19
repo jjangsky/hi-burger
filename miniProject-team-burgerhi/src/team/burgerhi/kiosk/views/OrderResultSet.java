@@ -25,7 +25,72 @@ public class OrderResultSet {
 
 	public void closeDisplayMainMenu() {
 		/* 담님이 작성 한 종료 쓰레드 작성 메소드 */
-		
+		Thread th = new Thread();
+		try {
+			for (int k = 0; k < 30; k++) {
+				System.out.println();
+			}
+			System.out.println("주문접수 중");
+			System.out.println("▷▷▷▷▷▷▷");
+			th.sleep(1500);
+			for (int k = 0; k < 30; k++) {
+				System.out.println();
+			}
+			System.out.println("주문접수 중.");
+			System.out.println("▷▷▷▷▷▷▷");
+			th.sleep(1500);
+			for (int k = 0; k < 30; k++) {
+				System.out.println();
+			}
+			System.out.println("주문접수 중..");
+			System.out.println("▶▷▷▷▷▷▷");
+			th.sleep(1000);
+			for (int k = 0; k < 30; k++) {
+				System.out.println();
+			}
+			System.out.println("메뉴가 준비중이에요!");
+			System.out.println("▶▶▷▷▷▷▷");
+			th.sleep(1000);
+			for (int k = 0; k < 30; k++) {
+				System.out.println();
+			}
+			System.out.println("메뉴가 준비중이에요!");
+			System.out.println("▶▶▶▷▷▷▷");
+			th.sleep(1000);
+			for (int k = 0; k < 30; k++) {
+				System.out.println();
+			}
+			System.out.println("메뉴가 준비중이에요!");
+			System.out.println("▶▶▶▶▷▷▷");
+			th.sleep(1000);
+			for (int k = 0; k < 30; k++) {
+				System.out.println();
+			}
+			System.out.println("메뉴 포장중.");
+			System.out.println("▶▶▶▶▶▷▷");
+			th.sleep(1000);
+			for (int k = 0; k < 30; k++) {
+				System.out.println();
+			}
+			System.out.println("메뉴 포장중..");
+			System.out.println("▶▶▶▶▶▶▷");
+			th.sleep(1000);
+			for (int k = 0; k < 30; k++) {
+				System.out.println();
+			}
+			System.out.println("메뉴 포장중...");
+			System.out.println("▶▶▶▶▶▶▶");
+			th.sleep(1000);
+			for (int k = 0; k < 30; k++) {
+				System.out.println();
+			}
+			System.out.println("🍔 메뉴가 준비됐어요! 🍔");
+			System.out.println("▶▶▶▶▶▶▶");
+			th.sleep(1000);
+			th.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}  /* finally */
 	}
 	
 

@@ -13,7 +13,6 @@ public class OrderMenu {
 	private NonMemberMenu nonMemberMenu = new NonMemberMenu();
 	private AdminMenu admin = new AdminMenu();
 	private OrderResultSet orderResultSet = new OrderResultSet();
-	private Test test = new Test();
 
 	public void displayMainMenu() {
 		Scanner sc = new Scanner(System.in);
@@ -216,7 +215,6 @@ public class OrderMenu {
 						System.out.println();
 						System.out.println("고객님의 " + paymentCard + "로 총" + lastPayment + "원이 결제 되었습니다!");
 						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
-						test.ani();
 					} else if (paymentBy == 2) { // 현금 결제
 						System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 						int grade = clientController.selectGrade(gradeNo);
