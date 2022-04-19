@@ -22,12 +22,11 @@ public class ClientController {
 	public UserDTO loginResult() {
 		/* View에 DTO 형태로 넘겨야 하기 때문에 인스턴스 생성 */
 		UserDTO userDTO = new UserDTO();
-		
 		/* 로그인 화면 출력 및 id와 pwd 입력하도록 유도 */ 
 		System.out.println(">>>>            BurgerHI 회원 주문           <<<<");
 		System.out.println("=================================================");
+		sc.nextLine();
 		System.out.print("\n  →  ID를 입력해 주세요: ");
-//		sc.nextLine();
 		String id = sc.nextLine();
 		System.out.print("\n  →  PassWord를 입력해 주세요: ");
 		String pwd = sc.nextLine();
@@ -74,8 +73,13 @@ public class ClientController {
 			System.out.println("          1            |           2           ");
 			System.out.println("     메뉴 주문하기     |     회원 정보 확인    ");
 			System.out.println("                       |                       ");
+			System.out.println("=================================================");
+			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 			System.out.print("\n → 번호를 선택해 주세요: ");
 			int firstInput = sc.nextInt();
+			if(firstInput == 0) {
+				break;			// 프로그램 종료로 메인매뉴로 돌아가도록 설정
+			}
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			
 			if(firstInput == 1) {
@@ -84,6 +88,7 @@ public class ClientController {
 			} else if(firstInput ==2) {
 				System.out.println(">>>>         BurgerHI 회원 정보 조회         <<<<");
 				System.out.println("=================================================");
+				System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 				System.out.println();
 				List<Object> user = clientService.selectUserBy(userNo, gradeName);
 				
@@ -99,23 +104,37 @@ public class ClientController {
 				System.out.println(" → 이전 화면으로 돌아가시려면 3번을 눌러주세요.");
 				int num = sc.nextInt();
 				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-				if(num == 1) {
+				if(num == 0) {
+					MenuPageNum = 0;	// 프로그램 종료로 메인매뉴로 돌아가도록 설정
+					break;
+				} else if(num == 1) {
 					System.out.println(">>>>         BurgerHI 회원 정보 수정         <<<<");
 					System.out.println("=================================================");
-					System.out.println();
-					System.out.println(" → 수정하실 회원 pwd를 입력해 주세요: ");
+					System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
+					System.out.print("\n → 수정하실 회원 pwd를 입력해 주세요: ");
 					sc.nextLine();
 					String pwd = sc.nextLine();
-					System.out.println(" → 수정하실 전화번호를 입력해 주세요: ");
+					if(pwd.equals("0")) {
+						MenuPageNum = 0;	// 프로그램 종료로 메인매뉴로 돌아가도록 설정
+						break;
+					}
+					System.out.print(" → 수정하실 전화번호를 입력해 주세요: ");
 					String phone = sc.nextLine();
+					String formatUserPhone = phoneFormat(phone);
+					if(phone.equals("0")) {
+						MenuPageNum = 0;	// 프로그램 종료로 메인매뉴로 돌아가도록 설정
+						break;
+					}
+//					System.out.println(formatUserPhone);		// 제대로 적용 되는지 확인 차 출력
 
-					int result = clientService.UpdateUserInfo(userNo, pwd, phone);
+					int result = clientService.UpdateUserInfo(userNo, pwd, formatUserPhone);
 					
 					if(result > 0) {
 						code = "updateUserInfoSuccess";
 					} else {
 						code = "updateUserInfoFail";
 					}
+					orderResultSet.displayDmlResult(code);
 					
 				} else if(num == 2) {
 					System.out.println(">>>>           BurgerHI 회원 탈퇴            <<<<");
@@ -137,8 +156,6 @@ public class ClientController {
 							code = "deleteUserInfoFail";
 							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						}
-						orderResultSet.displayDmlResult(code);
-						MenuPageNum = 2;
 						break;
 					}
 				}
@@ -185,13 +202,13 @@ public class ClientController {
 	}
 
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
-	public void selectOrderMenu(int totalPrice) {
+	public int selectOrderMenu(int totalPrice) {
 		
 		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
 		List<String> orderMenuList = clientService.selectOrderMenu();
-		
-		System.out.println(">>>>    BurgerHI 장바구니 확인    <<<<");
-		System.out.println("===================================");
+		totalPrice = 0;
+		System.out.println(">>>>         BurgerHI 장바구니 확인          <<<<");
+		System.out.println("=================================================");
 		System.out.println();
 		
 		/* for문으로 사용자에게 보여줄 내용 출력 */
@@ -206,30 +223,36 @@ public class ClientController {
 			System.out.println("▶ 금액: " + price + " * " + amount + " = " + (price *  amount));
 			System.out.println();
 			i += 4;
+			totalPrice += (price *  amount);
 		}
 		System.out.println("▶ 총 금액: " + totalPrice);	
 		System.out.println("\n\n\n\n");
 
+		return totalPrice;
 	}
 
 	/* 장바구니 내용 수정 | OrderMenu 테이블에서 원하지 않는 메뉴 삭제 후 최종 결제할 메뉴만 남기도록 설정 */
-	public void deleteOrderMenu() {
+	public int deleteOrderMenu() {
 		
 		System.out.println(">>>>         BurgerHI 장바구니 수정          <<<<");
 		System.out.println("=================================================");
+		System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 		System.out.print("\n → 삭제하실 메뉴 번호를 입력해 주세요: ");
 		int deleteMenuCode = sc.nextInt();
-		
-		/* MenuCode를 조건으로 걸어 OrderMenu테이블의 목록을 삭제하는 메소드 */
-		int deleteResult = clientService.deleteOrderMenu(deleteMenuCode);
-				
-		if(deleteResult > 0) {
-			code = "deleteOrderMenuSuccess";
-		} else {
-			code = "deleteOrderMenuFail";
+		if(deleteMenuCode != 0) {
+			/* MenuCode를 조건으로 걸어 OrderMenu테이블의 목록을 삭제하는 메소드 */
+			int deleteResult = clientService.deleteOrderMenu(deleteMenuCode);
+			
+			if(deleteResult > 0) {
+				code = "deleteOrderMenuSuccess";
+			} else {
+				code = "deleteOrderMenuFail";
+			}
+			
+			orderResultSet.displayDmlResult(code);
 		}
+		return deleteMenuCode;
 		
-		orderResultSet.displayDmlResult(code);
 	}
 
 	/* 등급에 따른 할인율 확인 */
@@ -377,6 +400,25 @@ public class ClientController {
 		
 		int result = clientService.insertSalesAmount(orderCode, menuCode, amount, totalPrice);
 		
+	}
+
+	/* 전화번호가 일정한 format으로 들어갈 수 있도록 하는 메소드 */
+	public String phoneFormat(String userPhone) {
+		if(userPhone != null) {
+			userPhone = userPhone.replaceAll("[^0-9]", "");
+			if(userPhone.length() == 11) {
+				userPhone = userPhone.substring(0, 3) + "-" + userPhone.substring(3, 7) + "-" + userPhone.substring(7);
+			} else if(userPhone.length() == 8){
+				userPhone = userPhone.substring(0, 4) + "-" + userPhone.substring(4);
+			} else {
+				if(userPhone.startsWith("02")) {
+					userPhone = userPhone.substring(0, 2) + "-" + userPhone.substring(2, 5) + "-" + userPhone.substring(5);
+				} else {
+					userPhone = userPhone.substring(0, 3) + "-" + userPhone.substring(3, 6) + "-" + userPhone.substring(7);
+				}
+			}
+		}
+		return userPhone;
 	}
 
 }

@@ -29,6 +29,7 @@ public class OrderMenu {
 		double cardDiscount = 0;
 		boolean flag = true;
 		boolean flag1 = true;
+		boolean flag2 = true;
 
 		while(true) {
 			do {
@@ -44,6 +45,7 @@ public class OrderMenu {
 				System.out.print("\n  → 번호를 선택해 주세요: ");
 				int num = sc.nextInt();
 				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+				
 
 				if(num == 1) { // 회원 주문하기
 					/* loginResult 메소드에서 로그인 화면 출력 및 가공처리 */
@@ -66,8 +68,10 @@ public class OrderMenu {
 
 					/* 메뉴 선택 or 회원 정보 조회, 수정, 탈퇴 메소드 */
 					int userInfo = clientController.userInfoSelect(userNo);
-					if(userInfo == 2) {
-						continue; // 회원 탈퇴로 인해 회원으로 주문 불가능 메뉴 첫 화면으로 돌아가도록 설정
+					if(userInfo == 0){
+						continue; // 프로그램 종료로 메인메뉴로 돌아가도록 설정
+					} else if(userInfo == 2) {
+						continue; // 회원 탈퇴로 인해 회원으로 주문 불가능 메인메뉴로 돌아가도록 설정
 					}
 
 					/* 메뉴주문 while문 */
@@ -76,17 +80,23 @@ public class OrderMenu {
 						/* 전체 Category 출력 */
 						System.out.println(">>>>         BurgerHI 카테고리 선택          <<<<");
 						System.out.println("=================================================");
+						System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 						System.out.println();
 						clientController.selectAllCategory(); // Category 출력 메소드
 
 						/* 메뉴 출력을 위해 필요한 category 번호 받기 */
 						System.out.print("\n → 원하시는 카테고리의 번호를 입력해 주세요: ");
 						int categoryNo = sc.nextInt();
+						if(categoryNo == 0) {
+							flag1 = false;		// 메뉴 주문 while문 탈출
+							continue;			// 메인메뉴로 돌아가도록 설정
+						}
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
 						/* 사용자가 선택한 Category의 전체 Menu 출력 */
 						System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
 						System.out.println("=================================================");
+						System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 						System.out.println();
 						List<MenuDTO> menuList = clientController.selectMenuBy(categoryNo); // Menu 출력 메소드
 						for (MenuDTO menu : menuList) {
@@ -97,8 +107,16 @@ public class OrderMenu {
 						/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
 						System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
 						int inputMenuNo = sc.nextInt();
+						if(inputMenuNo == 0) {
+							flag1 = false;		// 메뉴 주문 while문 탈출
+							continue;			// 메인메뉴로 돌아가도록 설정
+						}
 						System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
 						int inputAmount = sc.nextInt();
+						if(inputAmount == 0) {
+							flag1 = false;		// 메뉴 주문 while문 탈출
+							continue;			// 메인메뉴로 돌아가도록 설정
+						}
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						
 						/* OrderMenu(장바구니) Insert 메소드 */
@@ -117,11 +135,17 @@ public class OrderMenu {
 						System.out.println("           1           |           2           ");
 						System.out.println("      추가 주문하기    |     장바구니 보기     ");
 						System.out.println("                       |                       ");
+						System.out.println("=================================================");
+						System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 						System.out.print("\n → 번호를 선택해 주세요: ");
 						num = sc.nextInt();
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
-						if(num == 1) { // 추가 주문하기
+						if(num == 0) { 	//프로그램 종료
+							clientController.deleteAllOrderMenu();		// 프로그램이 종료 되면서 장바구니 내역 삭제
+							flag1 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
+							continue;									// 맨 처음 메인메뉴로 돌아가도록 설정
+						}else if(num == 1) { // 추가 주문하기
 							continue; // while문의 처음으로 돌아가도록 설정
 						} else if (num == 2) { // 장바구니 확인하기
 							clientController.selectOrderMenu(totalPrice); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
@@ -135,14 +159,27 @@ public class OrderMenu {
 								System.out.println("      1 　   　|       2　　   |       3       ");
 								System.out.println(" 추가 주문하기 | 장바구니 수정 |   결제 하기   ");
 								System.out.println("               |               |               ");
+								System.out.println("=================================================");
+								System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 								System.out.print("\n → 번호를 선택해 주세요: ");
 								num = sc.nextInt();
 								System.out.println("\n\n\n\n\n");
 
-								if(num == 1) { // 추가 주문하기
+								if(num == 0) {
+									clientController.deleteAllOrderMenu();		// 프로그램이 종료 되면서 장바구니 내역 삭제
+									flag1 = false;								// 메뉴 주문 while문 탈출
+									flag2 = false;								// 결제 while문 미실행
+									break;										// 장바구니 while문 탈출
+								} else if(num == 1) { // 추가 주문하기
 									break; // 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 								} else if(num == 2) { // 장바구니에 있는 메뉴 수정하기
-									clientController.deleteOrderMenu();
+									int close = clientController.deleteOrderMenu();
+									if(close == 0) {
+										clientController.deleteAllOrderMenu();		// 프로그램이 종료 되면서 장바구니 내역 삭제
+										break; 										// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
+									} else {
+										totalPrice = clientController.selectOrderMenu(totalPrice);
+									}
 								} else if(num == 3) {
 									flag = false; // 모든 while문을 빠져나가 최종 결제 화면이 뜨도록 함
 									flag1 = false;
@@ -166,7 +203,7 @@ public class OrderMenu {
 			} while(flag);
 
 			/* 결제 진행 */
-			boolean flag2 = true;
+			
 			while (flag2) {
 				System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
 				System.out.println("=================================================");
@@ -174,13 +211,19 @@ public class OrderMenu {
 				System.out.println("       1 　  　|        2　　  |       3      ");
 				System.out.println("     카 드     |      현 금    |    기프티콘  ");
 				System.out.println("               |               |              ");
+				System.out.println("=================================================");
+				System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 				System.out.print("\n → 결제하실 수단을 선택해 주세요: ");
 				paymentBy = sc.nextInt();
 				System.out.println("\n\n\n\n\n\n\n\n\n\n");
 
-					if (paymentBy == 1) { // 카드 결제
+					if (paymentBy == 0) {
+						clientController.deleteAllOrderMenu();		// 프로그램이 종료 되면서 장바구니 내역 삭제
+						flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
+					} else if (paymentBy == 1) { // 카드 결제
 						System.out.println("★★★★    제휴카드 중복 할인 Event!    ★★★★");
 						System.out.println("=================================================");
+						System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 
 						/* 할인 가능한 전체 제휴카드 리스트 출력 */
 						List<CardDTO> cardList = clientController.selectCard();
@@ -192,6 +235,10 @@ public class OrderMenu {
 						System.out.print("\n →결제하실 카드명을 입력해 주세요: ");
 						sc.nextLine();
 						String paymentCard = sc.nextLine();
+						if(paymentCard.equals("0")) {
+							clientController.deleteAllOrderMenu();		// 프로그램이 종료 되면서 장바구니 내역 삭제
+							flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
+						}
 						for (CardDTO card : cardList) {
 							if (card.getBank().equals(paymentCard)) {
 								cardDiscount = 0.1;
@@ -303,10 +350,9 @@ public class OrderMenu {
 
 					/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
 					orderResultSet.closeDisplayMainMenu();
-					System.out.println("\n\n\n\n");
 					flag2 = false;
 					break;
-			}
-		}
+			} 
+		} 
 	}
 }
