@@ -65,7 +65,7 @@ public class AdminDAO {
 		return null;
 	}
 	
-	public List<CategoryDTO> selectAllCategory(Connection con) {	// 담
+	public List<CategoryDTO> selectAllCategory(Connection con) {
 		/* List에 카테고리 모두 담아서 출력하기 */
 		Statement stmt = null;
 		ResultSet rset = null;

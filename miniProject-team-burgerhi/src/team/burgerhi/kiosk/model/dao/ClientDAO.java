@@ -584,7 +584,8 @@ public class ClientDAO {
 	
 
 	/* AdminMenu의 매출 조회를 위한 SalesAmount테이블 Insert */
-	public int insertSalesAmount(Connection con, int orderCode, int menuCode, int amount, int price) {
+	public int insertSalesAmount(Connection con, int orderCode, int menuCode, int amount,
+			int totalPrice) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("insertSalesAmount");
@@ -593,7 +594,23 @@ public class ClientDAO {
 			pstmt.setInt(1, orderCode);
 			pstmt.setInt(2, menuCode);
 			pstmt.setInt(3, amount);
-			pstmt.setInt(4, price);
+			pstmt.setInt(4, totalPrice);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteSalesAmount(Connection con, int deleteMenuCode) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteSalesAmount");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, deleteMenuCode);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

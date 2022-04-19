@@ -201,9 +201,17 @@ public class ClientService {
 		return userNo;
 	}
 
-	public int insertSalesAmount(int orderCode, int menuCode, int amount, int price) {
+
+	public int insertSalesAmount(int orderCode, int menuCode, int amount, int totalPrice) {
 		Connection con = getConnection();
-		int result = clientDAO.insertSalesAmount(con, orderCode, menuCode, amount, price);
+		int result = clientDAO.insertSalesAmount(con, orderCode, menuCode, amount, totalPrice);
+		close(con);
+		return result;
+	}
+
+	public int deleteSalesAmount(int deleteMenuCode) {
+		Connection con = getConnection();
+		int result = clientDAO.deleteSalesAmount(con, deleteMenuCode);
 		close(con);
 		return result;
 	}

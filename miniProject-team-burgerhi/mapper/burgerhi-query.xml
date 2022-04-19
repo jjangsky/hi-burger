@@ -349,4 +349,10 @@
 	    , ?
 	    )
 	</entry>
+	
+	<entry key="deleteSalesAmount">
+	     DELETE
+	      FROM SALES_AMOUNT_TABLE A
+	     WHERE A.MENU_CODE = ?
+	</entry>
 </properties>

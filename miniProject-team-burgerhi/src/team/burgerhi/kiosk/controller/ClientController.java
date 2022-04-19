@@ -8,6 +8,7 @@ import java.util.Scanner;
 import team.burgerhi.kiosk.model.dto.CardDTO;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
+import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 import team.burgerhi.kiosk.model.service.ClientService;
 import team.burgerhi.kiosk.views.OrderResultSet;
@@ -23,17 +24,15 @@ public class ClientController {
 		/* View에 DTO 형태로 넘겨야 하기 때문에 인스턴스 생성 */
 		UserDTO userDTO = new UserDTO();
 		
-		/* 로그인 화면 출력 및 id와 pwd 입력하도록 유도 */
-		System.out.println(">>>>   BurgerHI 회원 주문하기   <<<<");
-		System.out.println("================================");
-		System.out.println();
-		System.out.print(">>>> ID를 입력해 주세요: ");
+		/* 로그인 화면 출력 및 id와 pwd 입력하도록 유도 */ 
+		System.out.println(">>>>            BurgerHI 회원 주문           <<<<");
+		System.out.println("=================================================");
+		System.out.print("\n  →  ID를 입력해 주세요: ");
 //		sc.nextLine();
 		String id = sc.nextLine();
-		System.out.print(">>>> PassWord를 입력해 주세요: ");
+		System.out.print("\n  →  PassWord를 입력해 주세요: ");
 		String pwd = sc.nextLine();
-		System.out.println("\n\n\n");
-
+		System.out.println();
 		/* 회원 정보 dto로 담아서 return */
 		List<UserDTO> userList = clientService.loginResult(id, pwd);
 		for(UserDTO user : userList) {
@@ -52,11 +51,11 @@ public class ClientController {
 
 		/* name에 들어있는 값이 있을 경우 로그인 성공 | 없을 경우(null) 로그인 실패로 간주 */
 		if(userDTO.getName() != null) {
-			System.out.println(">>>> " + userDTO.getName() + "님 환영합니다!");
-			System.out.println("\n\n\n\n\n");
+			System.out.println(" → " + userDTO.getName() + "님 환영합니다!");
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		} else {
 			System.out.println("회원정보가 일치하지 않습니다. 다시 입력해 주세요!");
-			System.out.println("\n\n\n\n\n");
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		}
 //		userDTO.getName();
 //		System.out.println(userDTO.getName());
@@ -70,22 +69,22 @@ public class ClientController {
 		int MenuPageNum = 0;
 		
 		while(true) {
-			System.out.println(">>>>    BurgerHI 메뉴 선택    <<<<");
-			System.out.println("================================");
-			System.out.println();
-			System.out.println("     1        |      2       ");
-			System.out.println("메뉴 주문하기 |회원 정보 확인 ");
-			System.out.println();
-			System.out.print(">>>> 번호를 선택해 주세요: ");
+			System.out.println(">>>>           BurgerHI 메뉴 선택           <<<<");
+			System.out.println("=================================================");
+			System.out.println("                       |                       ");
+			System.out.println("          1            |           2           ");
+			System.out.println("     메뉴 주문하기     |     회원 정보 확인    ");
+			System.out.println("                       |                       ");
+			System.out.print("\n → 번호를 선택해 주세요: ");
 			int firstInput = sc.nextInt();
-			System.out.println("\n\n\n\n\n");
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			
 			if(firstInput == 1) {
 				MenuPageNum = 1;
 				break;
 			} else if(firstInput ==2) {
-				System.out.println(">>>>  BurgerHI 회원 정보 조회  <<<<");
-				System.out.println("================================");
+				System.out.println(">>>>         BurgerHI 회원 정보 조회         <<<<");
+				System.out.println("=================================================");
 				System.out.println();
 				List<Object> user = clientService.selectUserBy(userNo, gradeName);
 				
@@ -97,19 +96,20 @@ public class ClientController {
 				System.out.println("▶ 보유포인트: " + user.get(5));
 				System.out.println("▶ 전화번호: " + user.get(6));
 				System.out.println();
-				System.out.println(">>>> 회원 정보를 수정하시려면 1번을 눌러주세요.");
-				System.out.println(">>>> 회원 탈퇴를 하시려면 2번을 눌러주세요.");
-				System.out.println(">>>> 이전 화면으로 돌아가시려면 3번을 눌러주세요.");
+				System.out.println(" → 회원 정보 수정은 1번을 회원 탈퇴는 2번을 눌러주세요.");
+				System.out.println(" → 이전 화면으로 돌아가시려면 3번을 눌러주세요.");
 				int num = sc.nextInt();
+				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 				if(num == 1) {
-					System.out.println(">>>>  BurgerHI 회원 정보 수정  <<<<");
-					System.out.println("================================");
+					System.out.println(">>>>         BurgerHI 회원 정보 수정         <<<<");
+					System.out.println("=================================================");
 					System.out.println();
-					System.out.println(">>>> 수정하실 회원 pwd를 입력해 주세요: ");
+					System.out.println(" → 수정하실 회원 pwd를 입력해 주세요: ");
 					sc.nextLine();
 					String pwd = sc.nextLine();
-					System.out.println(">>>> 수정하실 전화번호를 입력해 주세요: ");
+					System.out.println(" → 수정하실 전화번호를 입력해 주세요: ");
 					int phone = sc.nextInt();
+					
 					
 					int result = clientService.UpdateUserInfo(userNo, pwd, phone);
 					
@@ -120,18 +120,24 @@ public class ClientController {
 					}
 					
 				} else if(num == 2) {
-					System.out.println(">>>>    BurgerHI 회원 탈퇴    <<<<");
-					System.out.println("================================");
+					System.out.println(">>>>           BurgerHI 회원 탈퇴            <<<<");
+					System.out.println("=================================================");
 					System.out.println();
 					System.out.println("★ 고객님의 모든 정보가 사라집니다. 모든 정보는 복구되지 않습니다. ★ \n 그래도 진행 하시겠습니까?");
-					System.out.println("1. 회원 탈퇴 진행   |   2. 취소");
+					System.out.println("                       |                       ");
+					System.out.println("          1            |           2           ");
+					System.out.println("      회원 탈퇴        |         취소          ");
+					System.out.println("                       |                       \n");
+					System.out.print("\n → 번호를 선택해 주세요: ");
 					int inputdelete = sc.nextInt();
 					if(inputdelete == 1) {
 						int result = clientService.deleteUserBy(userNo);
 						if(result > 0) {
 							code = "deleteUserInfoSuccess";
+							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						} else {
 							code = "deleteUserInfoFail";
+							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						}
 						orderResultSet.displayDmlResult(code);
 						MenuPageNum = 2;
@@ -203,21 +209,22 @@ public class ClientController {
 			System.out.println();
 			i += 4;
 		}
-		System.out.println("▶ 총 금액: " + totalPrice);		
+		System.out.println("▶ 총 금액: " + totalPrice);	
+		System.out.println("\n\n\n\n");
+
 	}
 
 	/* 장바구니 내용 수정 | OrderMenu 테이블에서 원하지 않는 메뉴 삭제 후 최종 결제할 메뉴만 남기도록 설정 */
 	public void deleteOrderMenu() {
 		
-		System.out.println(">>>>    BurgerHI 장바구니 수정    <<<<");
-		System.out.println("===================================");
-		System.out.println();
-		System.out.print(">>>> 삭제하실 메뉴 번호를 입력해 주세요: ");
+		System.out.println(">>>>         BurgerHI 장바구니 수정          <<<<");
+		System.out.println("=================================================");
+		System.out.print("\n → 삭제하실 메뉴 번호를 입력해 주세요: ");
 		int deleteMenuCode = sc.nextInt();
 		
 		/* MenuCode를 조건으로 걸어 OrderMenu테이블의 목록을 삭제하는 메소드 */
 		int deleteResult = clientService.deleteOrderMenu(deleteMenuCode);
-		
+				
 		if(deleteResult > 0) {
 			code = "deleteOrderMenuSuccess";
 		} else {
@@ -277,7 +284,7 @@ public class ClientController {
 	}
 	
 	/* 결제까지 완료 된 확정 정보를 Payment 테이블에 Insert */
-	public void insertPayment(int userNo, int totalPrice, int gradeNo, int cardCode, double lastPayment,
+	public int insertPayment(int userNo, int totalPrice, int gradeNo, int cardCode, double lastPayment,
 			int paymentBy) {
 		String payment = "";
 		switch(paymentBy) {
@@ -289,6 +296,8 @@ public class ClientController {
 		int orderCode = clientService.selectLastOrderCode();
 		
 		int insertResult = clientService.insertPayment(orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
+		
+		return orderCode;
 	}
 
 	/* 사용자가 입력 한 기프티콘 번호를 입력받아 기프티콘 테이블에서 Select */
@@ -354,19 +363,22 @@ public class ClientController {
 		return gradeNo;
 	}
 
-	public void insertSalesAmount() {
+	public void insertSalesAmount(int orderCode) {
+		List<String> orderMenuList = clientService.selectOrderMenu();
 		
-		int orderCode = clientService.selectLastOrderCode();
 		int menuCode = 0;
 		int amount = 0;
-		int price = 0;
-		List<String> orderMenuList = clientService.selectOrderMenu();
+		int totalPrice = 0;
 		for(int i = 0; (i/5) < (orderMenuList.size() / 5); i++) {
-			menuCode = Integer.valueOf(orderMenuList.get(i + 1));
+			int price = Integer.valueOf(orderMenuList.get(i + 4)); 
 			amount = Integer.valueOf(orderMenuList.get(i + 3));
-			price = Integer.valueOf(orderMenuList.get(i + 4));
+			menuCode = Integer.valueOf(orderMenuList.get(i + 1));
+			totalPrice = price * amount;
+			i += 4;
 		}
 		
-		int result = clientService.insertSalesAmount(orderCode, menuCode, amount, price);
+		int result = clientService.insertSalesAmount(orderCode, menuCode, amount, totalPrice);
+		
 	}
+
 }
