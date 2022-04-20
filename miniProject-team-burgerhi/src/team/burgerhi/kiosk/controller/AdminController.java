@@ -201,22 +201,25 @@ public class AdminController {		// 혜진 TEST
 
 	public void SalesBydate() {
 
-		System.out.println(">>>>   BurgerHI 날짜별 매출    <<<<");
-		System.out.println("================================");
-		System.out.println();
-		System.out.print(">>>> 매출을 조회할 '월'을 입력하세요: ");
-		int month = sc.nextInt();
-		System.out.print("※ 월 단위 매출 조회 희망 시 '일'을 0으로 입력 하세요.");
-		System.out.print(">>>> 매출을 조회할 '일'을 입력하세요: ");
-		int date = sc.nextInt();
-		
-		if(date > 0) {
-			int monthSales = adminService.selectMonthSales(month);
-		} else {
-			int monthSales = adminService.selectDateSales(month, date);
-		}
-		
-	}
+	      System.out.println(">>>>   BurgerHI 날짜별 매출    <<<<");
+	      System.out.println("================================");
+	      System.out.println();
+	      System.out.print(">>>> 매출을 조회할 '월'을 입력하세요: ");
+	      int month = sc.nextInt();
+	      System.out.print("※ 월 단위 매출 조회 희망 시 '일'을 0으로 입력 하세요.");
+	      System.out.print(">>>> 매출을 조회할 '일'을 입력하세요: ");
+	      int date = sc.nextInt();
+	      
+	      if(date == 0) {
+	         int monthSales = adminService.selectMonthSales(month);
+	         System.out.println(month + "월의 매출액은 총" + monthSales + "입니다.");
+	      } else {
+	         int monthSales = adminService.selectDateSales(month, date);
+	         System.out.println( month + "월" + date + "일의 매출액은 총" + monthSales + "원 입니다. ");
+	      }
+	      
+	      
+	   }
 
 	public void SalesCategory() {
 		System.out.println(">>>> BurgerHI 카테고리 별 매출  <<<<");

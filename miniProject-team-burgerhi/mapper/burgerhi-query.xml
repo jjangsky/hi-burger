@@ -259,19 +259,17 @@
 	     ORDER BY 3 DESC
  	</entry> 
 	<entry key="selectMonthSales">
-	    SELECT ORDER_DATE
-	         , SUM(TOTAL_PRICE)
-	      FROM ORDER_TABLE
-	     GROUP BY ORDER_DATE 
-	    HAVING ORDER_DATE = '2022/' || ? || '/%'
-	</entry>
+       SELECT SUM(TOTAL_PRICE)
+          FROM ORDER_TABLE
+         WHERE ORDER_DATE LIKE '2022/' || ? || '%'
+   </entry>
 	<entry key="selectDateSales">
-	    SELECT ORDER_DATE
-	         , SUM(TOTAL_PRICE)
-	      FROM ORDER_TABLE
-	     GROUP BY ORDER_DATE 
-	    HAVING ORDER_DATE like '2022/' || ? || '/' || ?
-	</entry>
+       SELECT ORDER_DATE
+            , SUM(TOTAL_PRICE)
+         FROM ORDER_TABLE
+        GROUP BY ORDER_DATE 
+       HAVING ORDER_DATE LIKE '2022/' || ? || '/' || ?
+   </entry>
 	<entry key="selectGradeSales">
 	    SELECT  
    	           SUM(PAYMENT_PRICE)
