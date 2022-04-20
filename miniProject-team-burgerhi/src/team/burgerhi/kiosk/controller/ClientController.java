@@ -322,6 +322,7 @@ public class ClientController {
 		
 		int insertResult = clientService.insertPayment(orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
 		
+		
 		return orderCode;
 	}
 
