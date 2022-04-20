@@ -237,6 +237,7 @@ public class AdminController {		// 혜진 TEST
 			System.out.println("▶ Family등급 매출액: " + gadeSales.get(1) + "원");
 			System.out.println("▶ Silver등급 매출액: " + gadeSales.get(2) + "원");
 			System.out.println("▶ Gold등급 매출액: " + gadeSales.get(3) + "원");
+			System.out.println("▶ 비회원등급 매출액: " + gadeSales.get(4) + "원");
 			
 		} else if(salesNum == 3) {
 			Map<String, Integer> methodSales = adminService.selectMethodSales();

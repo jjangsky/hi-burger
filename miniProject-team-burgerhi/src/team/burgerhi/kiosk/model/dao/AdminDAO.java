@@ -340,7 +340,7 @@ public class AdminDAO {
 			rset = stmt.executeQuery(query);
 			
 			for(int i = 1; rset.next(); i++) {
-				gradeSales.put(i, rset.getInt(2));
+				gradeSales.put(i, rset.getInt(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
