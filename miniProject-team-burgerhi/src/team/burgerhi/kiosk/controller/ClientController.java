@@ -390,22 +390,20 @@ public class ClientController {
 	}
 
 	public void insertSalesAmount(int orderCode) {
-		List<String> orderMenuList = clientService.selectOrderMenu();
-		
-		int menuCode = 0;
-		int amount = 0;
-		int totalPrice = 0;
-		for(int i = 0; (i/5) < (orderMenuList.size() / 5); i++) {
-			int price = Integer.valueOf(orderMenuList.get(i + 4)); 
-			amount = Integer.valueOf(orderMenuList.get(i + 3));
-			menuCode = Integer.valueOf(orderMenuList.get(i + 1));
-			totalPrice = price * amount;
-			i += 4;
-		}
-		
-		int result = clientService.insertSalesAmount(orderCode, menuCode, amount, totalPrice);
-		
-	}
+	      List<String> orderMenuList = clientService.selectOrderMenu();
+	      
+	      int menuCode = 0;
+	      int amount = 0;
+	      int totalPrice = 0;
+	      for(int i = 0; i < orderMenuList.size(); i+=5 ) {
+	         int price = Integer.valueOf(orderMenuList.get(i + 4)); 
+	         amount = Integer.valueOf(orderMenuList.get(i + 3));
+	         menuCode = Integer.valueOf(orderMenuList.get(i + 1));
+	         totalPrice = price * amount;
+	         int result = clientService.insertSalesAmount(orderCode, menuCode, amount, totalPrice);
+	      }
+	      
+	   }
 
 	/* 전화번호가 일정한 format으로 들어갈 수 있도록 하는 메소드 */
 	public String phoneFormat(String userPhone) {
