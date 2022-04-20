@@ -463,22 +463,22 @@ public class ClientDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int gifticonPrice = 0;
-		
 		String query = prop.getProperty("selectGifticonBy");
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, inputGiftNo);
+			rset = pstmt.executeQuery();
 			
-			if(rset.next()) {
-				gifticonPrice = rset.getInt(2);
+			while(rset.next()) {
+				gifticonPrice = rset.getInt(1);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		
 		return gifticonPrice;
 	}
 
@@ -491,8 +491,8 @@ public class ClientDAO {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, inputGiftNo);
-			pstmt.setInt(2, gifticonPrice);
+			pstmt.setInt(1, gifticonPrice);
+			pstmt.setString(2, inputGiftNo);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {

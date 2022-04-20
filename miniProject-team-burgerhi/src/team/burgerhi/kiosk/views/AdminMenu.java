@@ -43,7 +43,7 @@ public class AdminMenu {
 				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
 				switch (rankNum) {
-				case 0: flag = false;
+				case 0: flag = false; break;
 				case 1: adminController.selectHambergerRanking(); break;		// 햄버거 랭킹을 보여 줄 메소드
 				case 2: adminController.selectDrinkRanking(); break;			// 음료수 랭킹을 보여 줄 메소드
 				case 3: adminController.selectSideRanking(); break;				// 사이드 랭킹을 보여 줄 메소드
@@ -86,7 +86,7 @@ public class AdminMenu {
 					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 					
 					switch(categoryNum) {
-						case 0: flag = false;
+						case 0: flag = false; break;
 						case 1: adminController.insertCategory(); break;				// 카테고리 추가하는 메소드
 						case 2: adminController.updateCategory(); break;				// 카테고리 수정하는 메소드
 						case 3: adminController.deleteCategory(); break;				// 카테고리 삭제하는 메소드
@@ -115,7 +115,7 @@ public class AdminMenu {
 					System.out.println("\n\n\n\n\n");
 					
 					switch(menuNum) {
-						case 0: flag = false;
+						case 0: flag = false; break;
 						case 1: adminController.insertMenu(); break;					// 메뉴 추가하는 메소드
 						case 2: adminController.updateMenu(); break;					// 메뉴 수정하는 메소드
 						case 3: adminController.deleteMenu(); break;					// 메뉴 삭제하는 메소드
@@ -142,7 +142,7 @@ public class AdminMenu {
 				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 				
 				switch(salesNum) {
-					case 0: flag = false;
+					case 0: flag = false; break;
 					case 1: adminController.SalesBydate(); break;		// 날짜별 매출 확인하는 메소드
 					case 2: adminController.SalesCategory(); break;		// 카테고리별 매출 확인하는 메소드
 				}

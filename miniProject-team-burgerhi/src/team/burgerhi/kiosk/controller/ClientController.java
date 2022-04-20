@@ -78,12 +78,11 @@ public class ClientController {
 			System.out.print("\n → 번호를 선택해 주세요: ");
 			int firstInput = sc.nextInt();
 			sc.nextLine();
-			if(firstInput == 0) {
-				break;			// 프로그램 종료로 메인매뉴로 돌아가도록 설정
-			}
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			
-			if(firstInput == 1) {
+			if(firstInput == 0) {
+				break;			// 프로그램 종료로 메인매뉴로 돌아가도록 설정
+			} else if(firstInput == 1) {
 				MenuPageNum = 1;
 				break;
 			} else if(firstInput ==2) {
@@ -106,7 +105,6 @@ public class ClientController {
 				int num = sc.nextInt();
 				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 				if(num == 0) {
-					MenuPageNum = 0;	// 프로그램 종료로 메인매뉴로 돌아가도록 설정
 					break;
 				} else if(num == 1) {
 					System.out.println(">>>>         BurgerHI 회원 정보 수정         <<<<");
@@ -116,16 +114,14 @@ public class ClientController {
 					sc.nextLine();
 					String pwd = sc.nextLine();
 					if(pwd.equals("0")) {
-						MenuPageNum = 0;	// 프로그램 종료로 메인매뉴로 돌아가도록 설정
 						break;
 					}
 					System.out.print(" → 수정하실 전화번호를 입력해 주세요: ");
 					String phone = sc.nextLine();
-					String formatUserPhone = phoneFormat(phone);
 					if(phone.equals("0")) {
-						MenuPageNum = 0;	// 프로그램 종료로 메인매뉴로 돌아가도록 설정
 						break;
 					}
+					String formatUserPhone = phoneFormat(phone);
 //					System.out.println(formatUserPhone);		// 제대로 적용 되는지 확인 차 출력
 
 					int result = clientService.UpdateUserInfo(userNo, pwd, formatUserPhone);
@@ -328,8 +324,12 @@ public class ClientController {
 
 	/* 사용자가 입력 한 기프티콘 번호를 입력받아 기프티콘 테이블에서 Select */
 	public int selectGifticonBy(String inputGiftNo) {
-		
+		if(inputGiftNo != null) {
+			inputGiftNo = inputGiftNo.replaceAll("[^0-9]", "");
+			inputGiftNo = inputGiftNo.substring(0, 6) + "-" + inputGiftNo.substring(6, 10) + "-" + inputGiftNo.substring(10);
+		}
 		int gifticonPrice = clientService.selectGifticonBy(inputGiftNo);
+//		System.out.println(inputGiftNo);		// 기프티콘 번호 정상적으로 입력되는지 확인 출력문
 		
 		return gifticonPrice;
 	}
