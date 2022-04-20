@@ -25,7 +25,7 @@ public class ClientController {
 		/* 로그인 화면 출력 및 id와 pwd 입력하도록 유도 */ 
 		System.out.println(">>>>            BurgerHI 회원 주문           <<<<");
 		System.out.println("=================================================");
-//		sc.nextLine();
+		
 		System.out.print("\n  →  ID를 입력해 주세요: ");
 		String id = sc.nextLine();
 		System.out.print("\n  →  PassWord를 입력해 주세요: ");
@@ -77,6 +77,7 @@ public class ClientController {
 			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 			System.out.print("\n → 번호를 선택해 주세요: ");
 			int firstInput = sc.nextInt();
+			sc.nextLine();
 			if(firstInput == 0) {
 				break;			// 프로그램 종료로 메인매뉴로 돌아가도록 설정
 			}
@@ -147,6 +148,7 @@ public class ClientController {
 					System.out.println("                       |                       \n");
 					System.out.print("\n → 번호를 선택해 주세요: ");
 					int inputdelete = sc.nextInt();
+					sc.nextLine();
 					if(inputdelete == 1) {
 						int result = clientService.deleteUserBy(userNo);
 						if(result > 0) {
@@ -239,6 +241,8 @@ public class ClientController {
 		System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 		System.out.print("\n → 삭제하실 메뉴 번호를 입력해 주세요: ");
 		int deleteMenuCode = sc.nextInt();
+		sc.nextLine();
+		
 		if(deleteMenuCode != 0) {
 			/* MenuCode를 조건으로 걸어 OrderMenu테이블의 목록을 삭제하는 메소드 */
 			int deleteResult = clientService.deleteOrderMenu(deleteMenuCode);
@@ -318,6 +322,7 @@ public class ClientController {
 		
 		int insertResult = clientService.insertPayment(orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
 		
+		
 		return orderCode;
 	}
 
@@ -385,22 +390,20 @@ public class ClientController {
 	}
 
 	public void insertSalesAmount(int orderCode) {
-		List<String> orderMenuList = clientService.selectOrderMenu();
-		
-		int menuCode = 0;
-		int amount = 0;
-		int totalPrice = 0;
-		for(int i = 0; (i/5) < (orderMenuList.size() / 5); i++) {
-			int price = Integer.valueOf(orderMenuList.get(i + 4)); 
-			amount = Integer.valueOf(orderMenuList.get(i + 3));
-			menuCode = Integer.valueOf(orderMenuList.get(i + 1));
-			totalPrice = price * amount;
-			i += 4;
-		}
-		
-		int result = clientService.insertSalesAmount(orderCode, menuCode, amount, totalPrice);
-		
-	}
+	      List<String> orderMenuList = clientService.selectOrderMenu();
+	      
+	      int menuCode = 0;
+	      int amount = 0;
+	      int totalPrice = 0;
+	      for(int i = 0; i < orderMenuList.size(); i+=5 ) {
+	         int price = Integer.valueOf(orderMenuList.get(i + 4)); 
+	         amount = Integer.valueOf(orderMenuList.get(i + 3));
+	         menuCode = Integer.valueOf(orderMenuList.get(i + 1));
+	         totalPrice = price * amount;
+	         int result = clientService.insertSalesAmount(orderCode, menuCode, amount, totalPrice);
+	      }
+	      
+	   }
 
 	/* 전화번호가 일정한 format으로 들어갈 수 있도록 하는 메소드 */
 	public String phoneFormat(String userPhone) {

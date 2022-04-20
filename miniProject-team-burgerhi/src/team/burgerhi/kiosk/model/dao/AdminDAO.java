@@ -55,14 +55,48 @@ public class AdminDAO {
 
 	public Map<Integer, String> selectDrinkRanking(Connection con) {
 		/* hashMap 형태로 순위 담아서 넘기기 / key에는 숫자 순위 담기*/
-		
-		return null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		Map<Integer, String> drink = new HashMap<Integer, String>();
+		String query = prop.getProperty("selectDrinkRanking");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			for(int i = 1; rset.next(); i++) {
+				drink.put(i, rset.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return drink;
 	}
 
 	public Map<Integer, String> selectSideRanking(Connection con) {
 		/* hashMap 형태로 순위 담아서 넘기기 / key에는 숫자 순위 담기*/
-		
-		return null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		Map<Integer, String> side = new HashMap<Integer, String>();
+		String query = prop.getProperty("selectSideRanking");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			for(int i = 1; rset.next(); i++) {
+				side.put(i, rset.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return side;
 	}
 	
 	public List<CategoryDTO> selectAllCategory(Connection con) {
@@ -260,20 +294,19 @@ public class AdminDAO {
 		ResultSet rset = null;
 		int monthSales = 0;
 		String query = prop.getProperty("selectMonthSales");
+		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, month + "");
-			if(month < 10) {
+			if(month <10) {
 				pstmt.setString(1, "0" + month);
 			} else {
 				pstmt.setString(2, "" + month);
 			}
+			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				monthSales = rset.getInt(2);
-				System.out.println(monthSales);
-				System.out.println(rset.getInt(2));
+				monthSales = rset.getInt(1);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -286,24 +319,8 @@ public class AdminDAO {
 
 	public int selectDateSales(Connection con, int month, int date) {
 		/* 보고싶은 날짜의 매출 조회 */
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String query = prop.getProperty("selectDateSales");
-		int dateSales = 0;
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, month);
-			pstmt.setInt(2, date);
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				dateSales = rset.getInt(2);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return dateSales;
+	
+		return 0;
 	}
 
 	public int selectAllSales(Connection con) {
@@ -323,7 +340,7 @@ public class AdminDAO {
 			rset = stmt.executeQuery(query);
 			
 			for(int i = 1; rset.next(); i++) {
-				gradeSales.put(i, rset.getInt(2));
+				gradeSales.put(i, rset.getInt(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

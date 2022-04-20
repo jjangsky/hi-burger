@@ -227,16 +227,37 @@
 	</entry>
 	<entry key="selectHambergerRanking">
 	    SELECT 
- 	           A.MENU_CODE
- 	         , A.MENU_NAME 
- 	         , B.PAYMENT_PRICE
- 	         , RANK() OVER (ORDER BY B.PAYMENT_PRICE DESC) 매출순위
- 	      FROM MENU_TABLE A
- 	      JOIN SALES_AMOUNT_TABLE C ON (A.MENU_CODE = C.MENU_CODE)
- 	      JOIN PAYMENT_TABLE B ON (B.ORDER_CODE = C.ORDER_CODE)
- 	     WHERE A.CATEGORY_CODE = 1
- 	     ORDER BY MENU_CODE ASC
+	           A.MENU_CODE
+	         , B.MENU_NAME
+	         , SUM(A.MENU_AMOUNT)
+	      FROM SALES_AMOUNT_TABLE A
+	      JOIN MENU_TABLE B ON (A.MENU_CODE = B.MENU_CODE)
+	     WHERE B.CATEGORY_CODE = 1
+	     GROUP BY A.MENU_CODE, B.MENU_NAME
+	     ORDER BY 3 DESC
 	</entry>
+	<entry key="selectDrinkRanking">
+	    SELECT 
+ 	          A.MENU_CODE
+	         , B.MENU_NAME
+	         , SUM(A.MENU_AMOUNT)
+	      FROM SALES_AMOUNT_TABLE A
+	      JOIN MENU_TABLE B ON (A.MENU_CODE = B.MENU_CODE)
+	     WHERE B.CATEGORY_CODE = 2
+	     GROUP BY A.MENU_CODE, B.MENU_NAME
+	     ORDER BY 3 DESC
+	</entry>
+	<entry key="selectSideRanking">
+	    SELECT 
+ 	          A.MENU_CODE
+	         , B.MENU_NAME
+	         , SUM(A.MENU_AMOUNT)
+	      FROM SALES_AMOUNT_TABLE A
+	      JOIN MENU_TABLE B ON (A.MENU_CODE = B.MENU_CODE)
+	     WHERE B.CATEGORY_CODE = 3
+	     GROUP BY A.MENU_CODE, B.MENU_NAME
+	     ORDER BY 3 DESC
+ 	</entry> 
 	<entry key="selectMonthSales">
 	    SELECT ORDER_DATE
 	         , SUM(TOTAL_PRICE)

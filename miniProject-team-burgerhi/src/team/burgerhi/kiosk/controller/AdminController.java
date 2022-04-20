@@ -146,6 +146,11 @@ public class AdminController {		// 혜진 TEST
 		System.out.println("\n\n\n\n\n");
 		
 		int insertResult = adminService.insertMenu(menuName, menuPrice, menuExplain, categoryCode, orderable);
+		if(insertResult > 0) {
+			System.out.println("메뉴 추가 완료!");
+		}else {
+			System.out.println("메뉴 추가 실패...");
+		}
 	}
 
 	public void updateMenu() {
@@ -170,6 +175,11 @@ public class AdminController {		// 혜진 TEST
 		System.out.println("\n\n\n\n\n");
 		
 		int updateResult = adminService.updateMenu(menuNum, menuName, menuPrice, menuExplain, categoryCode, orderable);
+		if(updateResult > 0) {
+			System.out.println("메뉴 수정 완료!");
+		}else {
+			System.out.println("메뉴 수정 실패...");
+		}
 	}
 
 	public void deleteMenu() {
@@ -182,6 +192,11 @@ public class AdminController {		// 혜진 TEST
 		System.out.println("\n\n\n\n\n");
 		
 		int deleteResult = adminService.deleteMenu(menuName);
+		if(deleteResult > 0) {
+			System.out.println("메뉴 삭제 완료!");
+		}else {
+			System.out.println("메뉴 삭제 실패...");
+		}
 	}
 
 	public void SalesBydate() {
@@ -222,6 +237,7 @@ public class AdminController {		// 혜진 TEST
 			System.out.println("▶ Family등급 매출액: " + gadeSales.get(1) + "원");
 			System.out.println("▶ Silver등급 매출액: " + gadeSales.get(2) + "원");
 			System.out.println("▶ Gold등급 매출액: " + gadeSales.get(3) + "원");
+			System.out.println("▶ 비회원등급 매출액: " + gadeSales.get(4) + "원");
 			
 		} else if(salesNum == 3) {
 			Map<String, Integer> methodSales = adminService.selectMethodSales();

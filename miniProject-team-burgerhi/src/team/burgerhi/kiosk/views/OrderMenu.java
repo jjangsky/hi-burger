@@ -287,7 +287,7 @@ public class OrderMenu {
 					} else if (paymentBy == 3) { // 기프티콘 결제
 						System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 						int grade = clientController.selectGrade(gradeNo);
-						gradeDiscount = totalPrice * (gradeNo * 0.01);
+						gradeDiscount = totalPrice * (grade * 0.01);
 						lastPayment = (int)(totalPrice - gradeDiscount);
 						System.out.println("▶ 등급 할인 금액: " + (int)gradeDiscount + "원");
 						System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
