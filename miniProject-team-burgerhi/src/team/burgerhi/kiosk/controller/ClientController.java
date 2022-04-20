@@ -25,7 +25,7 @@ public class ClientController {
 		/* 로그인 화면 출력 및 id와 pwd 입력하도록 유도 */ 
 		System.out.println(">>>>            BurgerHI 회원 주문           <<<<");
 		System.out.println("=================================================");
-		sc.nextLine();
+//		sc.nextLine();
 		System.out.print("\n  →  ID를 입력해 주세요: ");
 		String id = sc.nextLine();
 		System.out.print("\n  →  PassWord를 입력해 주세요: ");

@@ -238,10 +238,18 @@
  	     ORDER BY MENU_CODE ASC
 	</entry>
 	<entry key="selectMonthSales">
-	    SELECT
- 	          SUM(TOTAL_ORDER_PRICE)
- 	     FROM TBL_ORDER
- 	    WHERE ORDER_DATE LIKE '22/' || ? || '/%'
+	    SELECT ORDER_DATE
+	         , SUM(TOTAL_PRICE)
+	      FROM ORDER_TABLE
+	     GROUP BY ORDER_DATE 
+	    HAVING ORDER_DATE = '2022/' || ? || '/%'
+	</entry>
+	<entry key="selectDateSales">
+	    SELECT ORDER_DATE
+	         , SUM(TOTAL_PRICE)
+	      FROM ORDER_TABLE
+	     GROUP BY ORDER_DATE 
+	    HAVING ORDER_DATE like '2022/' || ? || '/' || ?
 	</entry>
 	<entry key="selectGradeSales">
 	    SELECT  

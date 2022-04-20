@@ -260,19 +260,20 @@ public class AdminDAO {
 		ResultSet rset = null;
 		int monthSales = 0;
 		String query = prop.getProperty("selectMonthSales");
-		
 		try {
 			pstmt = con.prepareStatement(query);
-			if(month <10) {
+			pstmt.setString(1, month + "");
+			if(month < 10) {
 				pstmt.setString(1, "0" + month);
 			} else {
 				pstmt.setString(2, "" + month);
 			}
-			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				monthSales = rset.getInt(1);
+				monthSales = rset.getInt(2);
+				System.out.println(monthSales);
+				System.out.println(rset.getInt(2));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -285,8 +286,24 @@ public class AdminDAO {
 
 	public int selectDateSales(Connection con, int month, int date) {
 		/* 보고싶은 날짜의 매출 조회 */
-		
-		return 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectDateSales");
+		int dateSales = 0;
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, month);
+			pstmt.setInt(2, date);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				dateSales = rset.getInt(2);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dateSales;
 	}
 
 	public int selectAllSales(Connection con) {
