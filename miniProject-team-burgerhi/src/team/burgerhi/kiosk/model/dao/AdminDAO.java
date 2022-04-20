@@ -324,9 +324,33 @@ public class AdminDAO {
 	}
 
 	public int selectAllSales(Connection con) {
-		/* 조회일을 기준으로 총 누적 매출액 Select */
-		return 0;
-	}
+	      /* 조회일을 기준으로 총 누적 매출액 Select */
+	      Statement stmt = null;
+	      ResultSet rset = null;
+	      
+	      int allSales = 0;
+	      
+	      String query = prop.getProperty("selectAllSales");
+	      try {
+	         stmt = con.createStatement();
+	         rset = stmt.executeQuery(query);
+	         
+	      
+	         
+	         while(rset.next()) {
+	            allSales = rset.getInt(1);
+	         
+	         }
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	         close(stmt);
+	      }
+	      
+	      return allSales;
+	   }
 
 	public Map<Integer, Integer> selectGradeSales(Connection con) {
 		/* HashMap 형태로 등급별 매출액 조회 key = 등급명, value = 매출액 */

@@ -407,4 +407,9 @@
 	     GROUP BY PAYMENT_BY
 	     ORDER BY PAYMENT_BY
 	</entry>
+	<entry key="selectAllSales">
+       SELECT
+              SUM(PAYMENT_PRICE)
+         FROM PAYMENT_TABLE
+   </entry>
 </properties>
