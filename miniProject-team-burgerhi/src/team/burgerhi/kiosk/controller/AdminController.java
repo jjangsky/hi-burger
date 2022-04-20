@@ -146,6 +146,11 @@ public class AdminController {		// 혜진 TEST
 		System.out.println("\n\n\n\n\n");
 		
 		int insertResult = adminService.insertMenu(menuName, menuPrice, menuExplain, categoryCode, orderable);
+		if(insertResult > 0) {
+			System.out.println("메뉴 추가 완료!");
+		}else {
+			System.out.println("메뉴 추가 실패...");
+		}
 	}
 
 	public void updateMenu() {
@@ -170,6 +175,11 @@ public class AdminController {		// 혜진 TEST
 		System.out.println("\n\n\n\n\n");
 		
 		int updateResult = adminService.updateMenu(menuNum, menuName, menuPrice, menuExplain, categoryCode, orderable);
+		if(updateResult > 0) {
+			System.out.println("메뉴 수정 완료!");
+		}else {
+			System.out.println("메뉴 수정 실패...");
+		}
 	}
 
 	public void deleteMenu() {
@@ -182,6 +192,11 @@ public class AdminController {		// 혜진 TEST
 		System.out.println("\n\n\n\n\n");
 		
 		int deleteResult = adminService.deleteMenu(menuName);
+		if(deleteResult > 0) {
+			System.out.println("메뉴 삭제 완료!");
+		}else {
+			System.out.println("메뉴 삭제 실패...");
+		}
 	}
 
 	public void SalesBydate() {
