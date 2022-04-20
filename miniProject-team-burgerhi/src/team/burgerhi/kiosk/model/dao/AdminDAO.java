@@ -55,14 +55,48 @@ public class AdminDAO {
 
 	public Map<Integer, String> selectDrinkRanking(Connection con) {
 		/* hashMap 형태로 순위 담아서 넘기기 / key에는 숫자 순위 담기*/
-		
-		return null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		Map<Integer, String> drink = new HashMap<Integer, String>();
+		String query = prop.getProperty("selectDrinkRanking");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			for(int i = 1; rset.next(); i++) {
+				drink.put(i, rset.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return drink;
 	}
 
 	public Map<Integer, String> selectSideRanking(Connection con) {
 		/* hashMap 형태로 순위 담아서 넘기기 / key에는 숫자 순위 담기*/
-		
-		return null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		Map<Integer, String> side = new HashMap<Integer, String>();
+		String query = prop.getProperty("selectSideRanking");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			for(int i = 1; rset.next(); i++) {
+				side.put(i, rset.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return side;
 	}
 	
 	public List<CategoryDTO> selectAllCategory(Connection con) {
@@ -285,7 +319,7 @@ public class AdminDAO {
 
 	public int selectDateSales(Connection con, int month, int date) {
 		/* 보고싶은 날짜의 매출 조회 */
-		
+	
 		return 0;
 	}
 
