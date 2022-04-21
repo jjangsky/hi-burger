@@ -127,7 +127,7 @@ public class AdminController {
 		System.out.println(">>>>        BurgerHI 메뉴 추가 시스템        <<<<");
 		System.out.println("=================================================");
 		System.out.print("\n → 추가할 메뉴명을 입력해 주세요: ");
-		sc.nextLine();
+//		sc.nextLine();
 		String menuName = sc.nextLine();
 		System.out.print("\n → 추가할 메뉴의 가격을 입력해 주세요: ");
 		int menuPrice = sc.nextInt();
@@ -181,7 +181,7 @@ public class AdminController {
 		System.out.println(">>>>        BurgerHI 메뉴 삭제 시스템        <<<<");
 		System.out.println("=================================================");
 		System.out.print("\n → 삭제할 메뉴명을 입력해 주세요: ");
-		sc.nextLine();
+//		sc.nextLine();
 		String menuName = sc.nextLine();
 		System.out.println("\n\n\n\n\n");
 		
