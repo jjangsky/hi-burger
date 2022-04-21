@@ -283,8 +283,39 @@ public class OrderMenu {
 							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 						} else {
 							System.out.println("결제 금액이 " + (lastPayment - inputPrice) + "원 부족합니다!");
-							System.out.println("최종 결제 금액은 " + lastPayment + "원 입니다.");
-							System.out.println("다시 결제를 시도해 주세요 :)");
+							System.out.println("\n 추가 금액 " + (lastPayment - inputPrice) + "원을 결제해 주세요!\n\n\n");
+							System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
+							System.out.println("=================================================");
+							System.out.println("                       |                        ");
+							System.out.println("           1           |            2           ");
+							System.out.println("        카  드      　 |         현  금         ");
+							System.out.println("                       |                        ");
+							System.out.println("                       |                        ");
+							System.out.print("\n → 결제하실 수단을 선택해 주세요: ");
+							paymentBy = sc.nextInt();
+							if(paymentBy == 1) {
+								System.out.print("\n →  결제하실 카드명을 입력해 주세요: ");
+								sc.nextLine();
+								String paymentCard = sc.nextLine();
+								System.out.println(
+										"고객님의 " + paymentCard + "로 총" + (lastPayment - inputPrice) + "원이 결제 되었습니다!");
+								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+								System.out.println("\n\n\n\n\n\n\n\n\n\n");
+							}else if (paymentBy == 2) {
+								System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
+								inputPrice = sc.nextInt();
+								if (inputPrice == (lastPayment - inputPrice)) {
+									System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+									System.out.println("\n\n\n\n\n\n\n\n\n\n");
+								}else if (inputPrice > (lastPayment - inputPrice)) {
+
+									System.out.println(
+											"거스름돈은 " + (inputPrice - (lastPayment - inputPrice)) + "원 입니다!");
+									System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+									System.out.println("\n\n\n\n\n\n\n\n\n\n");
+								}
+								
+							}
 						}
 
 					} else if (paymentBy == 3) { // 기프티콘 결제

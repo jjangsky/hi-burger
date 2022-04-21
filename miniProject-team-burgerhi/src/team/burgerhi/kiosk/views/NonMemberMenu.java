@@ -107,7 +107,8 @@ public class NonMemberMenu {
 					flag2 = false;
 					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 					break;
-				} else if(num == 1) { // 추가 주문하기
+				} else if(num2 == 1) { // 추가 주문하기
+					flag2 =false;
 					break;// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 				} else if(num2 == 2) { // 장바구니에 있는 메뉴 수정하기
 					clientController.deleteOrderMenu();
