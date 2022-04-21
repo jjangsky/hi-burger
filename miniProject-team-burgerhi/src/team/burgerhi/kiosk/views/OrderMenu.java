@@ -393,9 +393,12 @@ public class OrderMenu {
 					/* 최종 모두 확정된 정보를 테이블에 Insert */
 					clientController.insertOrder(lastPayment);
 					int orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
+					clientController.gifticonEvent(orderCode);
+					
 					
 					/* 장바구니 delete */
 					clientController.insertSalesAmount(orderCode);
+					
 
 					/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
 //					orderResultSet.closeDisplayMainMenu();

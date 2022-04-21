@@ -438,4 +438,18 @@ public class ClientController {
 		return userPhone;
 	}
 
+	/* 주문번호가 10번인 고객님의 경우 기프티콘 증정하는 이벤트 */
+	public void gifticonEvent(int orderCode) {
+		
+		/* if문 사용(orderCode == 10) */
+		
+		
+		/* clientService의 Insert 메소드 사용 */
+		
+		
+		/* List<GifticonDTO>로 Select 메소드 사용 */
+		
+		
+	}
+
 }
