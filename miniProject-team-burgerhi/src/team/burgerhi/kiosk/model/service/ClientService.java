@@ -7,6 +7,7 @@ import java.util.Map;
 import team.burgerhi.kiosk.model.dao.ClientDAO;
 import team.burgerhi.kiosk.model.dto.CardDTO;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
+import team.burgerhi.kiosk.model.dto.GifticonDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
@@ -147,11 +148,11 @@ public class ClientService {
 	}
 
 	/* 사용자가 입력 한 기프티콘 번호를 입력받아 기프티콘 테이블에서 Select */
-	public int selectGifticonBy(String inputGiftNo) {
+	public List<GifticonDTO> selectGifticonBy(String inputGiftNo) {
 		Connection con = getConnection();
-		int gifticonPrice = clientDAO.selectGifticonBy(con, inputGiftNo);
+		List<GifticonDTO> gifticonList = clientDAO.selectGifticonBy(con, inputGiftNo);
 		close(con);
-		return gifticonPrice;
+		return gifticonList;
 	}
 
 	/* 사용한 기프티콘의 경우 사용 후 금액 테이블에 Update */

@@ -47,12 +47,7 @@ public class OrderMenu {
 				System.out.println("               |                  |             ");
 				System.out.println("=================================================");
 				System.out.print("\n  → 번호를 선택해 주세요: ");
-//				try {
-					num = sc.nextInt();
-//				} catch(InputMismatchException e){
-					System.out.println("번호로 입력해 주세요!");
-//					continue;
-//				}
+				num = sc.nextInt();
 				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 				
 
@@ -305,6 +300,10 @@ public class OrderMenu {
 						String inputGiftNo = sc.nextLine();
 //						System.out.println(inputGiftNo);
 						int gifticonPrice = clientController.selectGifticonBy(inputGiftNo);
+						if(gifticonPrice == 0) {
+							System.out.println("기프티콘 번호를 잘못 입력하셨습니다. 다시 입력해 주세요!");
+							continue;
+						}
 //						System.out.println(lastPayment);
 //						System.out.println(gifticonPrice);
 						

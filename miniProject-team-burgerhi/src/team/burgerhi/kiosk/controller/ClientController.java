@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import team.burgerhi.kiosk.model.dto.CardDTO;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
+import team.burgerhi.kiosk.model.dto.GifticonDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 import team.burgerhi.kiosk.model.service.ClientService;
@@ -324,13 +325,21 @@ public class ClientController {
 
 	/* 사용자가 입력 한 기프티콘 번호를 입력받아 기프티콘 테이블에서 Select */
 	public int selectGifticonBy(String inputGiftNo) {
+		int gifticonPrice = 0;
+		
 		if(inputGiftNo != null) {
 			inputGiftNo = inputGiftNo.replaceAll("[^0-9]", "");
 			inputGiftNo = inputGiftNo.substring(0, 6) + "-" + inputGiftNo.substring(6, 10) + "-" + inputGiftNo.substring(10);
 		}
-		int gifticonPrice = clientService.selectGifticonBy(inputGiftNo);
+		List<GifticonDTO> gifticonList = clientService.selectGifticonBy(inputGiftNo);
 //		System.out.println(inputGiftNo);		// 기프티콘 번호 정상적으로 입력되는지 확인 출력문
-		
+		for(GifticonDTO gif: gifticonList) {
+			if(gif.getNo().equals(inputGiftNo)) {
+				gifticonPrice = gif.getPrice();
+			} else {
+				
+			}
+		}
 		return gifticonPrice;
 	}
 

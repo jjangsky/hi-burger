@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import team.burgerhi.kiosk.model.dto.CardDTO;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
+import team.burgerhi.kiosk.model.dto.GifticonDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 import static team.burgerhi.common.JDBCTemplate.close;
@@ -459,29 +460,30 @@ public class ClientDAO {
 	}
 
 	/* 사용자가 입력 한 기프티콘 번호를 입력받아 기프티콘 테이블에서 Select */
-	public int selectGifticonBy(Connection con, String inputGiftNo) {
+	public List<GifticonDTO> selectGifticonBy(Connection con, String inputGiftNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		int gifticonPrice = 0;
+		List<GifticonDTO> gifticonList = new ArrayList<GifticonDTO>();
 		String query = prop.getProperty("selectGifticonBy");
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, inputGiftNo);
 			rset = pstmt.executeQuery();
 			
-
-			while(rset.next()) {
-				gifticonPrice = rset.getInt(1);
-
+			if(rset.next()) {
+				GifticonDTO gif = new GifticonDTO();
+				gif.setNo(rset.getString(1));
+				gif.setPrice(rset.getInt(2));
+				gifticonList.add(gif);
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		return gifticonPrice;
+		
+		return gifticonList;
 	}
 
 	/* 사용한 기프티콘의 경우 사용 후 금액 테이블에 Update */
