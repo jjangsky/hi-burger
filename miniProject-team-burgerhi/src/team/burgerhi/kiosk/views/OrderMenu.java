@@ -17,21 +17,21 @@ public class OrderMenu {
 	public void displayMainMenu() {
 		Scanner sc = new Scanner(System.in);
 
-		/* do~while문 밖에서도 사용해야 할 변수 */
-		int userNo = 0;
-		int gradeNo = 0;
-		int menuPrice = 0;
-		int totalPrice = 0;
-		int paymentBy = 0;
-		int cardCode = 0;
-		int lastPayment = 0;
-		double gradeDiscount = 0;
-		double cardDiscount = 0;
-		boolean flag = true;
-		boolean flag1 = true;
-		boolean flag2 = true;
 
 		while(true) {
+			/* do~while문 밖에서도 사용해야 할 변수 */
+			int userNo = 0;
+			int gradeNo = 0;
+			int menuPrice = 0;
+			int totalPrice = 0;
+			int paymentBy = 0;
+			int cardCode = 0;
+			int lastPayment = 0;
+			double gradeDiscount = 0;
+			double cardDiscount = 0;
+			boolean flag = true;
+			boolean flag1 = true;
+			boolean flag2 = true;
 			do {
 				clientController.deleteAllOrderMenu();
 				/* BurgerHI 메인 주문 화면(첫 화면) */
