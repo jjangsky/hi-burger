@@ -337,8 +337,13 @@ public class ClientController {
 	/* 사용한 기프티콘의 경우 사용 후 금액 테이블에 Update */
 	public void updateGifticonPrice(String inputGiftNo, int gifticonPrice) {
 		
+		if(inputGiftNo != null) {
+			inputGiftNo = inputGiftNo.replaceAll("[^0-9]", "");
+			inputGiftNo = inputGiftNo.substring(0, 6) + "-" + inputGiftNo.substring(6, 10) + "-" + inputGiftNo.substring(10);
+		}
 		int result = clientService.updateGifticonPrice(inputGiftNo, gifticonPrice);
-		
+//		System.out.println(result);
+//		System.out.println(gifticonPrice);
 	}
 
 	/* 장바구니에서 결제한 메뉴의 경우 전체 Delete */

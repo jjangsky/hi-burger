@@ -1,5 +1,6 @@
 package team.burgerhi.kiosk.views;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,6 +21,7 @@ public class OrderMenu {
 
 		while(true) {
 			/* do~while문 밖에서도 사용해야 할 변수 */
+			int num = 0;
 			int userNo = 0;
 			int gradeNo = 0;
 			int menuPrice = 0;
@@ -32,6 +34,7 @@ public class OrderMenu {
 			boolean flag = true;
 			boolean flag1 = true;
 			boolean flag2 = true;
+			
 			do {
 				clientController.deleteAllOrderMenu();
 				/* BurgerHI 메인 주문 화면(첫 화면) */
@@ -44,7 +47,12 @@ public class OrderMenu {
 				System.out.println("               |                  |             ");
 				System.out.println("=================================================");
 				System.out.print("\n  → 번호를 선택해 주세요: ");
-				int num = sc.nextInt();
+//				try {
+					num = sc.nextInt();
+//				} catch(InputMismatchException e){
+					System.out.println("번호로 입력해 주세요!");
+//					continue;
+//				}
 				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 				
 
@@ -304,14 +312,16 @@ public class OrderMenu {
 							gifticonPrice = gifticonPrice - lastPayment;
 							System.out.println("\n 결제가 완료 되었습니다! 기프티콘 잔액은 " + gifticonPrice + "원 입니다!");
 							System.out.println("\n 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+							
 							/* 사용한 기프티콘 잔액 수정 */
 							clientController.updateGifticonPrice(inputGiftNo, gifticonPrice);
+//							System.out.println(inputGiftNo);
+//							System.out.println(gifticonPrice);
 							System.out.println("\n\n\n\n\n\n\n\n\n\n");
 							
 						} else if(gifticonPrice < lastPayment){
 							System.out.println("\n 기프티콘 사용이 완료 되었습니다!");
 							System.out.println("\n 추가 금액 " + (lastPayment - gifticonPrice) + "원을 결제해 주세요!\n\n\n");
-							gifticonPrice = 0;
 							System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
 							System.out.println("=================================================");
 							System.out.println("                       |                        ");
@@ -343,6 +353,7 @@ public class OrderMenu {
 								}
 								
 							}
+							gifticonPrice = 0;
 							/* 사용한 기프티콘 잔액 수정 */
 							clientController.updateGifticonPrice(inputGiftNo, gifticonPrice);
 						}

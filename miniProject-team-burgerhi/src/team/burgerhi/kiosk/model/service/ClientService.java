@@ -158,6 +158,8 @@ public class ClientService {
 	public int updateGifticonPrice(String inputGiftNo, int gifticonPrice) {
 		Connection con = getConnection();
 		int result = clientDAO.updateGifticonPrice(con, inputGiftNo, gifticonPrice);
+		close(con);
+//		System.out.println(result);
 		return result;
 	}
 
