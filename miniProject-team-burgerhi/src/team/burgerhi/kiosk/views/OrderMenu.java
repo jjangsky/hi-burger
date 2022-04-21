@@ -302,6 +302,7 @@ public class OrderMenu {
 						int gifticonPrice = clientController.selectGifticonBy(inputGiftNo);
 						if(gifticonPrice == 0) {
 							System.out.println("기프티콘 번호를 잘못 입력하셨습니다. 다시 입력해 주세요!");
+							System.out.println("\n\n\n\n\n\n\n\n\n\n");
 							continue;
 						}
 //						System.out.println(lastPayment);

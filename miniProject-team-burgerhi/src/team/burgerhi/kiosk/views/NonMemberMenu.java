@@ -195,14 +195,19 @@ public class NonMemberMenu {
 					}
 
 				} else if (paymentBy == 3) { // 기프티콘 결제
-					System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
+					System.out.println("\n → 총 결제 금액은 " + lastPayment + "원 입니다.");
 					System.out.println();
 					System.out.println("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
 					sc.nextLine();
 					String inputGiftNo = sc.nextLine();
 					int gifticonPrice = clientController.selectGifticonBy(inputGiftNo);
+					if(gifticonPrice == 0) {
+						System.out.println("기프티콘 번호를 잘못 입력하셨습니다. 다시 입력해 주세요!");
+						System.out.println("\n\n\n\n\n\n\n\n\n\n");
+						continue;
+					}
 					if (gifticonPrice >= lastPayment) {
-						gifticonPrice -= gifticonPrice - lastPayment;
+						gifticonPrice = gifticonPrice - lastPayment;
 						System.out.println("결제가 완료 되었습니다! 기프티콘 잔액은 " + gifticonPrice + "원 입니다!");
 						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 
@@ -211,7 +216,6 @@ public class NonMemberMenu {
 					} else {
 						System.out.println("기프티콘 사용이 완료 되었습니다!");
 						System.out.println("추가 금액 " + (lastPayment - gifticonPrice) + "원을 결제해 주세요!");
-						gifticonPrice = 0;
 						System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
 						System.out.println("=================================================");
 						System.out.println("                       |                        ");
@@ -239,6 +243,7 @@ public class NonMemberMenu {
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 							}
 						}
+						gifticonPrice = 0;
 						/* 사용한 기프티콘 잔액 수정 */
 						clientController.updateGifticonPrice(inputGiftNo, gifticonPrice);
 					}
