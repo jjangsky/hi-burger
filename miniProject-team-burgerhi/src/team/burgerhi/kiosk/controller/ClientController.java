@@ -2,7 +2,9 @@ package team.burgerhi.kiosk.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import team.burgerhi.kiosk.model.dto.CardDTO;
@@ -168,7 +170,6 @@ public class ClientController {
 	
 	/* 전체 Category를 출력하는 메소드 */
 	public void selectAllCategory() {
-		
 		/* Sevice -> DAO -> DB를 통해 List 형태로 전달 받은 카테고리 */
 		List<CategoryDTO> categoryList = clientService.selectAllCategory();
 		
@@ -181,8 +182,8 @@ public class ClientController {
 
 	/* 사용자가 선택한 Category의 전체 Menu를 출력하기 위한 메소드 */
 	public List<MenuDTO> selectMenuBy(int categoryNo) {
-		
 		List<MenuDTO> menuList = clientService.selectMenuBy(categoryNo);
+		
 				
 		return menuList;
 	}
@@ -211,7 +212,7 @@ public class ClientController {
 		System.out.println();
 		
 		/* for문으로 사용자에게 보여줄 내용 출력 */
-		for(int i = 0; (i/5) < (orderMenuList.size() / 5); i++) {
+		for(int i = 0; i < orderMenuList.size(); i += 5) {
 			int price = Integer.valueOf(orderMenuList.get(i + 4)); 
 			int amount = Integer.valueOf(orderMenuList.get(i + 3));
 //			System.out.println(i + "번째" + orderMenuList.get(i));		// 값이 제대로 담겨 출력 되는지 확인
@@ -221,7 +222,7 @@ public class ClientController {
 			System.out.println("▶ 주문수량: " + orderMenuList.get(i + 3));
 			System.out.println("▶ 금액: " + price + " * " + amount + " = " + (price *  amount));
 			System.out.println();
-			i += 4;
+//			i += 4;
 			totalPrice += (price *  amount);
 		}
 		System.out.println("▶ 총 금액: " + totalPrice);	
@@ -317,7 +318,7 @@ public class ClientController {
 		
 		int orderCode = clientService.selectLastOrderCode();
 		
-		int insertResult = clientService.insertPayment(orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
+		clientService.insertPayment(orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
 		
 		
 		return orderCode;
@@ -416,7 +417,6 @@ public class ClientController {
 	         totalPrice = price * amount;
 	         int result = clientService.insertSalesAmount(orderCode, menuCode, amount, totalPrice);
 	      }
-	      
 	   }
 
 	/* 전화번호가 일정한 format으로 들어갈 수 있도록 하는 메소드 */
@@ -440,16 +440,36 @@ public class ClientController {
 
 	/* 주문번호가 10번인 고객님의 경우 기프티콘 증정하는 이벤트 */
 	public void gifticonEvent(int orderCode) {
-		
-		/* if문 사용(orderCode == 10) */
-		
+		int price = 0;
+		String gifticonNo = null;
 		
 		/* clientService의 Insert 메소드 사용 */
 		
 		
 		/* List<GifticonDTO>로 Select 메소드 사용 */
+
 		
 		
+		/* if문 사용(orderCode == 10) */
+		for(int i = 0; i < orderCode; i += 10) {
+			if(orderCode == i) {
+				System.out.println("★★★★    BergerHI의 특별한 Event!    ★★★★");
+				System.out.println("=================================================");
+				System.out.println("\n      BergerHI에서 준비한 특별한 Event!!!! ");
+				System.out.println("\n    " + i + "번째 고객님께 드리는 선물🎁");
+				System.out.println("\n → 기프티콘 번호:" + gifticonNo);
+				System.out.println("\n → 기프티콘 금액:" + price);
+				System.out.println("\n 다음 주문부터 사용이 가능하며, 현금으로 교환은 어렵습니다.");
+				System.out.println("  기프티콘 금액은 분할로 사용이 가능하며, 유효기간은 1년 입니다.");
+				System.out.println("\n\n BergerHI를 사랑해 주셔서 감사합니다. \n 좋은 하루 보내세요♥ ");
+			}
+		}
 	}
 
+	public List<MenuDTO> selectRefMenu(int categoryNo) {
+		int category = clientService.selectCategoryBy(categoryNo);
+		List<MenuDTO> menuList = clientService.selectMenuBy(category);
+		
+		return menuList;
+	}
 }

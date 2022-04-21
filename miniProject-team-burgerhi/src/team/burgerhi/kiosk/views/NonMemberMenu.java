@@ -9,7 +9,6 @@ import team.burgerhi.kiosk.model.dto.MenuDTO;
 
 public class NonMemberMenu {
 	private ClientController clientController = new ClientController();
-	private OrderResultSet orderResultSet = new OrderResultSet();
 	Scanner sc = new Scanner(System.in);
 	public void displayMainMenu() {
 		int menuPrice = 0;
@@ -57,11 +56,35 @@ public class NonMemberMenu {
 			gradeNo = clientController.selectNonMemberGradeNo();
 			userNo = clientController.insertNonMemberUser(gradeNo);
 //			System.out.println("NullPointException Test1");		// 오류 구문 확인
+			
+			/* 장바구니에 Insert */
 			clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
 			
 			/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
 			menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
 			totalPrice += (inputAmount * menuPrice);
+			
+			/* 추천카테고리의 메뉴 랜덤 추천 */
+			List<MenuDTO> randomMenu = clientController.selectRefMenu(categoryNo);
+			int i = (int)Math.random() * randomMenu.size();
+			System.out.println("\n\n\n ******** BergerHI가 추천하는 함께하면 좋을 메뉴 ********");
+			System.out.println("▶ " + randomMenu.get(i).getMenuCode() + ". " + randomMenu.get(i).getName() + "  "
+					+ randomMenu.get(i).getPrice() + "원\n     " + randomMenu.get(i).getExplain());
+			System.out.print("\n → 장바구니에 함께 담아드릴까요? (1.예 / 2.아니오): ");
+			int refNum = sc.nextInt();
+			int refAmount = 0;
+			if(refNum == 1) {
+				System.out.print("탁월한 선택이세요! 수량은 몇 개 담아드릴까요? ");
+				refAmount = sc.nextInt();
+				clientController.insertOrderMenu(userNo, randomMenu.get(i).getMenuCode(), refAmount);
+			}
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			
+			
+			/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
+			menuPrice = clientController.selectOrderMenuPrice(randomMenu.get(i).getMenuCode());
+			
+			totalPrice += (refAmount * randomMenu.get(i).getMenuCode());
 
 			/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
 			System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
@@ -171,7 +194,7 @@ public class NonMemberMenu {
 
 					/* 할인 내역 및 결제 금액 모두 출력 */
 					System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
-					System.out.println("▶ 카드사 할인 금액: " + cardDiscount + "원");
+					System.out.println("▶ 카드사 할인 금액: " + (int)cardDiscount + "원");
 					lastPayment = (int) (totalPrice - cardDiscount);
 					System.out.println();
 					System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
@@ -254,8 +277,8 @@ public class NonMemberMenu {
 				/* 최종 모두 확정된 정보를 테이블에 Insert */
 				clientController.insertOrder(totalPrice);
 				int orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
-				/* 장바구니 delete */
 				clientController.insertSalesAmount(orderCode);
+				clientController.gifticonEvent(orderCode);
 				
 
 				/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */

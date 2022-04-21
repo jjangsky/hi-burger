@@ -651,5 +651,29 @@ public class ClientDAO {
 		}
 		return result;
 	}
+
+	public int selectCategoryBy(Connection con, int categoryNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int category = 0;
+		String query = prop.getProperty("selectCategoryBy");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, categoryNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				category = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return category;
+	}
 	
 }

@@ -9,11 +9,14 @@ import team.burgerhi.kiosk.model.dto.CardDTO;
 import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.GifticonDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
-import team.burgerhi.kiosk.model.dto.OrderMenuDTO;
+import team.burgerhi.kiosk.model.dto.OrderDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 
 import static team.burgerhi.common.JDBCTemplate.getConnection;
 import static team.burgerhi.common.JDBCTemplate.close;
+import static team.burgerhi.common.JDBCTemplate.commit;
+import static team.burgerhi.common.JDBCTemplate.rollback;
+
 
 public class ClientService {
 	private ClientDAO clientDAO = new ClientDAO();
@@ -38,6 +41,11 @@ public class ClientService {
 	public int UpdateUserInfo(int userNo, String pwd, String phone) {
 		Connection con = getConnection();
 		int result = clientDAO.UpdateUserInfo(con, userNo, pwd, phone);
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 		return result;
 		
@@ -47,6 +55,11 @@ public class ClientService {
 	public int deleteUserBy(int userNo) {
 		Connection con = getConnection();
 		int result = clientDAO.deleteUserBy(con, userNo);
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 		return result;
 	}
@@ -70,6 +83,11 @@ public class ClientService {
 	public int insertOrderMenu(int userNo, int inputMenuNo, int inputAmount) {
 		Connection con = getConnection();
 		int insertOrderMenu = clientDAO.insertOrderMenu(con, userNo, inputMenuNo, inputAmount);
+		if(insertOrderMenu > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 		return insertOrderMenu;
 	}
@@ -94,6 +112,11 @@ public class ClientService {
 	public int deleteOrderMenu(int deleteMenuCode) {
 		Connection con = getConnection();
 		int deleteResulte = clientDAO.deleteOrderMenu(con, deleteMenuCode);
+		if(deleteResulte > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 		return deleteResulte;
 	}
@@ -126,6 +149,11 @@ public class ClientService {
 	public int insertOrder(String date, int lastPayment) {
 		Connection con = getConnection();
 		int insertResult = clientDAO.insertOrder(con, date, lastPayment);
+		if(insertResult > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 		return insertResult;
 	}
@@ -139,12 +167,16 @@ public class ClientService {
 	}
 	
 	/* 결제까지 완료 된 확정 정보를 Payment 테이블에 Insert */
-	public int insertPayment(int orderCode, int userNo, int totalPrice, int gradeNo, int cardCode, double lastPayment,
+	public void insertPayment(int orderCode, int userNo, int totalPrice, int gradeNo, int cardCode, double lastPayment,
 			String payment) {
 		Connection con = getConnection();
 		int inserResult = clientDAO.insertPayment(con, orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
+		if(inserResult > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
-		return inserResult;
 	}
 
 	/* 사용자가 입력 한 기프티콘 번호를 입력받아 기프티콘 테이블에서 Select */
@@ -159,6 +191,11 @@ public class ClientService {
 	public int updateGifticonPrice(String inputGiftNo, int gifticonPrice) {
 		Connection con = getConnection();
 		int result = clientDAO.updateGifticonPrice(con, inputGiftNo, gifticonPrice);
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 //		System.out.println(result);
 		return result;
@@ -168,6 +205,11 @@ public class ClientService {
 	public int deleteAllOrderMenu() {
 		Connection con = getConnection();
 		int result  = clientDAO.deleteAllOrderMenu(con);
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 		return result;
 	}
@@ -176,6 +218,11 @@ public class ClientService {
 	public int creatUserInfo(UserDTO userDTO) {
 		Connection con = getConnection();
 		int result = clientDAO.creatUserInfo(con, userDTO);
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 		return result;
 	}
@@ -184,6 +231,11 @@ public class ClientService {
 	public int insertNonMemberUser(int gradeNo) {
 		Connection con = getConnection();
 		int result = clientDAO.insertNonMemberUser(con, gradeNo);
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 		return result;
 	}
@@ -208,6 +260,11 @@ public class ClientService {
 	public int insertSalesAmount(int orderCode, int menuCode, int amount, int totalPrice) {
 		Connection con = getConnection();
 		int result = clientDAO.insertSalesAmount(con, orderCode, menuCode, amount, totalPrice);
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 		return result;
 	}
@@ -215,18 +272,19 @@ public class ClientService {
 	public int deleteSalesAmount(int deleteMenuCode) {
 		Connection con = getConnection();
 		int result = clientDAO.deleteSalesAmount(con, deleteMenuCode);
+		if(result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		close(con);
 		return result;
 	}
 
-	
-
-
-
-
-
-	
-
-	
-
+	public int selectCategoryBy(int categoryNo) {
+		Connection con = getConnection();
+		int category = clientDAO.selectCategoryBy(con, categoryNo);
+		close(con);
+		return category;
+	}
 }

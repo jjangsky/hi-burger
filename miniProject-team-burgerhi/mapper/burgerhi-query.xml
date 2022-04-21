@@ -410,7 +410,10 @@
               SUM(PAYMENT_PRICE)
          FROM PAYMENT_TABLE
    </entry>
-   <entry key="">
-      
+   <entry key="selectCategoryBy">
+      SELECT
+             A.REF_CATEGORY_CODE
+        FROM CATEGORY_TABLE A
+       WHERE A.CATEGORY_CODE = ?
    </entry>
 </properties>
