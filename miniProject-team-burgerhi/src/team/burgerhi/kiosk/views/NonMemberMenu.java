@@ -49,6 +49,7 @@ public class NonMemberMenu {
 			if(inputMenuNo == 0) {
 				flag2 = false;
 				flag = false;
+				break;
 			}
 			System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
 			int inputAmount = sc.nextInt();
@@ -79,6 +80,7 @@ public class NonMemberMenu {
 				clientController.deleteAllOrderMenu();
 				flag2 = false;
 				flag = false;
+				break;
 			} else if(num == 1) { 
 				continue; // while문의 처음으로 돌아가도록 설정
 			  /* 장바구니 확인하기 */
@@ -138,6 +140,7 @@ public class NonMemberMenu {
 				if(paymentBy == 0) {
 					clientController.deleteAllOrderMenu();
 					flag2 = false;
+					break;
 				} else if(paymentBy == 1) { // 카드 결제
 					System.out.println("\n\n\n\n\n");
 					System.out.println("★★★★    제휴카드 중복 할인 Event!    ★★★★");
@@ -195,7 +198,7 @@ public class NonMemberMenu {
 					System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
 					System.out.println();
 					System.out.println("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
-					sc.next();
+					sc.nextLine();
 					String inputGiftNo = sc.nextLine();
 					int gifticonPrice = clientController.selectGifticonBy(inputGiftNo);
 					if (gifticonPrice >= lastPayment) {
@@ -250,10 +253,11 @@ public class NonMemberMenu {
 				
 
 				/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
-				orderResultSet.closeDisplayMainMenu();
+//				orderResultSet.closeDisplayMainMenu();
 				System.out.println("\n\n\n\n");
 				break;
 		}
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	
 	}
 	public void createUserInfo(){
@@ -261,8 +265,8 @@ public class NonMemberMenu {
 		/* 비회원 회원가입 절차 */
 		System.out.println(">>>>         BurgerHI 회원가입 안내         <<<<");
 		System.out.println("=================================================");
-		System.out.println();  
 		System.out.print("\n →  본인의 성함을 입력해 주세요: ");
+		sc.nextLine();
 		String name = sc.nextLine();
 		System.out.print("\n →  사용하실 아이디를 입력해 주세요: ");
 		String userId = sc.nextLine();

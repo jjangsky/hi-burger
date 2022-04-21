@@ -33,6 +33,7 @@ public class OrderMenu {
 
 		while(true) {
 			do {
+				clientController.deleteAllOrderMenu();
 				/* BurgerHI 메인 주문 화면(첫 화면) */
 				System.out.println();
 				System.out.println(">>>>       어서오세요 BurgerHI 입니다.       <<<<");
@@ -63,16 +64,16 @@ public class OrderMenu {
 					/* 회원 등급이 4일 경우 관리자로 분류되어 관리자 페이지로 이동 */
 					if(gradeNo == 4) {
 						admin.displayMainMenu();
-						break;
+						continue;
 					}
 
 					/* 메뉴 선택 or 회원 정보 조회, 수정, 탈퇴 메소드 */
 					int userInfo = clientController.userInfoSelect(userNo);
 					if(userInfo == 0){
-						continue; // 프로그램 종료로 메인메뉴로 돌아가도록 설정
-					} else if(userInfo == 2) {
-						continue; // 회원 탈퇴로 인해 회원으로 주문 불가능 메인메뉴로 돌아가도록 설정
-					}
+						continue;
+					} else if(userInfo == 1) {
+						
+					} 
 
 					/* 메뉴주문 while문 */
 					while(flag1) {
@@ -109,6 +110,7 @@ public class OrderMenu {
 						int inputMenuNo = sc.nextInt();
 						if(inputMenuNo == 0) {
 							flag1 = false;		// 메뉴 주문 while문 탈출
+							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 							continue;			// 메인메뉴로 돌아가도록 설정
 						}
 						System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
@@ -117,6 +119,7 @@ public class OrderMenu {
 							flag1 = false;		// 메뉴 주문 while문 탈출
 							continue;			// 메인메뉴로 돌아가도록 설정
 						}
+						
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						
 						/* OrderMenu(장바구니) Insert 메소드 */
@@ -142,7 +145,7 @@ public class OrderMenu {
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
 						if(num == 0) { 	//프로그램 종료
-							clientController.deleteAllOrderMenu();		// 프로그램이 종료 되면서 장바구니 내역 삭제
+									// 프로그램이 종료 되면서 장바구니 내역 삭제
 							flag1 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 							continue;									// 맨 처음 메인메뉴로 돌아가도록 설정
 						}else if(num == 1) { // 추가 주문하기
@@ -166,9 +169,8 @@ public class OrderMenu {
 								System.out.println("\n\n\n\n\n");
 
 								if(num == 0) {
-									clientController.deleteAllOrderMenu();		// 프로그램이 종료 되면서 장바구니 내역 삭제
-									flag1 = false;								// 메뉴 주문 while문 탈출
 									flag2 = false;								// 결제 while문 미실행
+									flag1 = false;								// 메뉴 주문 while문 탈출
 									break;										// 장바구니 while문 탈출
 								} else if(num == 1) { // 추가 주문하기
 									break; // 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
@@ -218,7 +220,6 @@ public class OrderMenu {
 				System.out.println("\n\n\n\n\n\n\n\n\n\n");
 
 					if (paymentBy == 0) {
-						clientController.deleteAllOrderMenu();		// 프로그램이 종료 되면서 장바구니 내역 삭제
 						flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 					} else if (paymentBy == 1) { // 카드 결제
 						System.out.println("★★★★    제휴카드 중복 할인 Event!    ★★★★");
@@ -236,7 +237,6 @@ public class OrderMenu {
 						sc.nextLine();
 						String paymentCard = sc.nextLine();
 						if(paymentCard.equals("0")) {
-							clientController.deleteAllOrderMenu();		// 프로그램이 종료 되면서 장바구니 내역 삭제
 							flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 						}
 						for (CardDTO card : cardList) {
@@ -292,20 +292,25 @@ public class OrderMenu {
 						System.out.println("▶ 등급 할인 금액: " + (int)gradeDiscount + "원");
 						System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
 						System.out.println();
-						System.out.println("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
-						sc.next();
+						System.out.print("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
+						sc.nextLine();
 						String inputGiftNo = sc.nextLine();
+//						System.out.println(inputGiftNo);
 						int gifticonPrice = clientController.selectGifticonBy(inputGiftNo);
+//						System.out.println(lastPayment);
+//						System.out.println(gifticonPrice);
+						
 						if (gifticonPrice >= lastPayment) {
-							gifticonPrice -= gifticonPrice - lastPayment;
-							System.out.println("결제가 완료 되었습니다! 기프티콘 잔액은 " + gifticonPrice + "원 입니다!");
-							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
-
+							gifticonPrice = gifticonPrice - lastPayment;
+							System.out.println("\n 결제가 완료 되었습니다! 기프티콘 잔액은 " + gifticonPrice + "원 입니다!");
+							System.out.println("\n 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 							/* 사용한 기프티콘 잔액 수정 */
 							clientController.updateGifticonPrice(inputGiftNo, gifticonPrice);
-						} else {
-							System.out.println("기프티콘 사용이 완료 되었습니다!");
-							System.out.println("추가 금액 " + (lastPayment - gifticonPrice) + "원을 결제해 주세요!");
+							System.out.println("\n\n\n\n\n\n\n\n\n\n");
+							
+						} else if(gifticonPrice < lastPayment){
+							System.out.println("\n 기프티콘 사용이 완료 되었습니다!");
+							System.out.println("\n 추가 금액 " + (lastPayment - gifticonPrice) + "원을 결제해 주세요!\n\n\n");
 							gifticonPrice = 0;
 							System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
 							System.out.println("=================================================");
@@ -322,16 +327,19 @@ public class OrderMenu {
 								System.out.println(
 										"고객님의 " + paymentCard + "로 총" + (lastPayment - gifticonPrice) + "원이 결제 되었습니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+								System.out.println("\n\n\n\n\n\n\n\n\n\n");
 							}else if (paymentBy == 2) {
 								System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
 								int inputPrice = sc.nextInt();
 								if (inputPrice == (lastPayment - gifticonPrice)) {
 									System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+									System.out.println("\n\n\n\n\n\n\n\n\n\n");
 								}else if (inputPrice > (lastPayment - gifticonPrice)) {
 
 									System.out.println(
 											"거스름돈은 " + (inputPrice - (lastPayment - gifticonPrice)) + "원 입니다!");
 									System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+									System.out.println("\n\n\n\n\n\n\n\n\n\n");
 								}
 								
 							}
@@ -346,12 +354,11 @@ public class OrderMenu {
 					
 					/* 장바구니 delete */
 					clientController.insertSalesAmount(orderCode);
-					clientController.deleteAllOrderMenu();
 
 					/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
-					orderResultSet.closeDisplayMainMenu();
+//					orderResultSet.closeDisplayMainMenu();
 					flag2 = false;
-					break;
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			} 
 		} 
 	}

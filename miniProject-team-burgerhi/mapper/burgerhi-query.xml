@@ -143,10 +143,9 @@
 	</entry>
 	<entry key ="selectGifticonBy">
 	    SELECT
-   	           A.GIFTICON_NO
-  	         , A.GIFTICON_PRICE
-  	      FROM GIFTICON_TABLE A
- 	     WHERE A.GIFTICON_NO = ?
+			   GIFTICON_PRICE
+  	      FROM GIFTICON_TABLE
+ 	     WHERE GIFTICON_NO = ?
 	</entry>
 	<entry key="updateGifticonPrice">
 	    UPDATE GIFTICON_TABLE A
