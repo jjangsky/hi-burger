@@ -469,8 +469,10 @@ public class ClientDAO {
 			pstmt.setString(1, inputGiftNo);
 			rset = pstmt.executeQuery();
 			
+
 			while(rset.next()) {
 				gifticonPrice = rset.getInt(1);
+
 			}
 			
 		} catch (SQLException e) {

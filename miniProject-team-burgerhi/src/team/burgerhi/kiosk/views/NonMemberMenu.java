@@ -266,7 +266,7 @@ public class NonMemberMenu {
 		System.out.println(">>>>         BurgerHI 회원가입 안내         <<<<");
 		System.out.println("=================================================");
 		System.out.print("\n →  본인의 성함을 입력해 주세요: ");
-		sc.nextLine();
+//		sc.nextLine();
 		String name = sc.nextLine();
 		System.out.print("\n →  사용하실 아이디를 입력해 주세요: ");
 		String userId = sc.nextLine();
