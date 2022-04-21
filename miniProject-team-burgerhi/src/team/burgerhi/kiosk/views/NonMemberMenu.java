@@ -54,6 +54,7 @@ public class NonMemberMenu {
 			int inputAmount = sc.nextInt();
 			System.out.println("\n\n\n\n\n");
 			gradeNo = clientController.selectNonMemberGradeNo();
+			System.out.println(gradeNo);
 			userNo = clientController.insertNonMemberUser(gradeNo);
 //			System.out.println("NullPointException Test1");		// 오류 구문 확인
 			
@@ -276,7 +277,7 @@ public class NonMemberMenu {
 
 				/* 최종 모두 확정된 정보를 테이블에 Insert */
 				clientController.insertOrder(totalPrice);
-				int orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
+				int orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, totalPrice, paymentBy);
 				clientController.insertSalesAmount(orderCode);
 				clientController.gifticonEvent(orderCode);
 				

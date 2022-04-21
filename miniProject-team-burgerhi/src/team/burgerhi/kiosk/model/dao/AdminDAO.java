@@ -393,8 +393,8 @@ public class AdminDAO {
 			stmt = con.createStatement();
 			rset = stmt.executeQuery(query);
 			
-			for(int i = 1; rset.next(); i++) {
-				gradeSales.put(i, rset.getInt(1));
+			for(int i = 0; rset.next(); i++) {
+				gradeSales.put(i, rset.getInt(2));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

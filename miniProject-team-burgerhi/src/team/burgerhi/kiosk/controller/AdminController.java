@@ -223,6 +223,9 @@ public class AdminController {
 		System.out.println("              |                |               ");
 		System.out.println("       1 　   |        2　　   |       3       ");
 		System.out.println(" 총 누적 매출 |회원 등급별 매출|결제 종류별 매출");
+		System.out.println("              |                |               ");
+		System.out.println("=================================================");
+		System.out.print("\n  → 번호를 선택해 주세요: ");
 		int salesNum = sc.nextInt();
 		
 		Date now = new Date();
@@ -233,9 +236,9 @@ public class AdminController {
 			System.out.println(sdfm.format(now) + "기준 총 매출액은 " + totalSales + "원 입니다.");
 		} else if(salesNum == 2) {
 			Map<Integer, Integer> gadeSales = adminService.selectGradeSales();
-			System.out.println("▶ Family등급 매출액: " + gadeSales.get(1) + "원");
-			System.out.println("▶ Silver등급 매출액: " + gadeSales.get(2) + "원");
-			System.out.println("▶ Gold등급 매출액: " + gadeSales.get(3) + "원");
+			System.out.println("▶ Family등급 매출액: " + gadeSales.get(0) + "원");
+			System.out.println("▶ Silver등급 매출액: " + gadeSales.get(1) + "원");
+			System.out.println("▶ Gold등급 매출액: " + gadeSales.get(2) + "원");
 			System.out.println("▶ 비회원등급 매출액: " + gadeSales.get(4) + "원");
 			
 		} else if(salesNum == 3) {

@@ -271,11 +271,12 @@
        HAVING ORDER_DATE LIKE '2022/' || ? || '/' || ?
    </entry>
 	<entry key="selectGradeSales">
-	    SELECT  
-   	           SUM(PAYMENT_PRICE)
- 	      FROM PAYMENT_TABLE
- 	     GROUP BY GRADE_NO
- 	     ORDER BY GRADE_NO ASC
+	   SELECT
+   	          B.GRADE_NO
+   	        , SUM(A.PAYMENT_PRICE)
+ 	     FROM PAYMENT_TABLE A
+  	    RIGHT JOIN GRADE_TABLE B ON (A.GRADE_NO = B.GRADE_NO)
+  	    GROUP BY B.GRADE_NO
 	</entry>
 	<entry key="deleteAllOrderMenu">
 	    DELETE
