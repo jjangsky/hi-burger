@@ -54,7 +54,7 @@ public class NonMemberMenu {
 			int inputAmount = sc.nextInt();
 			System.out.println("\n\n\n\n\n");
 			gradeNo = clientController.selectNonMemberGradeNo();
-			System.out.println(gradeNo);
+//			System.out.println(gradeNo);						// 오류 구문 확인
 			userNo = clientController.insertNonMemberUser(gradeNo);
 //			System.out.println("NullPointException Test1");		// 오류 구문 확인
 			
@@ -204,22 +204,38 @@ public class NonMemberMenu {
 					System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 
 				} else if (paymentBy == 2) { // 현금 결제
-					System.out.println("▶ 총 결제 금액은 " + totalPrice + "원 입니다.");
+					System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 					System.out.println();
 					System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
 					int inputPrice = sc.nextInt();
 					if (inputPrice == totalPrice) {
 						System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
-					} else if (inputPrice > lastPayment) {
+					} else if (inputPrice > totalPrice) {
 
 						System.out.println("거스름돈은 " + (inputPrice - totalPrice) + "원 입니다!");
 						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 					} else {
 						System.out.println("결제 금액이 " + (totalPrice - inputPrice) + "원 부족합니다!");
-						System.out.println("최종 결제 금액은 " + totalPrice + "원 입니다.");
-						System.out.println("다시 결제를 시도해 주세요 :)");
+						System.out.println("\n 추가 금액 " + (totalPrice - inputPrice) + "원을 결제해 주세요!\n\n\n");
+						System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
+						System.out.println("=================================================");
+						System.out.println("                                                 ");
+						System.out.println("                       1                         ");
+						System.out.println("                    카  드                       ");
+						System.out.println("                                                 ");
+						System.out.println("=================================================");
+						System.out.print("\n → 결제하실 수단을 선택해 주세요: ");
+						paymentBy = sc.nextInt();
+						if(paymentBy == 1) {
+							System.out.print("\n →  결제하실 카드명을 입력해 주세요: ");
+							sc.nextLine();
+							String paymentCard = sc.nextLine();
+							System.out.println(
+									"고객님의 " + paymentCard + "로 총" + (totalPrice - inputPrice) + "원이 결제 되었습니다!");
+							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+							System.out.println("\n\n\n\n\n\n\n\n\n\n");
+						}
 					}
-
 				} else if (paymentBy == 3) { // 기프티콘 결제
 					System.out.println("\n → 총 결제 금액은 " + totalPrice + "원 입니다.");
 					System.out.println();

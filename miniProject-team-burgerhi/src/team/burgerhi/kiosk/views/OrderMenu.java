@@ -104,9 +104,19 @@ public class OrderMenu {
 						if(categoryNo == 0) {
 							flag1 = false;		// 메뉴 주문 while문 탈출
 							continue;			// 메인메뉴로 돌아가도록 설정
+						} else if(categoryNo == 1) {
+							System.out.println("세트메뉴로 주문 하시겠습니까?(1.예 / 2. 아니오)");
+							int num2 = sc.nextInt();
+							if(num2 == 1) {
+								// 세트메뉴 선택 가능한 메소드
+							} else {
+								// 기존 메뉴선택 메소드
+							}
+						}else {
+							//기존 메뉴선택 메소드
 						}
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
+						
 						/* 사용자가 선택한 Category의 전체 Menu 출력 */
 						System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
 						System.out.println("=================================================");
@@ -484,7 +494,6 @@ public class OrderMenu {
 									
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
 								}
-								
 							}
 						}
 
