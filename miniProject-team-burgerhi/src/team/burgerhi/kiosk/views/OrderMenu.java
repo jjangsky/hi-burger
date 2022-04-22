@@ -29,6 +29,8 @@ public class OrderMenu {
 			int paymentBy = 0;
 			int cardCode = 0;
 			int lastPayment = 0;
+			int afterLastPayment = 0;
+			int memberPoint = 0;
 			double gradeDiscount = 0;
 			double cardDiscount = 0;
 			boolean flag = true;
@@ -294,6 +296,32 @@ public class OrderMenu {
 						System.out.println();
 						System.out.println("고객님의 " + paymentCard + "로 총" + lastPayment + "원이 결제 되었습니다!");
 						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+						
+						/* 멤버쉽 포인트 조회 */
+						int selectPoint = clientController.selectMemberPoint(userNo);
+						selectPoint = selectPoint + lastPayment;
+						System.out.println("\n\n현재 " + lastPayment + "Point 적립되셨습니다." );
+						System.out.println("고객님의 현재 누적된 멤버쉽은 " + selectPoint + "Point 입니다.");
+						/* 멤버쉽 포인트 변경 */
+						memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
+						/* 멤버쉽 등급 변경 */
+						if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
+							clientController.updateGoldGrade(userNo);
+							System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.");
+						} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
+							clientController.updateSilverGrade(userNo);
+							System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
+							System.out.println("다음 등급까지" + (300000 - selectPoint) + "Point 남았습니다. ^_^");
+						}else {
+							clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
+							System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
+							System.out.println("다음 등급까지 " + (100000 - selectPoint) + "Point 남았습니다. ^_^");
+						}
+						
+						
+						
+						
+						
 					} else if (paymentBy == 2) { // 현금 결제
 						System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 						int grade = clientController.selectGrade(gradeNo);
@@ -306,10 +334,54 @@ public class OrderMenu {
 						int inputPrice = sc.nextInt();
 						if (inputPrice == lastPayment) {
 							System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+							
+							/* 멤버쉽 포인트 조회 */
+							int selectPoint = clientController.selectMemberPoint(userNo);
+							selectPoint = selectPoint + lastPayment;
+							System.out.println("\n\n현재 " + lastPayment + "Point 적립되셨습니다." );
+							System.out.println("고객님의 현재 누적된 멤버쉽은 " + selectPoint + "Point 입니다.");
+							/* 멤버쉽 포인트 변경 */
+							memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
+							/* 멤버쉽 등급 변경 */
+							if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
+								clientController.updateGoldGrade(userNo);
+								System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.");
+							} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
+								clientController.updateSilverGrade(userNo);
+								System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
+								System.out.println("다음 등급까지" + (300000 - selectPoint) + "Point 남았습니다. ^_^");
+							}else {
+								clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
+								System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
+								System.out.println("다음 등급까지 " + (100000 - selectPoint) + "Point 남았습니다. ^_^");
+							}
+							
 						} else if (inputPrice > lastPayment) {
 
 							System.out.println("거스름돈은 " + (inputPrice - lastPayment) + "원 입니다!");
 							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+							
+							/* 멤버쉽 포인트 조회 */
+							int selectPoint = clientController.selectMemberPoint(userNo);
+							selectPoint = selectPoint + lastPayment;
+							System.out.println("\n\n현재 " + lastPayment + "Point 적립되셨습니다." );
+							System.out.println("고객님의 현재 누적된 멤버쉽은 " + selectPoint + "Point 입니다.");
+							/* 멤버쉽 포인트 변경 */
+							memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
+							/* 멤버쉽 등급 변경 */
+							if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
+								clientController.updateGoldGrade(userNo);
+								System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.");
+							} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
+								clientController.updateSilverGrade(userNo);
+								System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
+								System.out.println("다음 등급까지" + (300000 - selectPoint) + "Point 남았습니다. ^_^");
+							}else {
+								clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
+								System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
+								System.out.println("다음 등급까지 " + (100000 - selectPoint) + "Point 남았습니다. ^_^");
+							}
+							
 						} else {
 							System.out.println("결제 금액이 " + (lastPayment - inputPrice) + "원 부족합니다!");
 							System.out.println("\n 추가 금액 " + (lastPayment - inputPrice) + "원을 결제해 주세요!\n\n\n");
@@ -330,17 +402,86 @@ public class OrderMenu {
 										"고객님의 " + paymentCard + "로 총" + (lastPayment - inputPrice) + "원이 결제 되었습니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 								System.out.println("\n\n\n\n\n\n\n\n\n\n");
+								
+								/* 멤버쉽 포인트 조회 */
+								int selectPoint = clientController.selectMemberPoint(userNo);
+								selectPoint = selectPoint + lastPayment;
+								System.out.println("\n\n현재 " + lastPayment + "Point 적립되셨습니다." );
+								System.out.println("고객님의 현재 누적된 멤버쉽은 " + selectPoint + "Point 입니다.");
+								/* 멤버쉽 포인트 변경 */
+								memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
+								/* 멤버쉽 등급 변경 */
+								if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
+									clientController.updateGoldGrade(userNo);
+									System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.");
+								} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
+									clientController.updateSilverGrade(userNo);
+									System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
+									System.out.println("다음 등급까지" + (300000 - selectPoint) + "Point 남았습니다. ^_^");
+								}else {
+									clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
+									System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
+									System.out.println("다음 등급까지 " + (100000 - selectPoint) + "Point 남았습니다. ^_^");
+								}
+								
 							}else if (paymentBy == 2) {
 								System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
 								inputPrice = sc.nextInt();
 								if (inputPrice == (lastPayment - inputPrice)) {
 									System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
+									
+									/* 멤버쉽 포인트 조회 */
+									int selectPoint = clientController.selectMemberPoint(userNo);
+									selectPoint = selectPoint + lastPayment;
+									System.out.println("\n\n현재 " + lastPayment + "Point 적립되셨습니다." );
+									System.out.println("고객님의 현재 누적된 멤버쉽은 " + selectPoint + "Point 입니다.");
+									/* 멤버쉽 포인트 변경 */
+									memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
+									/* 멤버쉽 등급 변경 */
+									if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
+										clientController.updateGoldGrade(userNo);
+										System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.");
+									} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
+										clientController.updateSilverGrade(userNo);
+										System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
+										System.out.println("다음 등급까지" + (300000 - selectPoint) + "Point 남았습니다. ^_^");
+									}else {
+										clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
+										System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
+										System.out.println("다음 등급까지 " + (100000 - selectPoint) + "Point 남았습니다. ^_^");
+									}
+									
+									
+									
 								}else if (inputPrice > (lastPayment - inputPrice)) {
 
 									System.out.println(
 											"거스름돈은 " + (inputPrice - (lastPayment - inputPrice)) + "원 입니다!");
 									System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+									
+									/* 멤버쉽 포인트 조회 */
+									int selectPoint = clientController.selectMemberPoint(userNo);
+									selectPoint = selectPoint + lastPayment;
+									System.out.println("\n\n현재 " + lastPayment + "Point 적립되셨습니다." );
+									System.out.println("고객님의 현재 누적된 멤버쉽은 " + selectPoint + "Point 입니다.");
+									/* 멤버쉽 포인트 변경 */
+									memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
+									/* 멤버쉽 등급 변경 */
+									if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
+										clientController.updateGoldGrade(userNo);
+										System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.");
+									} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
+										clientController.updateSilverGrade(userNo);
+										System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
+										System.out.println("다음 등급까지" + (300000 - selectPoint) + "Point 남았습니다. ^_^");
+									}else {
+										clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
+										System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
+										System.out.println("다음 등급까지 " + (100000 - selectPoint) + "Point 남았습니다. ^_^");
+									}
+									
+									
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
 								}
 								
@@ -398,6 +539,28 @@ public class OrderMenu {
 										"고객님의 " + paymentCard + "로 총" + (lastPayment - gifticonPrice) + "원이 결제 되었습니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 								System.out.println("\n\n\n\n\n\n\n\n\n\n");
+								afterLastPayment = lastPayment - gifticonPrice; // 기프티콘 사용 금액 적립 안해줄꺼임...
+								/* 멤버쉽 포인트 조회 */
+								int selectPoint = clientController.selectMemberPoint(userNo);
+								selectPoint = selectPoint + afterLastPayment;
+								System.out.println("\n\n현재 " + afterLastPayment + "Point 적립되셨습니다." );
+								System.out.println("고객님의 현재 누적된 멤버쉽은 " + selectPoint + "Point 입니다.");
+								/* 멤버쉽 포인트 변경 */
+								memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
+								/* 멤버쉽 등급 변경 */
+								if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
+									clientController.updateGoldGrade(userNo);
+									System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.");
+								} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
+									clientController.updateSilverGrade(userNo);
+									System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
+									System.out.println("다음 등급까지" + (300000 - selectPoint) + "Point 남았습니다. ^_^");
+								}else {
+									clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
+									System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
+									System.out.println("다음 등급까지 " + (100000 - selectPoint) + "Point 남았습니다. ^_^");
+								}
+								
 							}else if (paymentBy == 2) {
 								System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
 								int inputPrice = sc.nextInt();
@@ -410,6 +573,8 @@ public class OrderMenu {
 											"거스름돈은 " + (inputPrice - (lastPayment - gifticonPrice)) + "원 입니다!");
 									System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
+									
+									
 								}
 								
 							}

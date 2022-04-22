@@ -304,5 +304,39 @@ public class ClientService {
 		close(con);
 		return gifticonList;
 	}
+/* 멤버쉽 포인트 변경 */
+	public int updateMemberPoint(int userNo, int selectPoint) {
+		Connection con = getConnection();
+		int memberPoint = clientDAO.updateMemberPoint(con, userNo, selectPoint);
+		close(con);
+		
+		return memberPoint;
+	}
+/* 멤버쉽 포인트 조회 */
+	public int selectMemberPoint(int userNo) {
+		Connection con = getConnection();
+		int selectPoint = clientDAO.selectMemberPoint(con, userNo);
+		close(con);
+		return selectPoint;
+	}
+	/* 골드 등급으로 변경 */
+	public void updateGoldGrade(int userNo) {
+		Connection con = getConnection();
+		clientDAO.updateGoldGrade(con, userNo);
+		close(con);
+		
+	}
+
+	public void updateSilverGrade(int userNo) {
+		Connection con = getConnection();
+		clientDAO.updateSilverGrade(con, userNo);
+		close(con);		
+	}
+
+	public void updateFamilyGrade(int userNo) {
+		Connection con = getConnection();
+		clientDAO.updateFamilyGrade(con, userNo);
+		close(con);		
+	}
 
 }

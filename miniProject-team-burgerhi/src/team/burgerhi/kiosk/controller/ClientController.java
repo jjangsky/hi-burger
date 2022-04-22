@@ -473,4 +473,31 @@ public class ClientController {
 
 		return menuList;
 	}
+/* 멤버쉽 포인트 변경 */
+	public int updateMemberPoint(int userNo, int selectPoint) {
+		
+		int memberPoint = clientService.updateMemberPoint(userNo, selectPoint);
+		
+		return memberPoint;
+	}
+/* 멤버쉽 포인트 조회 */
+	public int selectMemberPoint(int userNo) {
+		
+		int selectPoint = clientService.selectMemberPoint(userNo);
+		
+		return selectPoint;
+	}
+	/* 골드 등급으로 변경 */
+	public void updateGoldGrade(int userNo) {
+		clientService.updateGoldGrade(userNo);
+	}
+	/* 실버 등급으로 변경 */
+	public void updateSilverGrade(int userNo) {
+		clientService.updateSilverGrade(userNo);
+	}
+	/* 패밀리 등급으로 변경 */
+	public void updateFamilyGrade(int userNo) {
+		clientService.updateFamilyGrade(userNo);
+		
+	}
 }

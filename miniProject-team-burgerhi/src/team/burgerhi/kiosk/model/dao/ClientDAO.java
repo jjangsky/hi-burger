@@ -719,4 +719,93 @@ public class ClientDAO {
 
 	}
 	
+	/* 멤버쉽 포인트 변경 */
+	public int updateMemberPoint(Connection con, int userNo, int selectPoint) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateMemberPoint");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, selectPoint);
+			pstmt.setInt(2, userNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		
+		return result;
+	}
+	/* 멤버쉽 포인트 조회 */
+	public int selectMemberPoint(Connection con, int userNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int selectPoint = 0;
+		
+		String query = prop.getProperty("selectMemberPoint");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				selectPoint = rset.getInt(1);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return selectPoint;
+	}
+	
+	/* 골드 등급으로 변경 */
+	public void updateGoldGrade(Connection con, int userNo) {
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateGoldGrade");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+	}
+
+	public void updateSilverGrade(Connection con, int userNo) {
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateSilverGrade");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}		
+	}
+
+	public void updateFamilyGrade(Connection con, int userNo) {
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateFamilyGrade");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}	
+	}
+	
 }

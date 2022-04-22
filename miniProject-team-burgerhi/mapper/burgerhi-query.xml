@@ -441,6 +441,36 @@
         WHERE GIFTICON_NO = (SELECT
                                     MAX(GIFTICON_NO)
                                FROM GIFTICON_TABLE
-                            );
+                            )
+   </entry>
+   <entry key="updateMemberPoint">
+  	    UPDATE
+               USER_TABLE
+           SET USER_POINT = ?
+        WHERE USER_NO = ?
+   </entry>
+   <entry key="selectMemberPoint">
+       SELECT
+              USER_POINT
+         FROM USER_TABLE
+        WHERE USER_NO = ?
+   </entry>
+   <entry key="updateGoldGrade">
+       UPDATE
+              USER_TABLE
+          SET GRADE_NO = 3
+        WHERE USER_NO = ?
+   </entry>
+   <entry key="updateSilverGrade">
+       UPDATE
+              USER_TABLE
+          SET GRADE_NO = 2
+        WHERE USER_NO = ?
+   </entry>
+   <entry key="updateFamilyGrade">
+       UPDATE
+              USER_TABLE
+          SET GRADE_NO = 1
+        WHERE USER_NO = ?
    </entry>
 </properties>
