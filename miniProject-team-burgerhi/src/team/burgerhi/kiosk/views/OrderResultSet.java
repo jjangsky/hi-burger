@@ -2,6 +2,8 @@ package team.burgerhi.kiosk.views;
 
 import java.util.Scanner;
 
+import team.burgerhi.kiosk.controller.ClientController;
+
 public class OrderResultSet {
 	Scanner sc = new Scanner(System.in);
 	public void displayDmlResult(String code) {
@@ -94,6 +96,58 @@ public class OrderResultSet {
 			e.printStackTrace();
 		}  /* finally */
 	}
+	
+	public void memberGradePoint(int userNo, int lastPayment) {
+		ClientController clientController = new ClientController();
+		
+		int selectPoint = clientController.selectMemberPoint(userNo);
+		selectPoint = selectPoint + lastPayment;
+		System.out.println("\n\n현재 " + lastPayment + "Point 적립되셨습니다." );
+		System.out.println("고객님의 현재 누적된 멤버쉽은 " + selectPoint + "Point 입니다.");
+		/* 멤버쉽 포인트 변경 */
+	 int memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
+		/* 멤버쉽 등급 변경 */
+		if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
+			clientController.updateGoldGrade(userNo);
+			System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.");
+		} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
+			clientController.updateSilverGrade(userNo);
+			System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
+			System.out.println("다음 등급까지" + (300000 - selectPoint) + "Point 남았습니다. ^_^");
+		}else {
+			clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
+			System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
+			System.out.println("다음 등급까지 " + (100000 - selectPoint) + "Point 남았습니다. ^_^");
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }
