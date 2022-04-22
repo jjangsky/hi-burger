@@ -413,10 +413,34 @@
               SUM(PAYMENT_PRICE)
          FROM PAYMENT_TABLE
    </entry>
+
    <entry key="selectCategoryBy">
       SELECT
              A.REF_CATEGORY_CODE
         FROM CATEGORY_TABLE A
        WHERE A.CATEGORY_CODE = ?
+	</entry>
+   <entry key="insertGifticonEvent">
+      INSERT
+             INTO GIFTICON_TABLE 
+             (
+               GIFTICON_NO
+             , GIFTICON_PRICE
+             )
+             VALUES
+             (
+               TO_CHAR(SYSDATE, 'YYmmDD')|| '-' || SEQ_GIFTICON_NO.NEXTVAL || '-0306'
+             , ?
+             )
+   </entry>
+   <entry key="selectlastgifticon">
+       SELECT
+              GIFTICON_NO
+            , GIFTICON_PRICE
+         FROM GIFTICON_TABLE
+        WHERE GIFTICON_NO = (SELECT
+                                    MAX(GIFTICON_NO)
+                               FROM GIFTICON_TABLE
+                            );
    </entry>
 </properties>

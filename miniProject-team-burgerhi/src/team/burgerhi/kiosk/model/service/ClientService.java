@@ -170,6 +170,7 @@ public class ClientService {
 	public void insertPayment(int orderCode, int userNo, int totalPrice, int gradeNo, int cardCode, double lastPayment,
 			String payment) {
 		Connection con = getConnection();
+
 		int inserResult = clientDAO.insertPayment(con, orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
 		if(inserResult > 0) {
 			commit(con);
@@ -177,6 +178,7 @@ public class ClientService {
 			rollback(con);
 		}
 		close(con);
+
 	}
 
 	/* 사용자가 입력 한 기프티콘 번호를 입력받아 기프티콘 테이블에서 Select */
@@ -272,7 +274,7 @@ public class ClientService {
 	public int deleteSalesAmount(int deleteMenuCode) {
 		Connection con = getConnection();
 		int result = clientDAO.deleteSalesAmount(con, deleteMenuCode);
-		if(result > 0) {
+		if (result > 0) {
 			commit(con);
 		} else {
 			rollback(con);
@@ -287,4 +289,20 @@ public class ClientService {
 		close(con);
 		return category;
 	}
+
+	/* 기프티콘 이벤트에 당첨된 기프티콘 생성 */
+	public int insertGifticonEvent() {
+		Connection con = getConnection();
+		int result = clientDAO.insertGifticonEvent(con);
+		close(con);
+		return result;
+	}
+
+	public List<GifticonDTO> selectlastgifticon() {
+		Connection con = getConnection();
+		List<GifticonDTO> gifticonList = clientDAO.selectlastgifticon(con);
+		close(con);
+		return gifticonList;
+	}
+
 }
