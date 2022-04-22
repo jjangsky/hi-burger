@@ -142,9 +142,9 @@ public class ClientService {
 	public int insertPayment(int orderCode, int userNo, int totalPrice, int gradeNo, int cardCode, double lastPayment,
 			String payment) {
 		Connection con = getConnection();
-		int inserResult = clientDAO.insertPayment(con, orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
+		int insertResult = clientDAO.insertPayment(con, orderCode, userNo, totalPrice, gradeNo, cardCode, lastPayment, payment);
 		close(con);
-		return inserResult;
+		return insertResult;
 	}
 
 	/* 사용자가 입력 한 기프티콘 번호를 입력받아 기프티콘 테이블에서 Select */
@@ -219,8 +219,21 @@ public class ClientService {
 		return result;
 	}
 
-	
+    /* 기프티콘 이벤트에 당첨된 기프티콘 생성 */
 
+	public int insertGifticonEvent() {
+		Connection con = getConnection();
+		int result = clientDAO.insertGifticonEvent(con);
+		close(con);
+		return result;
+	}
+
+	public List<GifticonDTO> selectlastgifticon() {
+		Connection con = getConnection();
+		List<GifticonDTO> gifticonList = clientDAO.selectlastgifticon(con); 
+		close(con);
+		return gifticonList;
+	}
 
 
 

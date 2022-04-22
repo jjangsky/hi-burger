@@ -441,15 +441,17 @@ public class ClientController {
 	/* 주문번호가 10번인 고객님의 경우 기프티콘 증정하는 이벤트 */
 	public void gifticonEvent(int orderCode) {
 		
-		/* if문 사용(orderCode == 10) */
-		
-		
 		/* clientService의 Insert 메소드 사용 */
-		
+		int result = clientService.insertGifticonEvent();
 		
 		/* List<GifticonDTO>로 Select 메소드 사용 */
-		
-		
+		List<GifticonDTO> gifticonList = clientService.selectlastgifticon();
+	
+		/* if문 사용(orderCode == 10) */
+		if(orderCode == 10) {
+			System.out.println(" 축하합니다. 기프티콘 이벤트에 당첨되셨습니다! ^__^ ");
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		}
 	}
 
 }
