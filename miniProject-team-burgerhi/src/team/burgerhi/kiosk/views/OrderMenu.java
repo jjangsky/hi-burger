@@ -430,7 +430,7 @@ public class OrderMenu {
 					
 
 					/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
-					orderResultSet.closeDisplayMainMenu();
+//					orderResultSet.closeDisplayMainMenu();
 					flag2 = false;
 					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			} 

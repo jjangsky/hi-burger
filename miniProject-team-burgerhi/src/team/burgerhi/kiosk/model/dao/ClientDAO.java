@@ -652,6 +652,7 @@ public class ClientDAO {
 		return result;
 	}
 
+
 	public int selectCategoryBy(Connection con, int categoryNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -672,8 +673,50 @@ public class ClientDAO {
 			close(rset);
 			close(pstmt);
 		}
-		
 		return category;
+	}
+				
+
+	public int insertGifticonEvent(Connection con) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertGifticonEvent");
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, 5000);
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		return result;
+	}
+
+	public List<GifticonDTO> selectlastgifticon(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<GifticonDTO> gifticonList = new ArrayList<GifticonDTO>();
+		String query = prop.getProperty("selectlastgifticon");
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				GifticonDTO gif = new GifticonDTO();
+				gif.setNo(rset.getString(1));
+				gif.setPrice(rset.getInt(2));
+				gifticonList.add(gif);	
+			
+				}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		close(stmt);
+		return gifticonList;
+
 	}
 	
 }

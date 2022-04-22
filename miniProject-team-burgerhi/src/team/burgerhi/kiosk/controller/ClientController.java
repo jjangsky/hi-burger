@@ -440,19 +440,19 @@ public class ClientController {
 
 	/* 주문번호가 10번인 고객님의 경우 기프티콘 증정하는 이벤트 */
 	public void gifticonEvent(int orderCode) {
+
 		int price = 0;
 		String gifticonNo = null;
-		
-		/* clientService의 Insert 메소드 사용 */
-		
-		
-		/* List<GifticonDTO>로 Select 메소드 사용 */
 
-		
-		
+		/* clientService의 Insert 메소드 사용 */
+		int result = clientService.insertGifticonEvent();
+
+		/* List<GifticonDTO>로 Select 메소드 사용 */
+		List<GifticonDTO> gifticonList = clientService.selectlastgifticon();
+
 		/* if문 사용(orderCode == 10) */
-		for(int i = 0; i < orderCode; i += 10) {
-			if(orderCode == i) {
+		for (int i = 0; i < orderCode; i += 10) {
+			if (orderCode == i) {
 				System.out.println("★★★★    BergerHI의 특별한 Event!    ★★★★");
 				System.out.println("=================================================");
 				System.out.println("\n      BergerHI에서 준비한 특별한 Event!!!! ");
@@ -463,13 +463,14 @@ public class ClientController {
 				System.out.println("  기프티콘 금액은 분할로 사용이 가능하며, 유효기간은 1년 입니다.");
 				System.out.println("\n\n BergerHI를 사랑해 주셔서 감사합니다. \n 좋은 하루 보내세요♥ ");
 			}
+
 		}
 	}
 
 	public List<MenuDTO> selectRefMenu(int categoryNo) {
 		int category = clientService.selectCategoryBy(categoryNo);
 		List<MenuDTO> menuList = clientService.selectMenuBy(category);
-		
+
 		return menuList;
 	}
 }
