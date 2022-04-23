@@ -85,7 +85,7 @@ public class NonMemberMenu {
 			/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
 			menuPrice = clientController.selectOrderMenuPrice(randomMenu.get(i).getMenuCode());
 			
-			totalPrice += (refAmount * randomMenu.get(i).getMenuCode());
+			totalPrice += (refAmount * randomMenu.get(i).getPrice());
 
 			/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
 			System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");

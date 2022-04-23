@@ -47,7 +47,6 @@ public class ClientController {
 				userDTO.setPhone(user.getPhone());
 				break;
 			}
-//			}
 		}
 
 		/* name에 들어있는 값이 있을 경우 로그인 성공 | 없을 경우(null) 로그인 실패로 간주 */
@@ -184,8 +183,21 @@ public class ClientController {
 	public List<MenuDTO> selectMenuBy(int categoryNo) {
 		List<MenuDTO> menuList = clientService.selectMenuBy(categoryNo);
 		
-				
 		return menuList;
+	}
+	
+	/* 회원 메뉴 보여지고 선택받기 */
+	public void ShowOrderMenu(int categoryNo) {
+		/* 사용자가 선택한 Category의 전체 Menu 출력 */
+		System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
+		System.out.println("=================================================");
+		System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
+		System.out.println();
+		List<MenuDTO> menuList = selectMenuBy(categoryNo); // Menu 출력 메소드
+		for (MenuDTO menu : menuList) {
+			System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  "
+					+ menu.getPrice() + "원\n     " + menu.getExplain());
+		}		
 	}
 
 	/* 사용자가 선택한 Menu를 장바구니에 Insert 하는 메소드 */
@@ -500,4 +512,5 @@ public class ClientController {
 		clientService.updateFamilyGrade(userNo);
 		
 	}
+
 }

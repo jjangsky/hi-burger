@@ -111,23 +111,15 @@ public class OrderMenu {
 								// 세트메뉴 선택 가능한 메소드
 							} else {
 								// 기존 메뉴선택 메소드
+								clientController.ShowOrderMenu(categoryNo);
 							}
 						}else {
 							//기존 메뉴선택 메소드
+							clientController.ShowOrderMenu(categoryNo);
 						}
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						
-						/* 사용자가 선택한 Category의 전체 Menu 출력 */
-						System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
-						System.out.println("=================================================");
-						System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
-						System.out.println();
-						List<MenuDTO> menuList = clientController.selectMenuBy(categoryNo); // Menu 출력 메소드
-						for (MenuDTO menu : menuList) {
-							System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  "
-									+ menu.getPrice() + "원\n     " + menu.getExplain());
-						}
-
+						
 						/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
 						System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
 						int inputMenuNo = sc.nextInt();
@@ -172,7 +164,7 @@ public class OrderMenu {
 						/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
 						menuPrice = clientController.selectOrderMenuPrice(randomMenu.get(i).getMenuCode());
 						
-						totalPrice += (refAmount * randomMenu.get(i).getMenuCode());
+						totalPrice += (refAmount * randomMenu.get(i).getPrice());
 
 
 						/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
@@ -291,14 +283,13 @@ public class OrderMenu {
 						}
 
 						cardCode = clientController.selectCardBy(paymentCard);
-
 						cardDiscount = totalPrice * cardDiscount; // 카드 할인: 10%이기 때문에 총 금액에서 10%가 얼마인지 계산 후 변수에 담기
 
 						/* 할인 내역 및 결제 금액 모두 출력 */
 						System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 						int grade = clientController.selectGrade(gradeNo);
 						gradeDiscount = totalPrice * (grade * 0.01);
-						System.out.println("▶ 등급 할인 금액: " + gradeDiscount + "원");
+						System.out.println("▶ 등급 할인 금액: " + (int)gradeDiscount + "원");
 						System.out.println("▶ 카드사 할인 금액: " + (int)cardDiscount + "원");
 						lastPayment = (int) (totalPrice - gradeDiscount - cardDiscount);
 						System.out.println();
