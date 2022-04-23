@@ -443,4 +443,106 @@
                                FROM GIFTICON_TABLE
                             )
    </entry>
+   <entry key="updateMemberPoint">
+  	    UPDATE
+               USER_TABLE
+           SET USER_POINT = ?
+        WHERE USER_NO = ?
+   </entry>
+   <entry key="selectMemberPoint">
+       SELECT
+              USER_POINT
+         FROM USER_TABLE
+        WHERE USER_NO = ?
+   </entry>
+   <entry key="updateGoldGrade">
+       UPDATE
+              USER_TABLE
+          SET GRADE_NO = 3
+        WHERE USER_NO = ?
+   </entry>
+   <entry key="updateSilverGrade">
+       UPDATE
+              USER_TABLE
+          SET GRADE_NO = 2
+        WHERE USER_NO = ?
+   </entry>
+   <entry key="updateFamilyGrade">
+       UPDATE
+              USER_TABLE
+          SET GRADE_NO = 1
+        WHERE USER_NO = ?
+   </entry>
+   
+   <entry key="selectAllBurger">
+		SELECT
+		       A.MENU_CODE
+		     , A.MENU_NAME
+		     , A.PRICE
+		     , A.MENU_EXPLAIN
+		     , A.CATEGORY_CODE
+		     , A.ORDERABLE
+		  FROM MENU_TABLE A
+		 WHERE A.CATEGORY_CODE = 1
+	</entry>
+	
+	<entry key="selectAllDrink">
+		SELECT
+		       A.MENU_CODE
+		     , A.MENU_NAME
+		     , A.PRICE
+		     , A.MENU_EXPLAIN
+		     , A.CATEGORY_CODE
+		     , A.ORDERABLE
+		  FROM MENU_TABLE A
+		 WHERE A.CATEGORY_CODE = 2
+	</entry>
+	
+	<entry key="selectAllSide">
+		SELECT
+		       A.MENU_CODE
+		     , A.MENU_NAME
+		     , A.PRICE
+		     , A.MENU_EXPLAIN
+		     , A.CATEGORY_CODE
+		     , A.ORDERABLE
+		  FROM MENU_TABLE A
+		 WHERE A.CATEGORY_CODE = 3
+	</entry>
+	
+	<entry key="insertDrinkMenu">
+		INSERT
+		  INTO ORDER_MENU_TABLE
+		(
+		  ORDER_MENU_NO
+		, USER_NO
+		, MENU_CODE
+		, ORDER_AMOUNT
+		)
+		VALUES
+		(
+		  SEQ_ORDER_MENU_NO.NEXTVAL
+		, ?
+		, 4
+		, ?
+		)
+	</entry>
+	
+	<entry key="insertSetMenu">
+		INSERT
+		  INTO ORDER_MENU_TABLE
+		(
+		  ORDER_MENU_NO
+		, USER_NO
+		, MENU_CODE
+		, ORDER_AMOUNT
+		)
+		VALUES
+		(
+		  SEQ_ORDER_MENU_NO.NEXTVAL
+		, ?
+		, 6
+		, ?
+		)
+	</entry>
 </properties>

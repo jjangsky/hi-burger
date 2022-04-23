@@ -810,5 +810,141 @@ public class ClientDAO {
 			close(pstmt);
 		}	
 	}
+
+	public List<MenuDTO> selectAllBurger(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		List<MenuDTO> burgerList = new ArrayList<MenuDTO>();
+		String query = prop.getProperty("selectAllBurger");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				MenuDTO menu = new MenuDTO();
+				menu.setMenuCode(rset.getInt("MENU_CODE"));
+				menu.setName(rset.getString("MENU_NAME"));
+				menu.setPrice(rset.getInt("PRICE"));
+				menu.setExplain(rset.getString("MENU_EXPLAIN"));
+				menu.setCategoryCode(rset.getInt("CATEGORY_CODE"));
+				menu.setOrderable(rset.getString("ORDERABLE"));
+				
+				burgerList.add(menu);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return burgerList;
+	}
+
+	public List<MenuDTO> selectAllDrink(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		List<MenuDTO> drinkList = new ArrayList<MenuDTO>();
+		String query = prop.getProperty("selectAllDrink");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				MenuDTO menu = new MenuDTO();
+				menu.setMenuCode(rset.getInt("MENU_CODE"));
+				menu.setName(rset.getString("MENU_NAME"));
+				menu.setPrice(rset.getInt("PRICE"));
+				menu.setExplain(rset.getString("MENU_EXPLAIN"));
+				menu.setCategoryCode(rset.getInt("CATEGORY_CODE"));
+				menu.setOrderable(rset.getString("ORDERABLE"));
+				
+				drinkList.add(menu);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return drinkList;
+	}
+
+	public List<MenuDTO> selectAllSide(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		List<MenuDTO> sideList = new ArrayList<MenuDTO>();
+		String query = prop.getProperty("selectAllSide");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				MenuDTO menu = new MenuDTO();
+				menu.setMenuCode(rset.getInt("MENU_CODE"));
+				menu.setName(rset.getString("MENU_NAME"));
+				menu.setPrice(rset.getInt("PRICE"));
+				menu.setExplain(rset.getString("MENU_EXPLAIN"));
+				menu.setCategoryCode(rset.getInt("CATEGORY_CODE"));
+				menu.setOrderable(rset.getString("ORDERABLE"));
+				
+				sideList.add(menu);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return sideList;
+	}
+
+	public int insertDrinkMenu(Connection con, int userNo, int inputAmount) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertDrinkMenu");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, inputAmount);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertSetMenu(Connection con, int userNo, int inputAmount) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertSetMenu");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, inputAmount);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 }
