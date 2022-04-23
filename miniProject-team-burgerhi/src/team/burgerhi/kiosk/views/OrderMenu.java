@@ -402,27 +402,8 @@ public class OrderMenu {
 										"고객님의 " + paymentCard + "로 총" + format.format((lastPayment - gifticonPrice)) + "원이 결제 되었습니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 								System.out.println("\n\n\n\n\n\n\n\n\n\n");
-								afterLastPayment = lastPayment - gifticonPrice; // 기프티콘 사용 금액 적립 안해줄꺼임...
-								/* 멤버쉽 포인트 조회 */
-								int selectPoint = clientController.selectMemberPoint(userNo);
-								selectPoint = selectPoint + afterLastPayment;
-								System.out.println("\n\n현재 " + format.format(afterLastPayment) + "Point 적립되셨습니다." );
-								System.out.println("고객님의 현재 누적된 멤버쉽은 " + format.format(selectPoint) + "Point 입니다.");
-								/* 멤버쉽 포인트 변경 */
-								memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
-								/* 멤버쉽 등급 변경 */
-								if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
-									clientController.updateGoldGrade(userNo);
-									System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.");
-								} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
-									clientController.updateSilverGrade(userNo);
-									System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
-									System.out.println("다음 등급까지" + format.format((300000 - selectPoint)) + "Point 남았습니다. ^_^");
-								}else {
-									clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
-									System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
-									System.out.println("다음 등급까지 " + format.format((100000 - selectPoint)) + "Point 남았습니다. ^_^");
-								}
+								orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice); // 기프티콘 사용 후 결제 금액 누적
+
 								
 							}else if (paymentBy == 2) {
 								System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
@@ -430,6 +411,8 @@ public class OrderMenu {
 								if (inputPrice == (lastPayment - gifticonPrice)) {
 									System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
+									orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice);// 기프티콘 사용 후 결제 금액 누적
+
 								}else if (inputPrice > (lastPayment - gifticonPrice)) {
 
 									System.out.println(
@@ -437,7 +420,7 @@ public class OrderMenu {
 									System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
 									
-									
+									orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice);// 기프티콘 사용 후 결제 금액 누적
 								}
 								
 							}
