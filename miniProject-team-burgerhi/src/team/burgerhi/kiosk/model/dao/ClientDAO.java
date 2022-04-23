@@ -775,6 +775,7 @@ public class ClientDAO {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, userNo);
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -788,6 +789,7 @@ public class ClientDAO {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, userNo);
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -801,6 +803,7 @@ public class ClientDAO {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, userNo);
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
