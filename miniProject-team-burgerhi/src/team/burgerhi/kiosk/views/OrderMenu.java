@@ -91,7 +91,10 @@ public class OrderMenu {
 
 					/* 메뉴주문 while문 */
 					while(flag1) {
-
+						int inputMenuNo = 0;
+						int inputAmount = 0;
+						int refPrice = 0;
+						
 						/* 전체 Category 출력 */
 						System.out.println(">>>>         BurgerHI 카테고리 선택          <<<<");
 						System.out.println("=================================================");
@@ -102,71 +105,79 @@ public class OrderMenu {
 						/* 메뉴 출력을 위해 필요한 category 번호 받기 */
 						System.out.print("\n → 원하시는 카테고리의 번호를 입력해 주세요: ");
 						int categoryNo = sc.nextInt();
+						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+						
 						if(categoryNo == 0) {
 							flag1 = false;		// 메뉴 주문 while문 탈출
 							continue;			// 메인메뉴로 돌아가도록 설정
 						} else if(categoryNo == 1) {
-							System.out.println("세트메뉴로 주문 하시겠습니까?(1.예 / 2. 아니오)");
+							System.out.print("세트메뉴로 주문 하시겠습니까?(1.예 / 2. 아니오): ");
 							int num2 = sc.nextInt();
+							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 							if(num2 == 1) {
 								// 세트메뉴 선택 가능한 메소드
+								
+								
 							} else {
 								// 기존 메뉴선택 메소드
 								clientController.ShowOrderMenu(categoryNo);
+								/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
+								System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
+								inputMenuNo = sc.nextInt();
+								if(inputMenuNo == 0) {
+									flag1 = false;		// 메뉴 주문 while문 탈출
+									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+									continue;			// 메인메뉴로 돌아가도록 설정
+								}
+								System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
+								inputAmount = sc.nextInt();
+								if(inputAmount == 0) {
+									flag1 = false;		// 메뉴 주문 while문 탈출
+									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+									continue;			// 메인메뉴로 돌아가도록 설정
+								}
+								/* OrderMenu(장바구니) Insert 메소드 */
+								clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
+								
+								/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
+								menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
+								totalPrice += (inputAmount * menuPrice);
+								
+								/* 추천카테고리의 메뉴 랜덤 추천 */
+								refPrice = clientController.selectRefMenu(categoryNo, userNo);
 							}
 						}else {
 							//기존 메뉴선택 메소드
 							clientController.ShowOrderMenu(categoryNo);
+							/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
+							System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
+							inputMenuNo = sc.nextInt();
+							if(inputMenuNo == 0) {
+								flag1 = false;		// 메뉴 주문 while문 탈출
+								System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+								continue;			// 메인메뉴로 돌아가도록 설정
+							}
+							System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
+							inputAmount = sc.nextInt();
+							if(inputAmount == 0) {
+								flag1 = false;		// 메뉴 주문 while문 탈출
+								System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+								continue;			// 메인메뉴로 돌아가도록 설정
+							}
+							/* OrderMenu(장바구니) Insert 메소드 */
+							clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
+							
+							/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
+							menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
+							totalPrice += (inputAmount * menuPrice);
+							
+							/* 추천카테고리의 메뉴 랜덤 추천 */
+							refPrice = clientController.selectRefMenu(categoryNo, userNo);
 						}
-						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						
 						
-						/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
-						System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
-						int inputMenuNo = sc.nextInt();
-						if(inputMenuNo == 0) {
-							flag1 = false;		// 메뉴 주문 while문 탈출
-							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-							continue;			// 메인메뉴로 돌아가도록 설정
-						}
-						System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
-						int inputAmount = sc.nextInt();
-						if(inputAmount == 0) {
-							flag1 = false;		// 메뉴 주문 while문 탈출
-							continue;			// 메인메뉴로 돌아가도록 설정
-						}
-						
-						
-						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-						
-						/* OrderMenu(장바구니) Insert 메소드 */
-						clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
-						/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
-						menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
-						
-						totalPrice += (inputAmount * menuPrice);
-						
-						/* 추천카테고리의 메뉴 랜덤 추천 */
-						List<MenuDTO> randomMenu = clientController.selectRefMenu(categoryNo);
-						int i = (int)Math.random() * randomMenu.size();
-						System.out.println("\n\n\n ******** BergerHI가 추천하는 함께하면 좋을 메뉴 ********");
-						System.out.println("▶ " + randomMenu.get(i).getMenuCode() + ". " + randomMenu.get(i).getName() + "  "
-								+ format.format(randomMenu.get(i).getPrice()) + "원\n     " + randomMenu.get(i).getExplain());
-						System.out.print("\n → 장바구니에 함께 담아드릴까요? (1.예 / 2.아니오): ");
-						int refNum = sc.nextInt();
-						int refAmount = 0;
-						if(refNum == 1) {
-							System.out.print("탁월한 선택이세요! 수량은 몇 개 담아드릴까요? ");
-							refAmount = sc.nextInt();
-							clientController.insertOrderMenu(userNo, randomMenu.get(i).getMenuCode(), refAmount);
-						}
-						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-																							
-						/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
-						menuPrice = clientController.selectOrderMenuPrice(randomMenu.get(i).getMenuCode());
-						
-						totalPrice += (refAmount * randomMenu.get(i).getPrice());
-
+						/* 추천 메뉴 금액과 세트메뉴 금액을 합산 할 총 금액 변수 */
+						totalPrice += refPrice;
 
 						/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
 						System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");

@@ -240,7 +240,7 @@ public class ClientController {
 			totalPrice += (price *  amount);
 		}
 		System.out.println("▶ 총 금액: " + format.format(totalPrice));	
-		System.out.println("\n\n\n\n");
+		System.out.println("\n\n\n\n\n\n\n\n\n");
 
 		return totalPrice;
 	}
@@ -480,13 +480,31 @@ public class ClientController {
 
 		}
 	}
-
-	public List<MenuDTO> selectRefMenu(int categoryNo) {
+	/* 추천카테고리의 메뉴 랜덤 추천 */
+	public int selectRefMenu(int categoryNo, int userNo) {
 		int category = clientService.selectCategoryBy(categoryNo);
-		List<MenuDTO> menuList = clientService.selectMenuBy(category);
-
-		return menuList;
+		int refPrice = 0;
+		
+		List<MenuDTO> randomMenu = clientService.selectMenuBy(category);
+		int i = (int)Math.random() * randomMenu.size();
+		System.out.println("\n\n\n ******** BergerHI가 추천하는 함께하면 좋을 메뉴 ********");
+		System.out.println("▶ " + randomMenu.get(i).getMenuCode() + ". " + randomMenu.get(i).getName() + "  "
+				+ format.format(randomMenu.get(i).getPrice()) + "원\n     " + randomMenu.get(i).getExplain());
+		System.out.print("\n → 장바구니에 함께 담아드릴까요? (1.예 / 2.아니오): ");
+		int refNum = sc.nextInt();
+		int refAmount = 0;
+		if(refNum == 1) {
+			System.out.print("\n\n 탁월한 선택이세요! 수량은 몇 개 담아드릴까요? ");
+			refAmount = sc.nextInt();
+			insertOrderMenu(userNo, randomMenu.get(i).getMenuCode(), refAmount);
+		}
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		
+		refPrice = (refAmount * randomMenu.get(i).getPrice());
+		
+		return refPrice;
 	}
+	
 /* 멤버쉽 포인트 변경 */
 	public int updateMemberPoint(int userNo, int selectPoint) {
 		
