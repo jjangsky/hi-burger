@@ -441,6 +441,6 @@
         WHERE GIFTICON_NO = (SELECT
                                     MAX(GIFTICON_NO)
                                FROM GIFTICON_TABLE
-                            );
+                            )
    </entry>
 </properties>
