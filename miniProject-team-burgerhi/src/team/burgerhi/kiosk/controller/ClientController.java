@@ -515,4 +515,63 @@ public class ClientController {
 		
 	}
 
+	public void ShowSetMenu(int userNo) {
+		/* 세트메뉴 선택 가능한 메소드 */
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		System.out.println(">>>>           BurgerHI 세트 선택            <<<<");
+		System.out.println("=================================================");
+		System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
+		System.out.println();
+		List<MenuDTO> burgerList = clientService.selectAllBurger();
+		List<MenuDTO> drinkList = clientService.selectAllDrink();
+		List<MenuDTO> sideList = clientService.selectAllSide();
+		
+		for (MenuDTO menu : burgerList) {
+			System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "세트  "
+					+ menu.getPrice() + "원\n     " + " 세트구성은 " + menu.getName() + ", 코카콜라, 감자튀김입니다.");
+		}
+		
+		System.out.print("\n → 원하시는 세트메뉴의 번호를 입력해 주세요: ");
+		int inputSetNo = sc.nextInt();
+		System.out.print("\n → 선택한 세트메뉴의 수량을 입력해 주세요: ");
+		int inputAmount = sc.nextInt();
+		
+		System.out.print("\n → 현재 구성으로 주문하시겠습니까?(1.예 / 2.아니오): ");
+		int inputSetOrder = sc.nextInt();
+		if(inputSetOrder == 1) {
+			
+			/* 장바구니에 insert */
+			clientService.insertOrderMenu(userNo, inputSetNo, inputAmount);	// 버거 insert
+			clientService.insertDrinkMenu(userNo, inputAmount);				// 음료 insert
+			clientService.insertSetMenu(userNo, inputAmount);				// 사이드 insert
+		} else if(inputSetOrder == 2){
+			/* 구성을 변경하는 메소드 */
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			System.out.println(">>>>           BurgerHI 음료 변경            <<<<");
+			System.out.println("=================================================");
+			for (MenuDTO menu : drinkList) {
+				System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  "
+						+ menu.getPrice() + "원\n     " + menu.getExplain());
+			}
+			System.out.print("\n → 변경 할 음료를 골라주세요: ");
+			int inputDrinkNo = sc.nextInt();
+			
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			System.out.println(">>>>           BurgerHI 사이드 변경            <<<<");
+			System.out.println("=================================================");
+			for (MenuDTO menu : sideList) {
+				System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  "
+						+ menu.getPrice() + "원\n     " + menu.getExplain());
+			}
+			System.out.print("\n → 변경 할 사이드를 골라주세요: ");
+			int inputsideNo = sc.nextInt();
+			
+			/* 장바구니에 insert */
+			clientService.insertOrderMenu(userNo, inputSetNo, inputAmount);			// 버거 insert
+			clientService.insertOrderMenu(userNo, inputDrinkNo, inputAmount);		// 음료 insert
+			clientService.insertOrderMenu(userNo, inputsideNo, inputAmount);			// 사이드 insert
+		}
+		
+	}
+
 }
