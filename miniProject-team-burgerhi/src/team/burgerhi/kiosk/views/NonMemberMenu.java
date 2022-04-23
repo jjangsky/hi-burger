@@ -21,6 +21,7 @@ public class NonMemberMenu {
 		double cardDiscount = 0;
 		boolean flag = true;
 		boolean flag2 = true;
+		int refPrice = 0;
 		
 		while(flag){
 			System.out.println(">>>>        BurgerHI 비회원 주문하기         <<<<");
@@ -66,26 +67,11 @@ public class NonMemberMenu {
 			totalPrice += (inputAmount * menuPrice);
 			
 			/* 추천카테고리의 메뉴 랜덤 추천 */
-			List<MenuDTO> randomMenu = clientController.selectRefMenu(categoryNo);
-			int i = (int)Math.random() * randomMenu.size();
-			System.out.println("\n\n\n ******** BergerHI가 추천하는 함께하면 좋을 메뉴 ********");
-			System.out.println("▶ " + randomMenu.get(i).getMenuCode() + ". " + randomMenu.get(i).getName() + "  "
-					+ randomMenu.get(i).getPrice() + "원\n     " + randomMenu.get(i).getExplain());
-			System.out.print("\n → 장바구니에 함께 담아드릴까요? (1.예 / 2.아니오): ");
-			int refNum = sc.nextInt();
-			int refAmount = 0;
-			if(refNum == 1) {
-				System.out.print("탁월한 선택이세요! 수량은 몇 개 담아드릴까요? ");
-				refAmount = sc.nextInt();
-				clientController.insertOrderMenu(userNo, randomMenu.get(i).getMenuCode(), refAmount);
-			}
+			refPrice = clientController.selectRefMenu(categoryNo, userNo);
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			
-			
-			/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
-			menuPrice = clientController.selectOrderMenuPrice(randomMenu.get(i).getMenuCode());
-			
-			totalPrice += (refAmount * randomMenu.get(i).getPrice());
+			/* 추천 메뉴 금액과 세트메뉴 금액을 합산 할 총 금액 변수 */
+			totalPrice += refPrice;
 
 			/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
 			System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");

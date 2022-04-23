@@ -339,4 +339,52 @@ public class ClientService {
 		close(con);		
 	}
 
+	public List<MenuDTO> selectAllBurger() {
+		Connection con = getConnection();
+		List<MenuDTO> burgerList = clientDAO.selectAllBurger(con);
+		close(con);
+		return burgerList;
+	}
+
+	public List<MenuDTO> selectAllDrink() {
+		Connection con = getConnection();
+		List<MenuDTO> drinkList = clientDAO.selectAllDrink(con);
+		close(con);
+		return drinkList;
+	}
+
+	public List<MenuDTO> selectAllSide() {
+		Connection con = getConnection();
+		List<MenuDTO> sideList = clientDAO.selectAllSide(con);
+		close(con);
+		return sideList;
+	}
+
+	public int insertDrinkMenu(int userNo, int inputAmount) {
+		Connection con = getConnection();
+		int insertDrinkMenu = clientDAO.insertDrinkMenu(con, userNo, inputAmount);
+		if(insertDrinkMenu > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return insertDrinkMenu;
+		
+	}
+
+	public int insertSetMenu(int userNo, int inputAmount) {
+		Connection con = getConnection();
+		int insertSetMenu = clientDAO.insertSetMenu(con, userNo, inputAmount);
+		if(insertSetMenu > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return insertSetMenu;
+		
+	}
+
+
 }

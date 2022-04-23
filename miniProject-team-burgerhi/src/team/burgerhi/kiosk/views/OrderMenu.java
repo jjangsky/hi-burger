@@ -116,8 +116,7 @@ public class OrderMenu {
 							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 							if(num2 == 1) {
 								// 세트메뉴 선택 가능한 메소드
-								
-								
+								clientController.ShowSetMenu(userNo);
 							} else {
 								// 기존 메뉴선택 메소드
 								clientController.ShowOrderMenu(categoryNo);
