@@ -68,7 +68,6 @@ public class NonMemberMenu {
 			
 			/* 추천카테고리의 메뉴 랜덤 추천 */
 			refPrice = clientController.selectRefMenu(categoryNo, userNo);
-			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			
 			/* 추천 메뉴 금액과 세트메뉴 금액을 합산 할 총 금액 변수 */
 			totalPrice += refPrice;
@@ -225,7 +224,7 @@ public class NonMemberMenu {
 				} else if (paymentBy == 3) { // 기프티콘 결제
 					System.out.println("\n → 총 결제 금액은 " + totalPrice + "원 입니다.");
 					System.out.println();
-					System.out.println("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
+					System.out.print("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
 					sc.nextLine();
 					String inputGiftNo = sc.nextLine();
 					int gifticonPrice = clientController.selectGifticonBy(inputGiftNo);

@@ -486,7 +486,9 @@ public class ClientController {
 		int refPrice = 0;
 		
 		List<MenuDTO> randomMenu = clientService.selectMenuBy(category);
-		int i = (int)Math.random() * randomMenu.size();
+		int i = (int)(Math.random() * randomMenu.size());
+//		System.out.println(randomMenu.size());			// 랜덤기능 확인 출력문
+//		System.out.println(i);
 		System.out.println("\n\n\n ******** BergerHI가 추천하는 함께하면 좋을 메뉴 ********");
 		System.out.println("▶ " + randomMenu.get(i).getMenuCode() + ". " + randomMenu.get(i).getName() + "  "
 				+ format.format(randomMenu.get(i).getPrice()) + "원\n     " + randomMenu.get(i).getExplain());
