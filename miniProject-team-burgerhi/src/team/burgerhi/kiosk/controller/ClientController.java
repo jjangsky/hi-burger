@@ -1,5 +1,6 @@
 package team.burgerhi.kiosk.controller;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class ClientController {
 	private OrderResultSet orderResultSet = new OrderResultSet();
 	Scanner sc = new Scanner(System.in);
 	String code = "";
+	DecimalFormat format = new DecimalFormat("###,###");
 	
 	/* Login 진행 메소드 */
 	public UserDTO loginResult() {
@@ -99,7 +101,7 @@ public class ClientController {
 				System.out.println("▶ 회원ID: " + user.get(2));
 				System.out.println("▶ 회원PWD: " + user.get(3));
 				System.out.println("▶ 등급: " + user.get(4));
-				System.out.println("▶ 보유포인트: " + user.get(5));
+				System.out.println("▶ 보유포인트: " + format.format(user.get(5)));
 				System.out.println("▶ 전화번호: " + user.get(6));
 				System.out.println();
 				System.out.println(" → 회원 정보 수정은 1번을 회원 탈퇴는 2번을 눌러주세요.");
@@ -196,7 +198,7 @@ public class ClientController {
 		List<MenuDTO> menuList = selectMenuBy(categoryNo); // Menu 출력 메소드
 		for (MenuDTO menu : menuList) {
 			System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  "
-					+ menu.getPrice() + "원\n     " + menu.getExplain());
+					+ format.format(menu.getPrice()) + "원\n     " + menu.getExplain());
 		}		
 	}
 
@@ -232,12 +234,12 @@ public class ClientController {
 			System.out.println("▶ 메뉴번호: " + orderMenuList.get(i + 1));			
 			System.out.println("▶ 메뉴명 : " + orderMenuList.get(i + 2));
 			System.out.println("▶ 주문수량: " + orderMenuList.get(i + 3));
-			System.out.println("▶ 금액: " + price + " * " + amount + " = " + (price *  amount));
+			System.out.println("▶ 금액: " + format.format(price) + " * " + amount + " = " + format.format((price *  amount)));
 			System.out.println();
 //			i += 4;
 			totalPrice += (price *  amount);
 		}
-		System.out.println("▶ 총 금액: " + totalPrice);	
+		System.out.println("▶ 총 금액: " + format.format(totalPrice));	
 		System.out.println("\n\n\n\n");
 
 		return totalPrice;
@@ -470,7 +472,7 @@ public class ClientController {
 				System.out.println("\n      BergerHI에서 준비한 특별한 Event!!!! ");
 				System.out.println("\n    " + i + "번째 고객님께 드리는 선물🎁");
 				System.out.println("\n → 기프티콘 번호:" + gifticonNo);
-				System.out.println("\n → 기프티콘 금액:" + price);
+				System.out.println("\n → 기프티콘 금액:" + format.format(price));
 				System.out.println("\n 다음 주문부터 사용이 가능하며, 현금으로 교환은 어렵습니다.");
 				System.out.println("  기프티콘 금액은 분할로 사용이 가능하며, 유효기간은 1년 입니다.");
 				System.out.println("\n\n BergerHI를 사랑해 주셔서 감사합니다. \n 좋은 하루 보내세요♥ ");

@@ -403,10 +403,12 @@
 	     WHERE A.MENU_CODE = ?
 	</entry>
 	<entry key="selectMethodSales">
-	    SELECT SUM(PAYMENT_PRICE)
-	      FROM PAYMENT_TABLE
-	     GROUP BY PAYMENT_BY
-	     ORDER BY PAYMENT_BY
+	    SELECT 
+    	       PAYMENT_BY
+  	        , SUM(PAYMENT_PRICE)
+ 	     FROM PAYMENT_TABLE
+	    GROUP BY PAYMENT_BY
+	    ORDER BY PAYMENT_BY
 	</entry>
 	<entry key="selectAllSales">
        SELECT

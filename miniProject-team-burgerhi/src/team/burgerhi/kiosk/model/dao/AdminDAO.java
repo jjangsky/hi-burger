@@ -413,19 +413,15 @@ public class AdminDAO {
 		Statement stmt = null;
 		ResultSet rset = null;
 		String query = prop.getProperty("selectMethodSales");
-		
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Integer> methodSales = new HashMap<String, Integer>();
 		
 		try {
 			stmt = con.createStatement();
 			rset = stmt.executeQuery(query);
-			List list = new ArrayList();
-			while(rset.next()) {
-				list.add(rset.getInt(1));
+			
+			for(int i = 0; rset.next(); i++) {
+				methodSales.put(rset.getString(1), rset.getInt(2));
 			}
-			map.put("기프티콘", (Integer)list.get(0));
-			map.put("카드", (Integer)list.get(1));
-			map.put("현금", (Integer)list.get(2));
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -433,7 +429,7 @@ public class AdminDAO {
 			close(rset);
 			close(stmt);
 		}
-		return map;
+		return methodSales;
 	}
 
 

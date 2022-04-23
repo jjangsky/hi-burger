@@ -1,5 +1,6 @@
 package team.burgerhi.kiosk.controller;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import team.burgerhi.kiosk.model.service.AdminService;
 public class AdminController {	
 	private AdminService adminService = new AdminService();
 	Scanner sc = new Scanner(System.in);
+	DecimalFormat format = new DecimalFormat("###,###");
 	
 	public void selectHambergerRanking() {
 		
@@ -20,9 +22,9 @@ public class AdminController {
 		
 		System.out.println(">>>>          BurgerHI 햄버거 랭킹           <<<<");
 		System.out.println("=================================================");
-		System.out.println("\n▶ 판매량 1위 " + hamberger.get(1));
-		System.out.println("▶ 판매량 2위 " + hamberger.get(2));
-		System.out.println("▶ 판매량 3위 " + hamberger.get(3));
+		System.out.println("\n▶ 판매량 1위 " + (hamberger.get(1) != null ? hamberger.get(1) : "판매 내역 없음"));
+		System.out.println("▶ 판매량 2위 " + (hamberger.get(2) != null ? hamberger.get(2) : "판매 내역 없음"));
+		System.out.println("▶ 판매량 3위 " + (hamberger.get(3) != null ? hamberger.get(3) : "판매 내역 없음"));
 		System.out.println("\n\n\n\n\n");
 		
 	}
@@ -33,9 +35,9 @@ public class AdminController {
 		
 		System.out.println(">>>>          BurgerHI 음료수 랭킹           <<<<");
 		System.out.println("=================================================");
-		System.out.println("\n▶ 판매량 1위 " + Drink.get(1));
-		System.out.println("▶ 판매량 2위 " + Drink.get(2));
-		System.out.println("▶ 판매량 3위 " + Drink.get(3));
+		System.out.println("\n▶ 판매량 1위 " + (Drink.get(1) != null ? Drink.get(1) : "판매 내역 없음"));
+		System.out.println("▶ 판매량 2위 " + (Drink.get(2) != null ? Drink.get(2) : "판매 내역 없음"));
+		System.out.println("▶ 판매량 3위 " + (Drink.get(3) != null ? Drink.get(3) : "판매 내역 없음"));
 		System.out.println("\n\n\n\n\n");
 	}
 
@@ -45,9 +47,9 @@ public class AdminController {
 		
 		System.out.println(">>>>          BurgerHI 사이드 랭킹           <<<<");
 		System.out.println("=================================================");
-		System.out.println("\n▶ 판매량 1위 " + Side.get(1));
-		System.out.println("▶ 판매량 2위 " + Side.get(2));
-		System.out.println("▶ 판매량 3위 " + Side.get(3));
+		System.out.println("\n▶ 판매량 1위 " + (Side.get(1) != null ? Side.get(1) : "판매 내역 없음"));
+		System.out.println("▶ 판매량 2위 " + (Side.get(2) != null ? Side.get(2) : "판매 내역 없음"));
+		System.out.println("▶ 판매량 3위 " + (Side.get(3) != null ? Side.get(3) : "판매 내역 없음"));
 		System.out.println("\n\n\n\n\n");
 		
 	}
@@ -103,7 +105,6 @@ public class AdminController {
 		System.out.println(">>>>      BurgerHI 카테고리 삭제 시스템      <<<<");
 		System.out.println("=================================================");
 		System.out.print("\n → 삭제할 카테고리 이름을 입력해 주세요: ");
-		sc.nextLine();
 		String categoryName = sc.nextLine();
 		System.out.println("\n\n\n\n\n");
 		
@@ -205,11 +206,11 @@ public class AdminController {
 	      
 	      if(date == 0) {
 	         int monthSales = adminService.selectMonthSales(month);
-	         System.out.println(month + "월의 매출액은 총" + monthSales + "입니다.");
+	         System.out.println("\n ▶ " + month + "월의 매출액은 총 " + format.format(monthSales) + "원 입니다.");
 	         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	      } else {
 	         int monthSales = adminService.selectDateSales(month, date);
-	         System.out.println( month + "월" + date + "일의 매출액은 총" + monthSales + "원 입니다. ");
+	         System.out.println("\n ▶ " + month + "월" + date + "일의 매출액은 총 " + format.format(monthSales) + "원 입니다. ");
 	         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	      }
 	      
@@ -229,23 +230,24 @@ public class AdminController {
 		int salesNum = sc.nextInt();
 		
 		Date now = new Date();
-		SimpleDateFormat sdfm = new SimpleDateFormat("yy/MM/dd");
+		SimpleDateFormat sdfm = new SimpleDateFormat("yy년 MM월 dd일");
 		
 		if(salesNum == 1) {
 			int totalSales = adminService.selectAllSales();
-			System.out.println(sdfm.format(now) + "기준 총 매출액은 " + totalSales + "원 입니다.");
+			System.out.println("\n\n ▶ " + sdfm.format(now) + " 기준 총 매출액은 " + format.format(totalSales) + "원 입니다.");
 		} else if(salesNum == 2) {
 			Map<Integer, Integer> gadeSales = adminService.selectGradeSales();
-			System.out.println("▶ Family등급 매출액: " + gadeSales.get(0) + "원");
-			System.out.println("▶ Silver등급 매출액: " + gadeSales.get(1) + "원");
-			System.out.println("▶ Gold등급 매출액: " + gadeSales.get(2) + "원");
-			System.out.println("▶ 비회원등급 매출액: " + gadeSales.get(4) + "원");
+			System.out.println("\n\n ▶ Family등급 매출액: " + format.format(gadeSales.get(0)) + "원");
+			System.out.println("\n ▶ Silver등급 매출액: " + format.format(gadeSales.get(1)) + "원");
+			System.out.println("\n ▶ Gold등급 매출액: " + format.format(gadeSales.get(2)) + "원");
+			System.out.println("\n ▶ 비회원등급 매출액: " + format.format(gadeSales.get(4)) + "원");
 			
 		} else if(salesNum == 3) {
 			Map<String, Integer> methodSales = adminService.selectMethodSales();
-			System.out.println("\n기프티콘 결제의 총 매출: " + methodSales.get("기프티콘")+ "원" + "\n");
-			System.out.println("카드 결제의 총 매출: " + methodSales.get("카드")+ "원" + "\n");
-			System.out.println("현금 결제의 총 매출: " + methodSales.get("현금")+ "원" + "\n");
+			
+			System.out.println("\n\n ▶ 기프티콘 결제의 총 매출: " + (methodSales.get("기프티콘") != null ? format.format(methodSales.get("기프티콘")) : 0) + "원" + "\n");
+			System.out.println(" ▶ 카드 결제의 총 매출: " + (methodSales.get("카드") != null ? format.format(methodSales.get("카드")) : 0) + "원" + "\n");
+			System.out.println(" ▶ 현금 결제의 총 매출: " + (methodSales.get("현금") != null ? format.format(methodSales.get("현금")) : 0) + "원" + "\n");
 		}
 		 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		
