@@ -14,6 +14,7 @@ import team.burgerhi.kiosk.model.dto.GifticonDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 import team.burgerhi.kiosk.model.service.ClientService;
+import team.burgerhi.kiosk.views.OrderMenu;
 import team.burgerhi.kiosk.views.OrderResultSet;
 
 public class ClientController {
@@ -216,7 +217,7 @@ public class ClientController {
 	}
 
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
-	public int selectOrderMenu(int totalPrice) {
+	public int selectOrderMenu(int totalPrice, int setAmount) {
 		
 		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
 		List<String> orderMenuList = clientService.selectOrderMenu();
@@ -239,7 +240,9 @@ public class ClientController {
 //			i += 4;
 			totalPrice += (price *  amount);
 		}
-		System.out.println("▶ 총 금액: " + format.format(totalPrice));	
+		int setSalePrice = setAmount * 1000;
+		System.out.println("▶ 세트 할인 금액: " + format.format(setSalePrice));
+		System.out.println("▶ 총 금액: " + format.format(totalPrice - setSalePrice));
 		System.out.println("\n\n\n\n\n\n\n\n\n");
 
 		return totalPrice;
@@ -533,7 +536,7 @@ public class ClientController {
 		
 	}
 
-	public void ShowSetMenu(int userNo) {
+	public int ShowSetMenu(int userNo) {
 		/* 세트메뉴 선택 가능한 메소드 */
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		System.out.println(">>>>           BurgerHI 세트 선택            <<<<");
@@ -543,17 +546,20 @@ public class ClientController {
 		List<MenuDTO> burgerList = clientService.selectAllBurger();
 		List<MenuDTO> drinkList = clientService.selectAllDrink();
 		List<MenuDTO> sideList = clientService.selectAllSide();
+		int selectBurgerPrice = 0;
+		int selectDrinkPrice = 0;
+		int selectSidePrice = 0;
 		
+		int setPrice = 0;
 		for (MenuDTO menu : burgerList) {
 			System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "세트  "
-					+ menu.getPrice() + "원\n     " + " 세트구성은 " + menu.getName() + ", 코카콜라, 감자튀김입니다.");
+					+ (menu.getPrice()+3000)+ "원  " + " (세트할인 1000)\n" +  " 세트구성은 " + menu.getName() + ", 코카콜라, 감자튀김입니다.");
 		}
 		
 		System.out.print("\n → 원하시는 세트메뉴의 번호를 입력해 주세요: ");
 		int inputSetNo = sc.nextInt();
 		System.out.print("\n → 선택한 세트메뉴의 수량을 입력해 주세요: ");
 		int inputAmount = sc.nextInt();
-		
 		System.out.print("\n → 현재 구성으로 주문하시겠습니까?(1.예 / 2.아니오): ");
 		int inputSetOrder = sc.nextInt();
 		if(inputSetOrder == 1) {
@@ -562,6 +568,19 @@ public class ClientController {
 			clientService.insertOrderMenu(userNo, inputSetNo, inputAmount);	// 버거 insert
 			clientService.insertDrinkMenu(userNo, inputAmount);				// 음료 insert
 			clientService.insertSetMenu(userNo, inputAmount);				// 사이드 insert
+			
+			for(int i = 0; i < burgerList.size(); i++) {
+				if(inputSetNo == burgerList.get(i).getMenuCode()) {
+					selectBurgerPrice = burgerList.get(i).getPrice();
+				}
+			}
+			
+			selectDrinkPrice = drinkList.get(0).getPrice();
+			selectSidePrice = sideList.get(0).getPrice();
+			int a = selectBurgerPrice * inputAmount;
+			int b = selectDrinkPrice * inputAmount;
+			int c = selectSidePrice * inputAmount;
+			setPrice = a+b+c;
 		} else if(inputSetOrder == 2){
 			/* 구성을 변경하는 메소드 */
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -583,13 +602,32 @@ public class ClientController {
 			}
 			System.out.print("\n → 변경 할 사이드를 골라주세요: ");
 			int inputsideNo = sc.nextInt();
-			
 			/* 장바구니에 insert */
 			clientService.insertOrderMenu(userNo, inputSetNo, inputAmount);			// 버거 insert
 			clientService.insertOrderMenu(userNo, inputDrinkNo, inputAmount);		// 음료 insert
 			clientService.insertOrderMenu(userNo, inputsideNo, inputAmount);			// 사이드 insert
+			
+			for(int i = 0; i < burgerList.size(); i++) {
+				if(inputSetNo == burgerList.get(i).getMenuCode()) {
+					selectBurgerPrice = burgerList.get(i).getPrice();
+				}
+			}
+			for(int i = 0; i < drinkList.size(); i++) {
+				if(inputDrinkNo == drinkList.get(i).getMenuCode()) {
+					selectDrinkPrice = drinkList.get(i).getPrice();
+				}
+			}
+			for(int i = 0; i < sideList.size(); i++) {
+				if(inputsideNo == sideList.get(i).getMenuCode()) {
+					selectSidePrice = sideList.get(i).getPrice();
+				}
+			}
+			int a = selectBurgerPrice * inputAmount;
+			int b = selectDrinkPrice * inputAmount;
+			int c = selectSidePrice * inputAmount;
+			setPrice = a+b+c;
 		}
-		
+		return setPrice;
 	}
 
 }

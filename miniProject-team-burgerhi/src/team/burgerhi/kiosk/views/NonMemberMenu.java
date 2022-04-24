@@ -22,6 +22,7 @@ public class NonMemberMenu {
 		boolean flag = true;
 		boolean flag2 = true;
 		int refPrice = 0;
+		int setAmount = 0;
 		
 		while(flag){
 			System.out.println(">>>>        BurgerHI 비회원 주문하기         <<<<");
@@ -95,7 +96,7 @@ public class NonMemberMenu {
 				continue; // while문의 처음으로 돌아가도록 설정
 			  /* 장바구니 확인하기 */
 			} else if (num == 2) { 
-				totalPrice = clientController.selectOrderMenu(totalPrice); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
+				totalPrice = clientController.selectOrderMenu(totalPrice, setAmount); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
 				
 			/* 장바구니 while문 */
 				while(true) { // 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
@@ -122,7 +123,7 @@ public class NonMemberMenu {
 					break;// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 				} else if(num2 == 2) { // 장바구니에 있는 메뉴 수정하기
 					clientController.deleteOrderMenu();
-					totalPrice = clientController.selectOrderMenu(totalPrice);
+					totalPrice = clientController.selectOrderMenu(totalPrice, setAmount);
 				} else if(num2 == 3) {
 					flag = false;
 					flag2 = true;

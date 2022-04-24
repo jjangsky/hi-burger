@@ -32,6 +32,9 @@ public class OrderMenu {
 			int lastPayment = 0;
 			int afterLastPayment = 0;
 			int memberPoint = 0;
+			int setPrice = 0;
+			int setDiscount = 0;
+			int setAmount = 0;
 			double gradeDiscount = 0;
 			double cardDiscount = 0;
 			boolean flag = true;
@@ -116,7 +119,10 @@ public class OrderMenu {
 							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 							if(num2 == 1) {
 								// 세트메뉴 선택 가능한 메소드
-								clientController.ShowSetMenu(userNo);
+								setPrice = clientController.ShowSetMenu(userNo);
+								setDiscount = 1000;
+								setAmount++;
+								totalPrice += (setPrice - setDiscount);
 							} else {
 								// 기존 메뉴선택 메소드
 								clientController.ShowOrderMenu(categoryNo);
@@ -176,8 +182,9 @@ public class OrderMenu {
 						
 						
 						/* 추천 메뉴 금액과 세트메뉴 금액을 합산 할 총 금액 변수 */
+						
 						totalPrice += refPrice;
-
+						
 						/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
 						System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
 						System.out.println("=================================================");
@@ -198,7 +205,7 @@ public class OrderMenu {
 						}else if(num == 1) { // 추가 주문하기
 							continue; // while문의 처음으로 돌아가도록 설정
 						} else if (num == 2) { // 장바구니 확인하기
-							clientController.selectOrderMenu(totalPrice); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
+							clientController.selectOrderMenu(totalPrice, setAmount); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
 
 							/* 장바구니 while문 */
 							while(true) { // 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
@@ -227,7 +234,7 @@ public class OrderMenu {
 										clientController.deleteAllOrderMenu();		// 프로그램이 종료 되면서 장바구니 내역 삭제
 										break; 										// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 									} else {
-										totalPrice = clientController.selectOrderMenu(totalPrice);
+										totalPrice = clientController.selectOrderMenu(totalPrice, setAmount);
 									}
 								} else if(num == 3) {
 									flag = false; // 모든 while문을 빠져나가 최종 결제 화면이 뜨도록 함
