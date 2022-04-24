@@ -219,9 +219,9 @@ public class OrderMenu {
 								List<MenuDTO> menuList = clientController.ShowOrderMenu(categoryNo);
 								
 								/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
-								System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
 								while(true) {
 									try {	// 문자열 예외처리
+										System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
 										inputMenuNo = sc.nextInt();
 									} catch(InputMismatchException e) {
 										System.out.println("\n 숫자로 입력해 주세요!");

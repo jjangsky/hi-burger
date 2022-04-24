@@ -122,7 +122,7 @@ public class NonMemberMenu {
 					while(true) {
 						try {		// 실수로 문자열을 입력했을 경우의 예외처리
 							System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
-							inputMenuNo = sc.nextInt();
+							inputAmount = sc.nextInt();
 							System.out.println("\n\n\n\n\n");
 						} catch(InputMismatchException e) {
 							System.out.println("\n 숫자로 입력해 주세요!");
@@ -178,10 +178,10 @@ public class NonMemberMenu {
 					flag2  = false;
 					break;
 				}
-				System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
 				
 				while(true) {
 					try {		// 실수로 문자열을 입력했을 경우의 예외처리
+						System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
 						inputAmount = sc.nextInt();
 						System.out.println("\n\n\n\n\n");
 					} catch(InputMismatchException e) {
