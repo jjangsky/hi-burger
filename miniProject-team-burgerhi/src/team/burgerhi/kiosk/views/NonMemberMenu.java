@@ -1,5 +1,6 @@
 package team.burgerhi.kiosk.views;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,6 +25,12 @@ public class NonMemberMenu {
 		int setPrice = 0;
 		int setDiscount = 0;
 		int inputMenuNo = 0;
+		int categoryNo = 0;
+		int num = 0;
+		int num2 = 0;
+		int num3 = 0;
+		int inputAmount = 0;
+		int inputPrice = 0;
 		double cardDiscount = 0;
 		boolean flag = true;
 		boolean flag2 = true;
@@ -33,10 +40,19 @@ public class NonMemberMenu {
 			System.out.println(">>>>        BurgerHI 비회원 주문하기         <<<<");
 			System.out.println("=================================================");
 			System.out.println();   
-			List<CategoryDTO> categoryList = clientController.selectAllCategory(); // Category 출력 메소드
-			System.out.print("\n →  원하시는 카테고리의 번호를 입력해 주세요: ");
-			int categoryNo = sc.nextInt();
-			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			List<CategoryDTO> categoryList = clientController.selectAllCategory(); // Category 출력 메소드		
+			while(true) {
+				try {		// 실수로 문자열을 입력했을 경우의 예외처리
+					System.out.print("\n →  원하시는 카테고리의 번호를 입력해 주세요: ");
+					categoryNo = sc.nextInt();
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+				} catch(InputMismatchException e) {
+					System.out.println("\n 숫자로 입력해 주세요!");
+					sc.next();
+					continue;
+				} break;
+				}
+			
 			gradeNo = clientController.selectNonMemberGradeNo();
 			userNo = clientController.insertNonMemberUser(gradeNo);
 //			System.out.println(gradeNo);						// 오류 구문 확인
@@ -46,9 +62,19 @@ public class NonMemberMenu {
 				flag2 = false;	// 메뉴 주문 while문 탈출
 				break;			// 메인메뉴로 돌아가도록 설정
 			} else if (categoryNo == 1){
-				System.out.print("세트메뉴로 주문 하시겠습니까?(1.예 / 2. 아니오): ");
-				int num2 = sc.nextInt();
-				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
+				while(true) {
+					try {		// 실수로 문자열을 입력했을 경우의 예외처리
+						System.out.print("세트메뉴로 주문 하시겠습니까?(1.예 / 2. 아니오): ");
+						 num2 = sc.nextInt();
+						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+					} catch(InputMismatchException e) {
+						System.out.println("\n 숫자로 입력해 주세요!");
+						sc.next();
+						continue;
+					} break;
+					}
+				
 				if(num2 == 1) {
 					// 세트메뉴 선택 가능한 메소드
 					setPrice = clientController.ShowSetMenu(userNo);
@@ -63,8 +89,17 @@ public class NonMemberMenu {
 						List<MenuDTO> menuList = clientController.ShowOrderMenu(categoryNo);
 						
 						/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
-						System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
-						inputMenuNo = sc.nextInt();
+						while(true) {
+							try {		// 실수로 문자열을 입력했을 경우의 예외처리
+								System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
+								inputMenuNo = sc.nextInt();
+							} catch(InputMismatchException e) {
+								System.out.println("\n 숫자로 입력해 주세요!");
+								sc.next();
+								continue;
+							} break;
+							}
+						
 						
 						for(MenuDTO menu : menuList) {
 							if(inputMenuNo == menu.getMenuCode() || inputMenuNo == 0) {
@@ -84,9 +119,17 @@ public class NonMemberMenu {
 						break;
 					}
 					
-					System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
-					int inputAmount = sc.nextInt();
-					System.out.println("\n\n\n\n\n");
+					while(true) {
+						try {		// 실수로 문자열을 입력했을 경우의 예외처리
+							System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
+							inputMenuNo = sc.nextInt();
+							System.out.println("\n\n\n\n\n");
+						} catch(InputMismatchException e) {
+							System.out.println("\n 숫자로 입력해 주세요!");
+							sc.next();
+							continue;
+						} break;
+						}
 					
 					/* 장바구니에 Insert */
 					clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
@@ -106,9 +149,17 @@ public class NonMemberMenu {
 					// 기존 메뉴선택 메소드
 					List<MenuDTO> menuList = clientController.ShowOrderMenu(categoryNo);
 					
-					/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
-					System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
-					inputMenuNo = sc.nextInt();
+					/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */				
+					while(true) {
+						try {		// 실수로 문자열을 입력했을 경우의 예외처리
+							System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
+							inputMenuNo = sc.nextInt();
+						} catch(InputMismatchException e) {
+							System.out.println("\n 숫자로 입력해 주세요!");
+							sc.next();
+							continue;
+						} break;
+						}
 					
 					for(MenuDTO menu : menuList) {
 						if(inputMenuNo == menu.getMenuCode() || inputMenuNo == 0) {
@@ -128,8 +179,18 @@ public class NonMemberMenu {
 					break;
 				}
 				System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
-				int inputAmount = sc.nextInt();
-				System.out.println("\n\n\n\n\n");
+				
+				while(true) {
+					try {		// 실수로 문자열을 입력했을 경우의 예외처리
+						inputAmount = sc.nextInt();
+						System.out.println("\n\n\n\n\n");
+					} catch(InputMismatchException e) {
+						System.out.println("\n 숫자로 입력해 주세요!");
+						sc.next();
+						continue;
+					} break;
+					}
+				
 				/* 장바구니에 Insert */
 				clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
 				
@@ -154,10 +215,20 @@ public class NonMemberMenu {
 			System.out.println("      추가 주문하기    |     장바구니 보기     ");
 			System.out.println("                       |                       ");
 			System.out.println("=================================================");
-			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
-			System.out.print("\n → 번호를 선택해 주세요: ");
-			int num = sc.nextInt();
-			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");	
+			while(true) {
+				try {		// 실수로 문자열을 입력했을 경우의 예외처리
+					System.out.print("\n → 번호를 선택해 주세요: ");
+					 num = sc.nextInt();
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+				} catch(InputMismatchException e) {
+					System.out.println("\n 숫자로 입력해 주세요!");
+					sc.next();
+					continue;
+				} break;
+				}
+			
+			
 			/* 추가 주문하기 */
 			if(num == 0) {
 				clientController.deleteAllOrderMenu();
@@ -181,26 +252,34 @@ public class NonMemberMenu {
 					System.out.println(" 추가 주문하기 | 장바구니 수정 |   결제 하기   ");
 					System.out.println("               |               |               ");
 					System.out.println("=================================================z");
-					System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
-				System.out.print("\n →번호를 선택해 주세요: ");
-				int num2 = sc.nextInt();
-				System.out.println("\n\n\n\n\n");
+					System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");		
+				while(true) {
+					try {		// 실수로 문자열을 입력했을 경우의 예외처리
+						System.out.print("\n → 번호를 선택해 주세요: ");
+						 num3 = sc.nextInt();
+						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+					} catch(InputMismatchException e) {
+						System.out.println("\n 숫자로 입력해 주세요!");
+						sc.next();
+						continue;
+					} break;
+					}
 
-				if(num2 == 0) {
+				if(num3 == 0) {
 					clientController.deleteAllOrderMenu();
 					flag = false;
 					flag2 = false;
 					flag1 = false;
 					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 					break;
-				} else if(num2 == 1) { // 추가 주문하기
+				} else if(num3 == 1) { // 추가 주문하기
 					flag2 =false;
 					flag1 = false;
 					break;// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
-				} else if(num2 == 2) { // 장바구니에 있는 메뉴 수정하기
+				} else if(num3 == 2) { // 장바구니에 있는 메뉴 수정하기
 					clientController.deleteOrderMenu();
 					totalPrice = clientController.selectOrderMenu(totalPrice, setAmount);
-				} else if(num2 == 3) {
+				} else if(num3 == 3) {
 					flag = false;
 					flag2 = true;
 					flag1 = false;
@@ -225,9 +304,17 @@ public class NonMemberMenu {
 			System.out.println("     카 드     |      현 금    |    기프티콘  ");
 			System.out.println("               |               |              ");
 			System.out.println("=================================================z");
-			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
-			System.out.print("\n → 결제하실 수단을 선택해 주세요: ");
-				paymentBy = sc.nextInt();
+			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");			
+				while(true) {
+					try {		// 실수로 문자열을 입력했을 경우의 예외처리
+						System.out.print("\n → 결제하실 수단을 선택해 주세요: ");
+						paymentBy = sc.nextInt();
+					} catch(InputMismatchException e) {
+						System.out.println("\n 숫자로 입력해 주세요!");
+						sc.next();
+						continue;
+					} break;
+					}
 
 				if(paymentBy == 0) {
 					flag2 = false;
@@ -269,10 +356,20 @@ public class NonMemberMenu {
 					System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 
 				} else if (paymentBy == 2) { // 현금 결제
-					System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
-					System.out.println();
-					System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
-					int inputPrice = sc.nextInt();
+				
+					while(true) {
+						try {		// 실수로 문자열을 입력했을 경우의 예외처리
+							System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
+							System.out.println();
+							System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
+							inputPrice = sc.nextInt();
+						} catch(InputMismatchException e) {
+							System.out.println("\n 숫자로 입력해 주세요!");
+							sc.next();
+							continue;
+						} break;
+						}
+					
 					if (inputPrice == totalPrice) {
 						System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 					} else if (inputPrice > totalPrice) {
@@ -338,9 +435,20 @@ public class NonMemberMenu {
 							System.out.println(
 									"고객님의 " + paymentCard + "로 총" + (totalPrice - gifticonPrice) + "원이 결제 되었습니다!");
 							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
-						}else if (paymentBy == 2) {
-							System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
-							int inputPrice = sc.nextInt();
+						}else if (paymentBy == 2) {					
+							while(true) {
+								try {		// 실수로 문자열을 입력했을 경우의 예외처리
+									System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
+									inputPrice = sc.nextInt();
+									inputPrice = sc.nextInt();
+								} catch(InputMismatchException e) {
+									System.out.println("\n 숫자로 입력해 주세요!");
+									sc.next();
+									continue;
+								} break;
+								}
+							
+							
 							if (inputPrice == (totalPrice - gifticonPrice)) {
 								System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 							}else if (inputPrice > (totalPrice - gifticonPrice)) {
