@@ -538,8 +538,8 @@ public class ClientController {
 		
 	}
 
+	/* 세트메뉴 선택 가능한 메소드 */
 	public int ShowSetMenu(int userNo) {
-		/* 세트메뉴 선택 가능한 메소드 */
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		System.out.println(">>>>           BurgerHI 세트 선택            <<<<");
 		System.out.println("=================================================");
@@ -607,7 +607,7 @@ public class ClientController {
 			/* 장바구니에 insert */
 			clientService.insertOrderMenu(userNo, inputSetNo, inputAmount);			// 버거 insert
 			clientService.insertOrderMenu(userNo, inputDrinkNo, inputAmount);		// 음료 insert
-			clientService.insertOrderMenu(userNo, inputsideNo, inputAmount);			// 사이드 insert
+			clientService.insertOrderMenu(userNo, inputsideNo, inputAmount);		// 사이드 insert
 			
 			for(int i = 0; i < burgerList.size(); i++) {
 				if(inputSetNo == burgerList.get(i).getMenuCode()) {

@@ -18,11 +18,13 @@ public class NonMemberMenu {
 		int cardCode = 0;
 		int userNo = 0;
 		int gradeNo = 0;
+		int refPrice = 0;
+		int setAmount = 0;
+		int setPrice = 0;
+		int setDiscount = 0;
 		double cardDiscount = 0;
 		boolean flag = true;
 		boolean flag2 = true;
-		int refPrice = 0;
-		int setAmount = 0;
 		
 		while(flag){
 			System.out.println(">>>>        BurgerHI 비회원 주문하기         <<<<");
@@ -32,43 +34,76 @@ public class NonMemberMenu {
 			System.out.print("\n →  원하시는 카테고리의 번호를 입력해 주세요: ");
 			int categoryNo = sc.nextInt();
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-			
-			System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
-			System.out.println("=================================================");
-			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
-			System.out.println();
-			List<MenuDTO> menuList = clientController.selectMenuBy(categoryNo); // Menu 출력 메소드
-			for (MenuDTO menu : menuList) {
-				System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  "
-						+ menu.getPrice() + "원\n     " + menu.getExplain());
-			}
-			System.out.println();
-			
-			/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
-			System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
-			int inputMenuNo = sc.nextInt();
-			if(inputMenuNo == 0) {
-				flag2 = false;
-				flag = false;
-				break;
-			}
-			System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
-			int inputAmount = sc.nextInt();
-			System.out.println("\n\n\n\n\n");
 			gradeNo = clientController.selectNonMemberGradeNo();
-//			System.out.println(gradeNo);						// 오류 구문 확인
 			userNo = clientController.insertNonMemberUser(gradeNo);
+//			System.out.println(gradeNo);						// 오류 구문 확인
 //			System.out.println("NullPointException Test1");		// 오류 구문 확인
 			
-			/* 장바구니에 Insert */
-			clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
-			
-			/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
-			menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
-			totalPrice += (inputAmount * menuPrice);
-			
-			/* 추천카테고리의 메뉴 랜덤 추천 */
-			refPrice = clientController.selectRefMenu(categoryNo, userNo);
+			if(categoryNo == 0) {
+				flag2 = false;		// 메뉴 주문 while문 탈출
+				break;			// 메인메뉴로 돌아가도록 설정
+			} else if (categoryNo == 1){
+				System.out.print("세트메뉴로 주문 하시겠습니까?(1.예 / 2. 아니오): ");
+				int num2 = sc.nextInt();
+				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+				if(num2 == 1) {
+					// 세트메뉴 선택 가능한 메소드
+					setPrice = clientController.ShowSetMenu(userNo);
+					setDiscount = 1000;
+					setAmount++;
+					totalPrice += (setPrice - setDiscount);
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+				} else {
+					// 기존 메뉴선택 메소드
+					clientController.ShowOrderMenu(categoryNo);
+					
+					/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
+					System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
+					int inputMenuNo = sc.nextInt();
+					if(inputMenuNo == 0) {
+						flag2 = false;
+						flag = false;
+						break;
+					}
+					System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
+					int inputAmount = sc.nextInt();
+					System.out.println("\n\n\n\n\n");
+					
+					/* 장바구니에 Insert */
+					clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
+					
+					/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
+					menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
+					totalPrice += (inputAmount * menuPrice);
+					
+					/* 추천카테고리의 메뉴 랜덤 추천 */
+					refPrice = clientController.selectRefMenu(categoryNo, userNo);
+				} 	
+			}else {
+				// 기존 메뉴선택 메소드
+				clientController.ShowOrderMenu(categoryNo);
+				
+				/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
+				System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
+				int inputMenuNo = sc.nextInt();
+				if(inputMenuNo == 0) {
+					flag2 = false;
+					flag = false;
+					break;
+				}
+				System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
+				int inputAmount = sc.nextInt();
+				System.out.println("\n\n\n\n\n");
+				/* 장바구니에 Insert */
+				clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
+				
+				/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
+				menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
+				totalPrice += (inputAmount * menuPrice);
+				
+				/* 추천카테고리의 메뉴 랜덤 추천 */
+				refPrice = clientController.selectRefMenu(categoryNo, userNo);
+			}
 			
 			/* 추천 메뉴 금액과 세트메뉴 금액을 합산 할 총 금액 변수 */
 			totalPrice += refPrice;
@@ -289,7 +324,7 @@ public class NonMemberMenu {
 				System.out.println("\n\n\n\n");
 				break;
 		}
-		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		
 	
 	}
 	public void createUserInfo(){
