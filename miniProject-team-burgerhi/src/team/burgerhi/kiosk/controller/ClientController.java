@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -70,6 +71,10 @@ public class ClientController {
 	public int userInfoSelect(int userNo) {
 		String gradeName = null;
 		int MenuPageNum = 0;
+		int firstInput  = 0;
+		int inputdelete = 0;
+		int num = 0;
+		
 		
 		while(true) {
 			System.out.println(">>>>           BurgerHI 메뉴 선택           <<<<");
@@ -80,10 +85,17 @@ public class ClientController {
 			System.out.println("                       |                       ");
 			System.out.println("=================================================");
 			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
-			System.out.print("\n → 번호를 선택해 주세요: ");
-			int firstInput = sc.nextInt();
-			sc.nextLine();
-			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			while(true) {
+				try {	// 문자열 예외처리
+					System.out.print("\n → 번호를 선택해 주세요: ");
+					firstInput = sc.nextInt();
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+				} catch(InputMismatchException e) {
+					System.out.println("\n 숫자로 입력해 주세요!");
+					sc.next();
+					continue;
+				} break;
+				}
 			
 			if(firstInput == 0) {
 				break;			// 프로그램 종료로 메인매뉴로 돌아가도록 설정
@@ -105,10 +117,21 @@ public class ClientController {
 				System.out.println("▶ 보유포인트: " + format.format(user.get(5)));
 				System.out.println("▶ 전화번호: " + user.get(6));
 				System.out.println();
-				System.out.println(" → 회원 정보 수정은 1번을 회원 탈퇴는 2번을 눌러주세요.");
-				System.out.println(" → 이전 화면으로 돌아가시려면 3번을 눌러주세요.");
-				int num = sc.nextInt();
-				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+				
+				while(true) {
+					try {	// 문자열 예외처리
+						System.out.println(" → 회원 정보 수정은 1번을 회원 탈퇴는 2번을 눌러주세요.");
+						System.out.println(" → 이전 화면으로 돌아가시려면 3번을 눌러주세요.");
+						num = sc.nextInt();
+						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+					} catch(InputMismatchException e) {
+						System.out.println("\n 숫자로 입력해 주세요!");
+						sc.next();
+						continue;
+					} break;
+					}
+				
+				
 				if(num == 0) {
 					break;
 				} else if(num == 1) {
@@ -148,8 +171,19 @@ public class ClientController {
 					System.out.println("      회원 탈퇴        |         취소          ");
 					System.out.println("                       |                       \n");
 					System.out.print("\n → 번호를 선택해 주세요: ");
-					int inputdelete = sc.nextInt();
-					sc.nextLine();
+					
+					while(true) {
+						try {	// 문자열 예외처리
+							System.out.print("\n → 번호를 선택해 주세요: ");
+							inputdelete = sc.nextInt();
+							sc.nextLine();
+						} catch(InputMismatchException e) {
+							System.out.println("\n 숫자로 입력해 주세요!");
+							sc.next();
+							continue;
+						} break;
+						}
+					
 					if(inputdelete == 1) {
 						int result = clientService.deleteUserBy(userNo);
 						if(result > 0) {
@@ -171,7 +205,7 @@ public class ClientController {
 	
 	
 	/* 전체 Category를 출력하는 메소드 */
-	public void selectAllCategory() {
+	public List<CategoryDTO> selectAllCategory() {
 		/* Sevice -> DAO -> DB를 통해 List 형태로 전달 받은 카테고리 */
 		List<CategoryDTO> categoryList = clientService.selectAllCategory();
 		
@@ -180,6 +214,8 @@ public class ClientController {
 			System.out.println("▶ " + cate.getCode() + ". " + cate.getName());
 		}
 		System.out.println();
+		
+		return categoryList;
 	}
 
 	/* 사용자가 선택한 Category의 전체 Menu를 출력하기 위한 메소드 */
@@ -190,7 +226,7 @@ public class ClientController {
 	}
 	
 	/* 회원 메뉴 보여지고 선택받기 */
-	public void ShowOrderMenu(int categoryNo) {
+	public List<MenuDTO> ShowOrderMenu(int categoryNo) {
 		/* 사용자가 선택한 Category의 전체 Menu 출력 */
 		System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
 		System.out.println("=================================================");
@@ -201,6 +237,7 @@ public class ClientController {
 			System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  "
 					+ format.format(menu.getPrice()) + "원\n     " + menu.getExplain());
 		}		
+		return menuList;
 	}
 
 	/* 사용자가 선택한 Menu를 장바구니에 Insert 하는 메소드 */
@@ -250,13 +287,23 @@ public class ClientController {
 
 	/* 장바구니 내용 수정 | OrderMenu 테이블에서 원하지 않는 메뉴 삭제 후 최종 결제할 메뉴만 남기도록 설정 */
 	public int deleteOrderMenu() {
+		int deleteMenuCode = 0;
 		
 		System.out.println(">>>>         BurgerHI 장바구니 수정          <<<<");
 		System.out.println("=================================================");
 		System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
-		System.out.print("\n → 삭제하실 메뉴 번호를 입력해 주세요: ");
-		int deleteMenuCode = sc.nextInt();
-		sc.nextLine();
+		while(true) {
+			try {	// 문자열 예외처리
+				System.out.print("\n → 삭제하실 메뉴 번호를 입력해 주세요: ");
+				
+				deleteMenuCode = sc.nextInt();
+				sc.nextLine();
+			} catch(InputMismatchException e) {
+				System.out.println("\n 숫자로 입력해 주세요!");
+				sc.next();
+				continue;
+			} break;
+			}
 		
 		if(deleteMenuCode != 0) {
 			/* MenuCode를 조건으로 걸어 OrderMenu테이블의 목록을 삭제하는 메소드 */
@@ -506,7 +553,7 @@ public class ClientController {
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		
 		refPrice = (refAmount * randomMenu.get(i).getPrice());
-		
+		sc.nextLine();
 		return refPrice;
 	}
 	
@@ -551,7 +598,6 @@ public class ClientController {
 		int selectBurgerPrice = 0;
 		int selectDrinkPrice = 0;
 		int selectSidePrice = 0;
-		
 		int setPrice = 0;
 		for (MenuDTO menu : burgerList) {
 			System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "세트  "
