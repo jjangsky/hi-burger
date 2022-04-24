@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import team.burgerhi.kiosk.controller.ClientController;
 import team.burgerhi.kiosk.model.dto.CardDTO;
+import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 
 public class NonMemberMenu {
@@ -22,15 +23,17 @@ public class NonMemberMenu {
 		int setAmount = 0;
 		int setPrice = 0;
 		int setDiscount = 0;
+		int inputMenuNo = 0;
 		double cardDiscount = 0;
 		boolean flag = true;
 		boolean flag2 = true;
 		
 		while(flag){
+			boolean flag1 = true;
 			System.out.println(">>>>        BurgerHI 비회원 주문하기         <<<<");
 			System.out.println("=================================================");
 			System.out.println();   
-			clientController.selectAllCategory(); // Category 출력 메소드
+			List<CategoryDTO> categoryList = clientController.selectAllCategory(); // Category 출력 메소드
 			System.out.print("\n →  원하시는 카테고리의 번호를 입력해 주세요: ");
 			int categoryNo = sc.nextInt();
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -40,7 +43,7 @@ public class NonMemberMenu {
 //			System.out.println("NullPointException Test1");		// 오류 구문 확인
 			
 			if(categoryNo == 0) {
-				flag2 = false;		// 메뉴 주문 while문 탈출
+				flag2 = false;	// 메뉴 주문 while문 탈출
 				break;			// 메인메뉴로 돌아가도록 설정
 			} else if (categoryNo == 1){
 				System.out.print("세트메뉴로 주문 하시겠습니까?(1.예 / 2. 아니오): ");
@@ -54,17 +57,33 @@ public class NonMemberMenu {
 					totalPrice += (setPrice - setDiscount);
 					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 				} else {
-					// 기존 메뉴선택 메소드
-					clientController.ShowOrderMenu(categoryNo);
 					
-					/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
-					System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
-					int inputMenuNo = sc.nextInt();
+					while(flag1) {
+						// 기존 메뉴선택 메소드
+						List<MenuDTO> menuList = clientController.ShowOrderMenu(categoryNo);
+						
+						/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
+						System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
+						inputMenuNo = sc.nextInt();
+						
+						for(MenuDTO menu : menuList) {
+							if(inputMenuNo == menu.getMenuCode() || inputMenuNo == 0) {
+								flag1 = false;
+								break;
+							}
+						}
+						if(flag1 == true) {
+							System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+						}
+					}
+					
 					if(inputMenuNo == 0) {
-						flag2 = false;
+						flag1 = false;
 						flag = false;
+						flag2  = false;
 						break;
 					}
+					
 					System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
 					int inputAmount = sc.nextInt();
 					System.out.println("\n\n\n\n\n");
@@ -79,16 +98,33 @@ public class NonMemberMenu {
 					/* 추천카테고리의 메뉴 랜덤 추천 */
 					refPrice = clientController.selectRefMenu(categoryNo, userNo);
 				} 	
+			}else if(categoryNo > categoryList.size()) {
+				System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+				continue;
 			}else {
-				// 기존 메뉴선택 메소드
-				clientController.ShowOrderMenu(categoryNo);
+				while(flag1) {
+					// 기존 메뉴선택 메소드
+					List<MenuDTO> menuList = clientController.ShowOrderMenu(categoryNo);
+					
+					/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
+					System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
+					inputMenuNo = sc.nextInt();
+					
+					for(MenuDTO menu : menuList) {
+						if(inputMenuNo == menu.getMenuCode() || inputMenuNo == 0) {
+							flag1 = false;
+							break;
+						}
+					}
+					if(flag1 == true) {
+						System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+					}
+				}
 				
-				/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
-				System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
-				int inputMenuNo = sc.nextInt();
 				if(inputMenuNo == 0) {
-					flag2 = false;
+					flag1 = false;
 					flag = false;
+					flag2  = false;
 					break;
 				}
 				System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
@@ -107,7 +143,9 @@ public class NonMemberMenu {
 			
 			/* 추천 메뉴 금액과 세트메뉴 금액을 합산 할 총 금액 변수 */
 			totalPrice += refPrice;
-
+			
+			flag1 = true;
+			while(flag1) {
 			/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
 			System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
 			System.out.println("=================================================");
@@ -125,11 +163,13 @@ public class NonMemberMenu {
 				clientController.deleteAllOrderMenu();
 				flag2 = false;
 				flag = false;
+				flag1 = false;
 				break;
-			} else if(num == 1) { 
-				continue; // while문의 처음으로 돌아가도록 설정
+			} else if(num == 1) {
+				flag1 = false;
+				break; // while문의 처음으로 돌아가도록 설정
 			  /* 장바구니 확인하기 */
-			} else if (num == 2) { 
+			} else if (num == 2) {
 				totalPrice = clientController.selectOrderMenu(totalPrice, setAmount); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
 				
 			/* 장바구니 while문 */
@@ -150,10 +190,12 @@ public class NonMemberMenu {
 					clientController.deleteAllOrderMenu();
 					flag = false;
 					flag2 = false;
+					flag1 = false;
 					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 					break;
 				} else if(num2 == 1) { // 추가 주문하기
 					flag2 =false;
+					flag1 = false;
 					break;// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 				} else if(num2 == 2) { // 장바구니에 있는 메뉴 수정하기
 					clientController.deleteOrderMenu();
@@ -161,14 +203,17 @@ public class NonMemberMenu {
 				} else if(num2 == 3) {
 					flag = false;
 					flag2 = true;
+					flag1 = false;
 					break;
 				} else {
-					System.out.println("번호를 잘못 입력하셨습니다! ");
-					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+					System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 				}
 			} // 장바구니 while문 종료
 
+		}else {
+			System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		}
+	}
 	} // 메뉴주문 while문 종료
 
 		/* 결제 진행 */
@@ -185,7 +230,6 @@ public class NonMemberMenu {
 				paymentBy = sc.nextInt();
 
 				if(paymentBy == 0) {
-					clientController.deleteAllOrderMenu();
 					flag2 = false;
 					break;
 				} else if(paymentBy == 1) { // 카드 결제
@@ -310,6 +354,9 @@ public class NonMemberMenu {
 						/* 사용한 기프티콘 잔액 수정 */
 						clientController.updateGifticonPrice(inputGiftNo, gifticonPrice);
 					}
+				} else {
+					System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+					continue;
 				}
 
 				/* 최종 모두 확정된 정보를 테이블에 Insert */
@@ -324,9 +371,9 @@ public class NonMemberMenu {
 				System.out.println("\n\n\n\n");
 				break;
 		}
-		
-	
 	}
+	
+	
 	public void createUserInfo(){
 		
 		/* 비회원 회원가입 절차 */
@@ -351,8 +398,5 @@ public class NonMemberMenu {
 		}else {
 			System.out.println(" 회원가입에 실패하셨습니다.");
 		}
-		
-	
 	}
-
 }

@@ -171,7 +171,7 @@ public class ClientController {
 	
 	
 	/* 전체 Category를 출력하는 메소드 */
-	public void selectAllCategory() {
+	public List<CategoryDTO> selectAllCategory() {
 		/* Sevice -> DAO -> DB를 통해 List 형태로 전달 받은 카테고리 */
 		List<CategoryDTO> categoryList = clientService.selectAllCategory();
 		
@@ -180,6 +180,8 @@ public class ClientController {
 			System.out.println("▶ " + cate.getCode() + ". " + cate.getName());
 		}
 		System.out.println();
+		
+		return categoryList;
 	}
 
 	/* 사용자가 선택한 Category의 전체 Menu를 출력하기 위한 메소드 */
@@ -190,7 +192,7 @@ public class ClientController {
 	}
 	
 	/* 회원 메뉴 보여지고 선택받기 */
-	public void ShowOrderMenu(int categoryNo) {
+	public List<MenuDTO> ShowOrderMenu(int categoryNo) {
 		/* 사용자가 선택한 Category의 전체 Menu 출력 */
 		System.out.println(">>>>           BurgerHI 메뉴 선택            <<<<");
 		System.out.println("=================================================");
@@ -201,6 +203,7 @@ public class ClientController {
 			System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "  "
 					+ format.format(menu.getPrice()) + "원\n     " + menu.getExplain());
 		}		
+		return menuList;
 	}
 
 	/* 사용자가 선택한 Menu를 장바구니에 Insert 하는 메소드 */
@@ -506,7 +509,7 @@ public class ClientController {
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		
 		refPrice = (refAmount * randomMenu.get(i).getPrice());
-		
+		sc.nextLine();
 		return refPrice;
 	}
 	
@@ -551,7 +554,6 @@ public class ClientController {
 		int selectBurgerPrice = 0;
 		int selectDrinkPrice = 0;
 		int selectSidePrice = 0;
-		
 		int setPrice = 0;
 		for (MenuDTO menu : burgerList) {
 			System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "세트  "
