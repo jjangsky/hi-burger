@@ -199,7 +199,6 @@ public class OrderMenu {
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
 						if(num == 0) { 	//프로그램 종료
-									// 프로그램이 종료 되면서 장바구니 내역 삭제
 							flag1 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 							continue;									// 맨 처음 메인메뉴로 돌아가도록 설정
 						}else if(num == 1) { // 추가 주문하기
