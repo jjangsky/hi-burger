@@ -419,7 +419,7 @@ public class OrderMenu {
 							flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 						}
 						for (CardDTO card : cardList) {
-							if (card.getBank().equals(paymentCard)) {
+							if (card.getBank().equals(paymentCard) || card.getBank().substring(0, 2).equals(paymentCard)) {
 								cardDiscount = 0.1;
 								break;
 							}

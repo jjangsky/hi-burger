@@ -77,13 +77,14 @@ public class AdminMenu {
 					System.out.println("=================================================");
 					System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 					/* 담 */
+					System.out.print("\n  → 번호를 선택해 주세요: ");
+					int categoryNum = sc.nextInt();
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 					List<CategoryDTO> categoryList = adminController.selectAllCategory();
 					for(CategoryDTO cate : categoryList) {
 						System.out.println("▶ " + cate.getCode() + ". " + cate.getName() + "(추천 카테고리: " + cate.getRefName() + ")");
 					}
-					System.out.print("\n  → 번호를 선택해 주세요: ");
-					int categoryNum = sc.nextInt();
-					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+					System.out.println();
 					
 					switch(categoryNum) {
 						case 0: flag = false; break;
@@ -104,15 +105,16 @@ public class AdminMenu {
 					System.out.println("=================================================");
 					System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 					System.out.println();
+					System.out.print("\n  → 번호를 선택해 주세요: ");
+					int menuNum = sc.nextInt();
+					System.out.println("\n\n\n\n\n");
 					List<MenuDTO> menuList = adminController.selectAllMenu();
 					for(MenuDTO menu : menuList) {
 						System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "$" + menu.getPrice());
 						System.out.println("　 카테고리 번호: " + menu.getCategoryCode() + " 주문 가능 여부: " + menu.getOrderable());
 						System.out.println("　  \"" + menu.getExplain() + "\"");
 					}
-					System.out.print("\n  → 번호를 선택해 주세요: ");
-					int menuNum = sc.nextInt();
-					System.out.println("\n\n\n\n\n");
+					System.out.println();
 					
 					switch(menuNum) {
 						case 0: flag = false; break;
