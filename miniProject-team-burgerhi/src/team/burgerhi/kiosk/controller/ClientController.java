@@ -274,16 +274,15 @@ public class ClientController {
 			System.out.println("▶ 금액: " + format.format(price) + " * " + amount + " = " + format.format((price *  amount)));
 			System.out.println();
 			totalPrice += (price *  amount);
-			
-			for(int j = 0; j < setList.size(); j += 5){
-				if(menuNo == setList.get(j) || menuNo == setList.get(j+1) || menuNo == setList.get(j+2)) {
-					set++;
-				}
-			}
 		}
+		
+		for(int i = 0; i < setList.size(); i+=5) {
+			set += setList.get(i+4);
+		}
+		
 //		System.out.println("set값 제대로 들어갔는지? " + set);
-		if(set % 3 == 0) {
-		int setSalePrice = (set / 3) * 1000;
+		if(set > 0) {
+		int setSalePrice = set * 1000;
 		System.out.println("▶ 세트 할인 금액: " + format.format(setSalePrice));
 		System.out.println("▶ 총 금액: " + format.format(totalPrice - setSalePrice));
 		System.out.println("\n\n\n\n\n\n\n\n\n");
@@ -323,9 +322,7 @@ public class ClientController {
 					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i));
 					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+1));
 					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+2));
-					for(int j = i; j < 5; j ++) {
-						setList.remove(j);
-					}
+					setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);
 					break;
 				} else {
 					deleteResult = clientService.deleteOrderMenuAmount(deleteMenuCode);
