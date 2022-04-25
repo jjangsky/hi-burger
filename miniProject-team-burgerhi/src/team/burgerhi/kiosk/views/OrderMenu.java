@@ -2,6 +2,8 @@ package team.burgerhi.kiosk.views;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -51,6 +53,7 @@ public class OrderMenu {
 				flag2 = true;
 				clientController.deleteAllOrderMenu();
 				/* BurgerHI 메인 주문 화면(첫 화면) */
+				
 				System.out.println();
 				System.out.println(">>>>       어서오세요 BurgerHI 입니다.       <<<<");
 				System.out.println("=================================================");
@@ -147,7 +150,6 @@ public class OrderMenu {
 							if(num2 == 1) {
 								// 세트메뉴 선택 가능한 메소드
 								setList = clientController.ShowSetMenu(userNo);
-								System.out.println(setList);
 							
 //								setDiscount = 1000;
 //								setAmount++;
@@ -196,7 +198,6 @@ public class OrderMenu {
 									} break;
 									}
 								
-								
 								if(inputAmount == 0) {
 									flag1 = false;		// 메뉴 주문 while문 탈출
 									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -212,7 +213,7 @@ public class OrderMenu {
 								/* 추천카테고리의 메뉴 랜덤 추천 */
 								refPrice = clientController.selectRefMenu(categoryNo, userNo);
 							}
-						} else if(categoryNo > categoryList.size()) {
+						} else if(categoryNo > categoryList.get(categoryList.size()-1).getCode()) {
 							System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 							continue;
 						}else {
@@ -278,8 +279,11 @@ public class OrderMenu {
 						
 						
 						/* 추천 메뉴 금액과 세트메뉴 금액을 합산 할 총 금액 변수 */
-//						totalPrice += refPrice;
+
 						
+
+						totalPrice += refPrice;
+
 						flag3 = true;
 						while(flag3) {
 						/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
