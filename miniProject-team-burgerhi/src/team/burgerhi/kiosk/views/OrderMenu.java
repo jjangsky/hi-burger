@@ -45,6 +45,7 @@ public class OrderMenu {
 			boolean flag1 = true;
 			boolean flag2 = true;
 			boolean flag3 = true;
+			List<Integer> setList = new ArrayList<Integer>();
 			
 			do {
 				flag2 = true;
@@ -145,9 +146,9 @@ public class OrderMenu {
 							
 							if(num2 == 1) {
 								// 세트메뉴 선택 가능한 메소드
-								List<Integer> list = new ArrayList<>();
-								list.addAll(clientController.ShowSetMenu(userNo));
-								System.out.println(list);
+								setList = new ArrayList<>();
+								setList.addAll(clientController.ShowSetMenu(userNo));
+								System.out.println(setList);
 							
 //								setDiscount = 1000;
 //								setAmount++;
@@ -346,7 +347,7 @@ public class OrderMenu {
 									flag3 = false;
 									break; // 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 								} else if(num == 2) { // 장바구니에 있는 메뉴 수정하기
-									int close = clientController.deleteOrderMenu();
+									int close = clientController.deleteOrderMenu(setList);
 									if(close == 0) {
 										flag3 = false;
 										break; 										// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감

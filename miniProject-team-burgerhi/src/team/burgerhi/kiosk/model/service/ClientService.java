@@ -386,5 +386,12 @@ public class ClientService {
 		
 	}
 
+	public int deleteOrderMenuAmount(int menuNo) {
+		Connection con = getConnection();
+		int result = clientDAO.deleteOrderMenuAmount(con, menuNo);
+		close(con);
+		return result;
+	}
+
 
 }

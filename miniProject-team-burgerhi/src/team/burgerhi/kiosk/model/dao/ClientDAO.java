@@ -946,5 +946,22 @@ public class ClientDAO {
 		}
 		return result;
 	}
+
+
+	public int deleteOrderMenuAmount(Connection con, int menuNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteOrderMenuAmount");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, menuNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 }
