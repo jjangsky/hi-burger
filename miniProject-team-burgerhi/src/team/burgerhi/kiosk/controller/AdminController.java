@@ -139,7 +139,7 @@ public class AdminController {
 		int categoryCode = sc.nextInt();
 		System.out.print("\n → 추가할 메뉴의 판매여부를 입력해 주세요: ");
 		sc.nextLine();
-		String orderable = sc.nextLine();
+		String orderable = sc.nextLine().toUpperCase();
 		System.out.println("\n\n\n\n\n");
 		
 		int insertResult = adminService.insertMenu(menuName, menuPrice, menuExplain, categoryCode, orderable);
