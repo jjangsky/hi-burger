@@ -1,6 +1,7 @@
 package team.burgerhi.kiosk.views;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -20,7 +21,8 @@ public class OrderMenu {
 	public void displayMainMenu() {
 		Scanner sc = new Scanner(System.in);
 		DecimalFormat format = new DecimalFormat("###,###");
-
+		
+		List<Integer> list1 = new ArrayList<>();
 		while(true) {
 			/* do~while문 밖에서도 사용해야 할 변수 */
 			int num = 0;
@@ -146,10 +148,13 @@ public class OrderMenu {
 							
 							if(num2 == 1) {
 								// 세트메뉴 선택 가능한 메소드
-								setPrice = clientController.ShowSetMenu(userNo);
-								setDiscount = 1000;
-								setAmount++;
-								totalPrice += (setPrice - setDiscount);
+								List<Integer> list = new ArrayList<>();
+								list.addAll(clientController.ShowSetMenu(userNo));
+								System.out.println(list);
+							
+//								setDiscount = 1000;
+//								setAmount++;
+//								totalPrice += (setPrice - setDiscount);
 							} else {
 								while(flag3) {
 									// 기존 메뉴선택 메소드
