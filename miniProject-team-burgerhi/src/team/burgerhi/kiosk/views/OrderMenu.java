@@ -45,6 +45,7 @@ public class OrderMenu {
 			boolean flag1 = true;
 			boolean flag2 = true;
 			boolean flag3 = true;
+			List<Integer> setList = new ArrayList<>();
 			
 			do {
 				flag2 = true;
@@ -145,9 +146,8 @@ public class OrderMenu {
 							
 							if(num2 == 1) {
 								// 세트메뉴 선택 가능한 메소드
-								List<Integer> list = new ArrayList<>();
-								list.addAll(clientController.ShowSetMenu(userNo));
-								System.out.println(list);
+								setList=clientController.ShowSetMenu(userNo);
+								System.out.println(setList);
 							
 //								setDiscount = 1000;
 //								setAmount++;
@@ -436,8 +436,13 @@ public class OrderMenu {
 						int grade = clientController.selectGrade(gradeNo);
 						gradeDiscount = totalPrice * (grade * 0.01);
 						System.out.println("▶ 등급 할인 금액: " + format.format((int)gradeDiscount) + "원");
+						for(int i = 0; i < setList.size(); i += 5) {
+						setAmount += setList.get(i+4);
+						}
+						setPrice = setAmount * 1000;
 						System.out.println("▶ 카드사 할인 금액: " + format.format((int)cardDiscount) + "원");
-						lastPayment = (int) (totalPrice - gradeDiscount - cardDiscount);
+						System.out.println("▶ 세트 할인 금액: " + setPrice + "원");
+						lastPayment = (int) (totalPrice - gradeDiscount - cardDiscount - setPrice);
 						System.out.println();
 						System.out.println("▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
 						System.out.println();
@@ -455,6 +460,13 @@ public class OrderMenu {
 						gradeDiscount = totalPrice * (grade * 0.01);
 						lastPayment = (int) (totalPrice - gradeDiscount);
 						System.out.println("▶ 등급 할인 금액: " + format.format((int)gradeDiscount) + "원");
+						for(int i = 0; i < setList.size(); i += 5) {
+						setAmount += setList.get(i+4);
+						}
+						setPrice = setAmount * 1000;
+						System.out.println("▶ 세트 할인 금액: " + setPrice + "원");
+						lastPayment = (int) (totalPrice - gradeDiscount - setPrice);
+						System.out.println();
 						System.out.println("▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
 						System.out.println();				
 						while(true) {
@@ -522,6 +534,13 @@ public class OrderMenu {
 						gradeDiscount = totalPrice * (grade * 0.01);
 						lastPayment = (int)(totalPrice - gradeDiscount);
 						System.out.println("▶ 등급 할인 금액: " + format.format((int)gradeDiscount) + "원");
+						for(int i = 0; i < setList.size(); i += 5) {
+						setAmount += setList.get(i+4);
+						}
+						setPrice = setAmount * 1000;
+						System.out.println("▶ 세트 할인 금액: " + setPrice + "원");
+						lastPayment = (int) (totalPrice - gradeDiscount - setPrice);
+						System.out.println();
 						System.out.println("▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
 						System.out.println();
 						System.out.print("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
