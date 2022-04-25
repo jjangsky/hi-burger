@@ -39,6 +39,7 @@ public class OrderMenu {
 			int setDiscount = 0;
 			int setAmount = 0;
 			int inputPrice = 0;
+			int checkCard = 0;
 			double gradeDiscount = 0;
 			double cardDiscount = 0;
 			boolean flag = true;
@@ -422,11 +423,30 @@ public class OrderMenu {
 						if(paymentCard.equals("0")) {
 							flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 						}
-						for (CardDTO card : cardList) {
-							if (card.getBank().equals(paymentCard) || card.getBank().substring(0, 2).equals(paymentCard)) {
+						for(int i = 0; i < cardList.size(); i++) {
+							CardDTO card = cardList.get(i);
+							if (card.getBank().equals(paymentCard) && card.getCardable() == "Y") {  // cardable 여부로 할인 적용 판정
 								cardDiscount = 0.1;
+								checkCard = 1;
 								break;
+							}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable() == "Y") {
+								cardDiscount = 0.1;
+								checkCard = 1;
+								break;
+							}else if (card.getBank().equals(paymentCard) || card.getBank().substring(0, 2).equals(paymentCard)) {
+								checkCard = 1;
+								break;
+							}else {
+								continue;
 							}
+							
+						}							
+						
+							if(checkCard == 0) {
+								System.out.println("\n 사용할 수 없는 카드입니다.");
+								System.out.println("다시 결제를 시도해 주세요.");
+							continue;
+							
 						}
 
 						cardCode = clientController.selectCardBy(paymentCard);
@@ -504,9 +524,40 @@ public class OrderMenu {
 								}
 							
 							if(paymentBy == 1) {
-								System.out.print("\n →  결제하실 카드명을 입력해 주세요: ");
+								List<CardDTO> cardList = clientController.selectCard();
+
+								/* 사용자가 결제 할 카드 입력받기 */
+								System.out.print("\n →결제하실 카드명을 입력해 주세요: ");
 								sc.nextLine();
 								String paymentCard = sc.nextLine();
+								if(paymentCard.equals("0")) {
+									flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
+								}
+								for(int i = 0; i < cardList.size(); i++) {
+									CardDTO card = cardList.get(i);
+									if (card.getBank().equals(paymentCard) && card.getCardable() == "Y") {  // cardable 여부로 할인 적용 판정
+										cardDiscount = 0.1;
+										checkCard = 1;
+										break;
+									}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable() == "Y") {
+										cardDiscount = 0.1;
+										checkCard = 1;
+										break;
+									}else if (card.getBank().equals(paymentCard) || card.getBank().substring(0, 2).equals(paymentCard)) {
+										checkCard = 1;
+										break;
+									}else {
+										continue;
+									}
+									
+								}							
+								
+									if(checkCard == 0) {
+										System.out.println("\n 사용할 수 없는 카드입니다.");
+										System.out.println("다시 결제를 시도해 주세요.");
+									continue;
+									
+								}
 								System.out.println(
 										"고객님의 " + paymentCard + "로 총" + format.format((lastPayment - inputPrice)) + "원이 결제 되었습니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
@@ -562,9 +613,39 @@ public class OrderMenu {
 							paymentBy = sc.nextInt();
 							
 							if(paymentBy == 1) {
-								System.out.print("\n →  결제하실 카드명을 입력해 주세요: ");
+								List<CardDTO> cardList = clientController.selectCard();
+								/* 사용자가 결제 할 카드 입력받기 */
+								System.out.print("\n →결제하실 카드명을 입력해 주세요: ");
 								sc.nextLine();
 								String paymentCard = sc.nextLine();
+								if(paymentCard.equals("0")) {
+									flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
+								}
+								for(int i = 0; i < cardList.size(); i++) {
+									CardDTO card = cardList.get(i);
+									if (card.getBank().equals(paymentCard) && card.getCardable() == "Y") {  // cardable 여부로 할인 적용 판정
+										cardDiscount = 0.1;
+										checkCard = 1;
+										break;
+									}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable() == "Y") {
+										cardDiscount = 0.1;
+										checkCard = 1;
+										break;
+									}else if (card.getBank().equals(paymentCard) || card.getBank().substring(0, 2).equals(paymentCard)) {
+										checkCard = 1;
+										break;
+									}else {
+										continue;
+									}
+									
+								}							
+								
+									if(checkCard == 0) {
+										System.out.println("\n 사용할 수 없는 카드입니다.");
+										System.out.println("다시 결제를 시도해 주세요.");
+									continue;
+									
+								}
 								System.out.println(
 										"고객님의 " + paymentCard + "로 총" + format.format((lastPayment - gifticonPrice)) + "원이 결제 되었습니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
