@@ -305,13 +305,20 @@ public class ClientController {
 		
 		for(int i = 0; i < setList.size(); i += 5) {
 			if(deleteMenuCode == setList.get(i) || deleteMenuCode == setList.get(i+1) || deleteMenuCode == setList.get(i+2)) {
-				deleteResult = clientService.deleteOrderMenuAmount(setList.get(i));
-				deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+1));
-				deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+2));
-				for(int j = i; j < 5; j ++) {
-					setList.remove(j);
+				System.out.print("\n\n → 세트 메뉴를 삭제하시겠습니까?(1.예 / 2. 아니오):");
+				int num = sc.nextInt();
+				if(num == 1) {
+					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i));
+					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+1));
+					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+2));
+					for(int j = i; j < 5; j ++) {
+						setList.remove(j);
+					}
+					break;
+				} else {
+					deleteResult = clientService.deleteOrderMenuAmount(deleteMenuCode);
+					break;
 				}
-				break;
 			}
 		}
 		
