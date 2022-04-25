@@ -33,8 +33,6 @@ public class OrderMenu {
 			int paymentBy = 0;
 			int cardCode = 0;
 			int lastPayment = 0;
-			int afterLastPayment = 0;
-			int memberPoint = 0;
 			int setPrice = 0;
 			int setDiscount = 0;
 			int setAmount = 0;
@@ -119,15 +117,14 @@ public class OrderMenu {
 							try {	// 문자열 예외처리
 								System.out.print("\n → 원하시는 카테고리의 번호를 입력해 주세요: ");
 								categoryNo = sc.nextInt();
-								System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 							} catch(InputMismatchException e) {
 								System.out.println("\n 숫자로 입력해 주세요!");
 								sc.next();
 								continue;
 							} break;
-							}
+						}
 			
-						
+						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						if(categoryNo == 0) {
 							flag1 = false;		// 메뉴 주문 while문 탈출
 							continue;			// 메인메뉴로 돌아가도록 설정
@@ -158,7 +155,6 @@ public class OrderMenu {
 									/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
 									System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
 									inputMenuNo = sc.nextInt();
-									
 									for(MenuDTO menu : menuList) {
 										if(inputMenuNo == menu.getMenuCode() || inputMenuNo == 0) {
 											flag3 = false;
@@ -166,6 +162,7 @@ public class OrderMenu {
 										}
 									}
 									if(flag3 == true) {
+										System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 										System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 									}
 								}
@@ -177,6 +174,7 @@ public class OrderMenu {
 								}
 								System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
 								inputAmount = sc.nextInt();
+								System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 								if(inputAmount == 0) {
 									flag1 = false;		// 메뉴 주문 while문 탈출
 									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -219,6 +217,7 @@ public class OrderMenu {
 									}
 								}
 								if(flag3 == true) {
+									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 									System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 								}
 							}
@@ -229,6 +228,7 @@ public class OrderMenu {
 								continue;			// 메인메뉴로 돌아가도록 설정
 							}
 							System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
+							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 							while(true) {
 								try {	// 문자열 예외처리
 									inputAmount = sc.nextInt();
@@ -280,7 +280,6 @@ public class OrderMenu {
 								continue;
 							} break;
 							}
-						
 						
 
 						if(num == 0) { 	//프로그램 종료

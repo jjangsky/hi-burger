@@ -36,12 +36,11 @@ public class NonMemberMenu {
 			List<CategoryDTO> categoryList = clientController.selectAllCategory(); // Category 출력 메소드
 			System.out.print("\n →  원하시는 카테고리의 번호를 입력해 주세요: ");
 			int categoryNo = sc.nextInt();
-			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			gradeNo = clientController.selectNonMemberGradeNo();
 			userNo = clientController.insertNonMemberUser(gradeNo);
 //			System.out.println(gradeNo);						// 오류 구문 확인
 //			System.out.println("NullPointException Test1");		// 오류 구문 확인
-			
+			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			if(categoryNo == 0) {
 				flag2 = false;	// 메뉴 주문 while문 탈출
 				break;			// 메인메뉴로 돌아가도록 설정
@@ -65,7 +64,6 @@ public class NonMemberMenu {
 						/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
 						System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
 						inputMenuNo = sc.nextInt();
-						
 						for(MenuDTO menu : menuList) {
 							if(inputMenuNo == menu.getMenuCode() || inputMenuNo == 0) {
 								flag1 = false;
@@ -73,6 +71,7 @@ public class NonMemberMenu {
 							}
 						}
 						if(flag1 == true) {
+							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 							System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						}
 					}
@@ -86,7 +85,7 @@ public class NonMemberMenu {
 					
 					System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
 					int inputAmount = sc.nextInt();
-					System.out.println("\n\n\n\n\n");
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 					
 					/* 장바구니에 Insert */
 					clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
@@ -117,6 +116,7 @@ public class NonMemberMenu {
 						}
 					}
 					if(flag1 == true) {
+						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 					}
 				}
@@ -129,7 +129,7 @@ public class NonMemberMenu {
 				}
 				System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
 				int inputAmount = sc.nextInt();
-				System.out.println("\n\n\n\n\n");
+				System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 				/* 장바구니에 Insert */
 				clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
 				
