@@ -534,6 +534,7 @@ public class ClientController {
 	public int selectRefMenu(int categoryNo, int userNo) {
 		int category = clientService.selectCategoryBy(categoryNo);
 		int refPrice = 0;
+		int refNum = 0;
 		
 		List<MenuDTO> randomMenu = clientService.selectMenuBy(category);
 		int i = (int)(Math.random() * randomMenu.size());
@@ -542,8 +543,19 @@ public class ClientController {
 		System.out.println("\n\n\n ******** BergerHI가 추천하는 함께하면 좋을 메뉴 ********");
 		System.out.println("▶ " + randomMenu.get(i).getMenuCode() + ". " + randomMenu.get(i).getName() + "  "
 				+ format.format(randomMenu.get(i).getPrice()) + "원\n     " + randomMenu.get(i).getExplain());
-		System.out.print("\n → 장바구니에 함께 담아드릴까요? (1.예 / 2.아니오): ");
-		int refNum = sc.nextInt();
+		
+		while(true) {
+			try {		// 실수로 문자열을 입력했을 경우의 예외처리
+				System.out.print("\n → 장바구니에 함께 담아드릴까요? (1.예 / 2.아니오): ");
+				refNum = sc.nextInt();
+			} catch(InputMismatchException e) {
+				System.out.println("\n 숫자로 입력해 주세요!");
+				sc.next();
+				continue;
+			} break;
+			}
+		
+		
 		int refAmount = 0;
 		if(refNum == 1) {
 			System.out.print("\n\n 탁월한 선택이세요! 수량은 몇 개 담아드릴까요? ");

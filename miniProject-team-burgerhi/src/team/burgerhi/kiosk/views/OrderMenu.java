@@ -152,9 +152,17 @@ public class OrderMenu {
 									// 기존 메뉴선택 메소드
 									List<MenuDTO> menuList = clientController.ShowOrderMenu(categoryNo);
 									
-									/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
-									System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
-									inputMenuNo = sc.nextInt();
+									/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */								
+									while(true) {
+										try {		// 실수로 문자열을 입력했을 경우의 예외처리
+											System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
+											inputMenuNo = sc.nextInt();
+										} catch(InputMismatchException e) {
+											System.out.println("\n 숫자로 입력해 주세요!");
+											sc.next();
+											continue;
+										} break;
+									}
 									for(MenuDTO menu : menuList) {
 										if(inputMenuNo == menu.getMenuCode() || inputMenuNo == 0) {
 											flag3 = false;
@@ -172,9 +180,18 @@ public class OrderMenu {
 									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 									continue;			// 메인메뉴로 돌아가도록 설정
 								}
-								System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
-								inputAmount = sc.nextInt();
-								System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+								while(true) {
+									try {		// 실수로 문자열을 입력했을 경우의 예외처리
+										System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
+										inputAmount = sc.nextInt();
+									} catch(InputMismatchException e) {
+										System.out.println("\n 숫자로 입력해 주세요!");
+										sc.next();
+										continue;
+									} break;
+									}
+								
+								
 								if(inputAmount == 0) {
 									flag1 = false;		// 메뉴 주문 while문 탈출
 									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -199,9 +216,9 @@ public class OrderMenu {
 								List<MenuDTO> menuList = clientController.ShowOrderMenu(categoryNo);
 								
 								/* 원하는 Menu 선택하도록 하여 장바구니에 Insert */
-								System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
 								while(true) {
 									try {	// 문자열 예외처리
+										System.out.print("\n → 원하시는 메뉴의 번호를 입력해 주세요: ");
 										inputMenuNo = sc.nextInt();
 									} catch(InputMismatchException e) {
 										System.out.println("\n 숫자로 입력해 주세요!");
@@ -400,7 +417,7 @@ public class OrderMenu {
 							flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 						}
 						for (CardDTO card : cardList) {
-							if (card.getBank().equals(paymentCard)) {
+							if (card.getBank().equals(paymentCard) || card.getBank().substring(0, 2).equals(paymentCard)) {
 								cardDiscount = 0.1;
 								break;
 							}
