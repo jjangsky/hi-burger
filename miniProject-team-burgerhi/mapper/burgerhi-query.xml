@@ -547,4 +547,12 @@
 		, ?
 		)
 	</entry>
+	<entry key = "deleteOrderMenuAmount">
+	    DELETE
+ 	     FROM ORDER_MENU_TABLE
+ 	    WHERE ORDER_MENU_NO = (SELECT
+                              	      MAX(ORDER_MENU_NO)
+                        	     FROM ORDER_MENU_TABLE
+                       	        WHERE MENU_CODE = ?)
+	</entry>
 </properties>

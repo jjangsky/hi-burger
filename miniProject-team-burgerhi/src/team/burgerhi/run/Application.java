@@ -1,7 +1,5 @@
 package team.burgerhi.run;
 
-import java.util.InputMismatchException;
-
 import team.burgerhi.kiosk.views.OrderMenu;
 
 public class Application {

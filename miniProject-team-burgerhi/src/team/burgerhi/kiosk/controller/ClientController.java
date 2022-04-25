@@ -253,10 +253,9 @@ public class ClientController {
 
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
 	public int selectOrderMenu(int totalPrice, int setAmount) {
-		
+		totalPrice = 0;
 		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
 		List<String> orderMenuList = clientService.selectOrderMenu();
-		totalPrice = 0;
 		System.out.println(">>>>         BurgerHI 장바구니 확인          <<<<");
 		System.out.println("=================================================");
 		System.out.println();
@@ -284,8 +283,9 @@ public class ClientController {
 	}
 
 	/* 장바구니 내용 수정 | OrderMenu 테이블에서 원하지 않는 메뉴 삭제 후 최종 결제할 메뉴만 남기도록 설정 */
-	public int deleteOrderMenu() {
+	public int deleteOrderMenu(List<Integer> setList) {
 		int deleteMenuCode = 0;
+		int deleteResult = 0;
 		
 		System.out.println(">>>>         BurgerHI 장바구니 수정          <<<<");
 		System.out.println("=================================================");
@@ -301,26 +301,37 @@ public class ClientController {
 				sc.next();
 				continue;
 			} break;
-			}
-		
-		if(deleteMenuCode != 0) {
-			/* MenuCode를 조건으로 걸어 OrderMenu테이블의 목록을 삭제하는 메소드 */
-			int deleteResult = clientService.deleteOrderMenu(deleteMenuCode);
-			
-			if(deleteResult > 0) {
-				code = "deleteOrderMenuSuccess";
-			} else {
-				code = "deleteOrderMenuFail";
-			}
-			
-			orderResultSet.displayDmlResult(code);
 		}
-		return deleteMenuCode;
 		
+		for(int i = 0; i < setList.size(); i += 5) {
+			if(deleteMenuCode == setList.get(i) || deleteMenuCode == setList.get(i+1) || deleteMenuCode == setList.get(i+2)) {
+				deleteResult = clientService.deleteOrderMenuAmount(setList.get(i));
+				deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+1));
+				deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+2));
+				for(int j = i; j < 5; j ++) {
+					setList.remove(j);
+				}
+				break;
+			}
+		}
+		
+		if(deleteMenuCode != 0 && deleteResult == 0) {
+			/* MenuCode를 조건으로 걸어 OrderMenu테이블의 목록을 삭제하는 메소드 */
+			deleteResult = clientService.deleteOrderMenu(deleteMenuCode);
+		}
+		
+		if(deleteResult > 0) {
+			code = "deleteOrderMenuSuccess";
+		} else {
+			code = "deleteOrderMenuFail";
+		}
+		orderResultSet.displayDmlResult(code);
+		
+		return deleteMenuCode;
 	}
 
 	/* 등급에 따른 할인율 확인 */
-	public int selectGrade(int gradeNo) {
+	public int selectGrade(int gradeNo){
 		
 		int gradediscount = clientService.selectGrade(gradeNo);
 		

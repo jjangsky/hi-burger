@@ -36,6 +36,7 @@ public class NonMemberMenu {
 		double cardDiscount = 0;
 		boolean flag = true;
 		boolean flag2 = true;
+		List<Integer> setList = new ArrayList<Integer>();
 		
 		while(flag){
 			boolean flag1 = true;
@@ -79,9 +80,9 @@ public class NonMemberMenu {
 				
 				if(num2 == 1) {
 					// 세트메뉴 선택 가능한 메소드
-					List<Integer> list = new ArrayList<>();
-					list = clientController.ShowSetMenu(userNo);
-					System.out.println(list);
+					setList = new ArrayList<>();
+					setList = clientController.ShowSetMenu(userNo);
+					System.out.println(setList);
 //					setDiscount = 1000;
 //					setAmount++;
 //					totalPrice += (setPrice - setDiscount);
@@ -280,7 +281,7 @@ public class NonMemberMenu {
 					flag1 = false;
 					break;// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 				} else if(num3 == 2) { // 장바구니에 있는 메뉴 수정하기
-					clientController.deleteOrderMenu();
+					clientController.deleteOrderMenu(setList);
 					totalPrice = clientController.selectOrderMenu(totalPrice, setAmount);
 				} else if(num3 == 3) {
 					flag = false;
