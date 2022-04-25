@@ -127,7 +127,7 @@ public class OrderMenu {
 								continue;
 							} break;
 						}
-			
+						
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						if(categoryNo == 0) {
 							flag1 = false;		// 메뉴 주문 while문 탈출
@@ -147,8 +147,7 @@ public class OrderMenu {
 							
 							if(num2 == 1) {
 								// 세트메뉴 선택 가능한 메소드
-								setList = new ArrayList<>();
-								setList.addAll(clientController.ShowSetMenu(userNo));
+								setList = clientController.ShowSetMenu(userNo);
 								System.out.println(setList);
 							
 //								setDiscount = 1000;
