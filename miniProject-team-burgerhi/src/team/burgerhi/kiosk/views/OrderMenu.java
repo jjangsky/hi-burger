@@ -313,7 +313,7 @@ public class OrderMenu {
 							flag3 = false;
 							break; // while문의 처음으로 돌아가도록 설정
 						} else if (num == 2) { // 장바구니 확인하기
-							clientController.selectOrderMenu(totalPrice, setAmount); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
+							clientController.selectOrderMenu(setList); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
 
 							/* 장바구니 while문 */
 							while(true) { // 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
@@ -352,7 +352,7 @@ public class OrderMenu {
 										flag3 = false;
 										break; 										// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 									} else {
-										totalPrice = clientController.selectOrderMenu(totalPrice, setAmount);
+										totalPrice = clientController.selectOrderMenu(setList);
 									}
 								} else if(num == 3) {
 									flag = false; // 모든 while문을 빠져나가 최종 결제 화면이 뜨도록 함
