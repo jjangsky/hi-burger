@@ -146,7 +146,7 @@ public class NonMemberMenu {
 					/* 추천카테고리의 메뉴 랜덤 추천 */
 					refPrice = clientController.selectRefMenu(categoryNo, userNo);
 				} 	
-			}else if(categoryNo > categoryList.size()) {
+			}else if(categoryNo > categoryList.get(categoryList.size()-1).getCode()) {
 				System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 				continue;
 			}else {
