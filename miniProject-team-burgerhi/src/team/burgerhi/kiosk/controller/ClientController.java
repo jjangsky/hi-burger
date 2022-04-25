@@ -2,11 +2,10 @@ package team.burgerhi.kiosk.controller;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import team.burgerhi.kiosk.model.dto.CardDTO;
@@ -15,7 +14,6 @@ import team.burgerhi.kiosk.model.dto.GifticonDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.dto.UserDTO;
 import team.burgerhi.kiosk.model.service.ClientService;
-import team.burgerhi.kiosk.views.OrderMenu;
 import team.burgerhi.kiosk.views.OrderResultSet;
 
 public class ClientController {
@@ -24,7 +22,7 @@ public class ClientController {
 	Scanner sc = new Scanner(System.in);
 	String code = "";
 	DecimalFormat format = new DecimalFormat("###,###");
-	
+	List<Integer> list = new ArrayList<>();
 	/* Login 진행 메소드 */
 	public UserDTO loginResult() {
 		/* View에 DTO 형태로 넘겨야 하기 때문에 인스턴스 생성 */
@@ -598,7 +596,7 @@ public class ClientController {
 	}
 
 	/* 세트메뉴 선택 가능한 메소드 */
-	public int ShowSetMenu(int userNo) {
+	public List<Integer> ShowSetMenu(int userNo) {
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		System.out.println(">>>>           BurgerHI 세트 선택            <<<<");
 		System.out.println("=================================================");
@@ -610,6 +608,9 @@ public class ClientController {
 		int selectBurgerPrice = 0;
 		int selectDrinkPrice = 0;
 		int selectSidePrice = 0;
+		int selectBurgerCode = 0;
+		int selectDrinkCode = 0;
+		int selectSideCode = 0;
 		int setPrice = 0;
 		for (MenuDTO menu : burgerList) {
 			System.out.println("▶ " + menu.getMenuCode() + ". " + menu.getName() + "세트  "
@@ -634,13 +635,18 @@ public class ClientController {
 					selectBurgerPrice = burgerList.get(i).getPrice();
 				}
 			}
-			
 			selectDrinkPrice = drinkList.get(0).getPrice();
 			selectSidePrice = sideList.get(0).getPrice();
-			int a = selectBurgerPrice * inputAmount;
-			int b = selectDrinkPrice * inputAmount;
-			int c = selectSidePrice * inputAmount;
+			int a = selectBurgerPrice;
+			int b = selectDrinkPrice;
+			int c = selectSidePrice;
 			setPrice = a+b+c;
+			
+			list.add(inputSetNo);
+			list.add(4);
+			list.add(6);
+			list.add(setPrice);
+			list.add(inputAmount);
 		} else if(inputSetOrder == 2){
 			/* 구성을 변경하는 메소드 */
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -670,24 +676,34 @@ public class ClientController {
 			for(int i = 0; i < burgerList.size(); i++) {
 				if(inputSetNo == burgerList.get(i).getMenuCode()) {
 					selectBurgerPrice = burgerList.get(i).getPrice();
+					selectBurgerCode = burgerList.get(i).getMenuCode();
 				}
 			}
 			for(int i = 0; i < drinkList.size(); i++) {
 				if(inputDrinkNo == drinkList.get(i).getMenuCode()) {
 					selectDrinkPrice = drinkList.get(i).getPrice();
+					selectDrinkCode = drinkList.get(i).getMenuCode();
 				}
 			}
 			for(int i = 0; i < sideList.size(); i++) {
 				if(inputsideNo == sideList.get(i).getMenuCode()) {
 					selectSidePrice = sideList.get(i).getPrice();
+					selectSideCode = sideList.get(i).getMenuCode();
 				}
 			}
-			int a = selectBurgerPrice * inputAmount;
-			int b = selectDrinkPrice * inputAmount;
-			int c = selectSidePrice * inputAmount;
+
+			int a = selectBurgerPrice;
+			int b = selectDrinkPrice;
+			int c = selectSidePrice;
 			setPrice = a+b+c;
+			
+			list.add(selectBurgerCode);
+			list.add(selectDrinkCode);
+			list.add(selectSideCode);
+			list.add(setPrice);
+			list.add(inputAmount);
 		}
-		return setPrice;
+		return list;
 	}
 
 }

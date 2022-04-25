@@ -1,6 +1,8 @@
 package team.burgerhi.kiosk.views;
 
+
 import java.util.InputMismatchException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -77,10 +79,12 @@ public class NonMemberMenu {
 				
 				if(num2 == 1) {
 					// 세트메뉴 선택 가능한 메소드
-					setPrice = clientController.ShowSetMenu(userNo);
-					setDiscount = 1000;
-					setAmount++;
-					totalPrice += (setPrice - setDiscount);
+					List<Integer> list = new ArrayList<>();
+					list = clientController.ShowSetMenu(userNo);
+					System.out.println(list);
+//					setDiscount = 1000;
+//					setAmount++;
+//					totalPrice += (setPrice - setDiscount);
 					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 				} else {
 					
