@@ -141,7 +141,7 @@ public class NonMemberMenu {
 					
 					/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
 					menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
-					totalPrice += (inputAmount * menuPrice);
+//					totalPrice += (inputAmount * menuPrice);
 					
 					/* 추천카테고리의 메뉴 랜덤 추천 */
 					refPrice = clientController.selectRefMenu(categoryNo, userNo);
@@ -201,14 +201,14 @@ public class NonMemberMenu {
 				
 				/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
 				menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
-				totalPrice += (inputAmount * menuPrice);
+//				totalPrice += (inputAmount * menuPrice);
 				
 				/* 추천카테고리의 메뉴 랜덤 추천 */
 				refPrice = clientController.selectRefMenu(categoryNo, userNo);
 			}
 			
 			/* 추천 메뉴 금액과 세트메뉴 금액을 합산 할 총 금액 변수 */
-			totalPrice += refPrice;
+//			totalPrice += refPrice;
 			
 			flag1 = true;
 			while(flag1) {

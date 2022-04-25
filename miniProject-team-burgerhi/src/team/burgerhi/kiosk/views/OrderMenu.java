@@ -208,7 +208,7 @@ public class OrderMenu {
 								
 								/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
 								menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
-								totalPrice += (inputAmount * menuPrice);
+//								totalPrice += (inputAmount * menuPrice);
 								
 								/* 추천카테고리의 메뉴 랜덤 추천 */
 								refPrice = clientController.selectRefMenu(categoryNo, userNo);
@@ -271,7 +271,7 @@ public class OrderMenu {
 							
 							/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
 							menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
-							totalPrice += (inputAmount * menuPrice);
+//							totalPrice += (inputAmount * menuPrice);
 							
 							/* 추천카테고리의 메뉴 랜덤 추천 */
 							refPrice = clientController.selectRefMenu(categoryNo, userNo);
@@ -279,7 +279,7 @@ public class OrderMenu {
 						
 						
 						/* 추천 메뉴 금액과 세트메뉴 금액을 합산 할 총 금액 변수 */
-						totalPrice += refPrice;
+//						totalPrice += refPrice;
 						
 						flag3 = true;
 						while(flag3) {
@@ -313,7 +313,7 @@ public class OrderMenu {
 							flag3 = false;
 							break; // while문의 처음으로 돌아가도록 설정
 						} else if (num == 2) { // 장바구니 확인하기
-							clientController.selectOrderMenu(setList); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
+							totalPrice = clientController.selectOrderMenu(setList); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
 
 							/* 장바구니 while문 */
 							while(true) { // 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
