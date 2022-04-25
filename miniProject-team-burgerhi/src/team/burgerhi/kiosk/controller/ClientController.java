@@ -582,7 +582,7 @@ public class ClientController {
 		
 		int refAmount = 0;
 		if(refNum == 1) {
-			System.out.print("\n → 탁월한 선택이세요! 수량은 몇 개 담아드릴까요? ");
+			System.out.print("\n\n 탁월한 선택이세요! 수량은 몇 개 담아드릴까요? ");
 			refAmount = sc.nextInt();
 			insertOrderMenu(userNo, randomMenu.get(i).getMenuCode(), refAmount);
 		}
