@@ -251,7 +251,6 @@ public class OrderMenu {
 								continue;			// 메인메뉴로 돌아가도록 설정
 							}
 							System.out.print("\n → 선택한 메뉴의 수량을 입력해 주세요: ");
-							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 							while(true) {
 								try {	// 문자열 예외처리
 									inputAmount = sc.nextInt();
