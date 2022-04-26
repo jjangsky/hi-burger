@@ -137,16 +137,16 @@ public class OrderResultSet {
 		int memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
 		/* 멤버쉽 등급 변경 */
 		if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
+			System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.\n\n");
 			clientController.updateGoldGrade(userNo);
-			System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.");
 		} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
+			System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.\n\n");
 			clientController.updateSilverGrade(userNo);
-			System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
-			System.out.println("다음 등급까지" + format.format((300000 - selectPoint)) + "Point 남았습니다. ^_^");
+			System.out.println("\n\n ※ 다음 등급까지" + format.format((300000 - selectPoint)) + "Point 남았습니다. ^_^");
 		}else {
+			System.out.println("\n\n회원님의 현재 등급은 Family 입니다.\n\n");
 			clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
-			System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
-			System.out.println("다음 등급까지 " + format.format((100000 - selectPoint)) + "Point 남았습니다. ^_^");
+			System.out.println("\n\n ※ 다음 등급까지 " + format.format((100000 - selectPoint)) + "Point 남았습니다. ^_^");
 		}
 		
 	

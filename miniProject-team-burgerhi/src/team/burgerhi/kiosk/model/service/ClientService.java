@@ -291,9 +291,9 @@ public class ClientService {
 	}
 
 	/* 기프티콘 이벤트에 당첨된 기프티콘 생성 */
-	public int insertGifticonEvent() {
+	public int insertGifticonEvent(int eventPrice) {
 		Connection con = getConnection();
-		int result = clientDAO.insertGifticonEvent(con);
+		int result = clientDAO.insertGifticonEvent(con, eventPrice);
 		close(con);
 		return result;
 	}

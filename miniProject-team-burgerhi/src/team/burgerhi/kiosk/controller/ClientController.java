@@ -562,30 +562,6 @@ public class ClientController {
 		return userPhone;
 	}
 
-	/* 주문번호가 10번인 고객님의 경우 기프티콘 증정하는 이벤트 */
-	public void gifticonEvent(int orderCode) {
-
-		/* clientService의 Insert 메소드 사용 */
-		clientService.insertGifticonEvent();
-
-		/* List<GifticonDTO>로 Select 메소드 사용 */
-		List<GifticonDTO> gifticonList = clientService.selectlastgifticon();
-
-		/* if문 사용(orderCode == 10) */
-		for (int i = 0; i < orderCode; i += 10) {
-			if (orderCode == i) {
-				System.out.println("★★★★    BergerHI의 특별한 Event!    ★★★★");
-				System.out.println("=================================================");
-				System.out.println("\n      BergerHI에서 준비한 특별한 Event!!!! ");
-				System.out.println("\n    " + i + "번째 고객님께 드리는 선물🎁");
-				System.out.println("\n → 기프티콘 번호:" + gifticonList.get(1).getNo());
-				System.out.println("\n → 기프티콘 금액:" + format.format(gifticonList.get(1).getPrice()));
-				System.out.println("\n 다음 주문부터 사용이 가능하며, 현금으로 교환은 어렵습니다.");
-				System.out.println("  기프티콘 금액은 분할로 사용이 가능하며, 유효기간은 1년 입니다.");
-				System.out.println("\n\n BergerHI를 사랑해 주셔서 감사합니다. \n 좋은 하루 보내세요♥ ");
-			}
-		}
-	}
 	/* 추천카테고리의 메뉴 랜덤 추천 */
 	public int selectRefMenu(int categoryNo, int userNo) {
 		int category = clientService.selectCategoryBy(categoryNo);
@@ -641,7 +617,25 @@ public class ClientController {
 	}
 	/* 골드 등급으로 변경 */
 	public void updateGoldGrade(int userNo) {
+		int eventPrice = 10000;
 		clientService.updateGoldGrade(userNo);
+		
+		/* clientService의 Insert 메소드 사용 */
+		clientService.insertGifticonEvent(eventPrice);
+
+		/* List<GifticonDTO>로 Select 메소드 사용 */
+		List<GifticonDTO> gifticonList = clientService.selectlastgifticon();
+		/* if문 사용(orderCode == 10) */
+		System.out.println("★★★★    BergerHI의 특별한 Event!    ★★★★");
+		System.out.println("=================================================");
+		System.out.println("\n      BergerHI에서 준비한 특별한 Event!!!!    ");
+		System.out.println("\n       골드 등급 고객님께 드리는 선물🎁       ");
+		System.out.println("\n → 기프티콘 번호:" + gifticonList.get(0).getNo());
+		System.out.println("\n → 기프티콘 금액:" + format.format(eventPrice));
+		System.out.println("\n 다음 주문부터 사용이 가능하며, 현금으로 교환은 어렵습니다.");
+		System.out.println("  기프티콘 금액은 분할로 사용이 가능하며, 유효기간은 1년 입니다.");
+		System.out.println("\n\n BergerHI를 사랑해 주셔서 감사합니다. \n 좋은 하루 보내세요♥ ");
+
 	}
 	/* 실버 등급으로 변경 */
 	public void updateSilverGrade(int userNo) {
