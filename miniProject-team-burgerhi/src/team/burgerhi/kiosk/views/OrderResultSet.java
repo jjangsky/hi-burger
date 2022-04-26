@@ -33,18 +33,19 @@ public class OrderResultSet {
 		/* 담님이 작성 한 종료 쓰레드 작성 메소드 */
 		Thread th = new Thread();
 		try {
+			th.sleep(2500);
 			for (int k = 0; k < 30; k++) {
 				System.out.println();
 			}
 			System.out.println("주문접수 중");
 			System.out.println("▷▷▷▷▷▷▷");
-			th.sleep(1500);
+			th.sleep(1000);
 			for (int k = 0; k < 30; k++) {
 				System.out.println();
 			}
 			System.out.println("주문접수 중.");
 			System.out.println("▷▷▷▷▷▷▷");
-			th.sleep(1500);
+			th.sleep(1000);
 			for (int k = 0; k < 30; k++) {
 				System.out.println();
 			}
@@ -90,7 +91,7 @@ public class OrderResultSet {
 			for (int k = 0; k < 30; k++) {
 				System.out.println();
 			}
-			System.out.println("🍔 메뉴가 준비됐어요! 🍔");
+			System.out.println("메뉴가 준비됐어요! 🍔");
 			System.out.println("▶▶▶▶▶▶▶");
 			th.sleep(1000);
 			th.sleep(1000);
