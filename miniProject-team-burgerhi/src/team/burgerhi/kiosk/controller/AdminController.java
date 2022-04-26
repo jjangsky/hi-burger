@@ -251,6 +251,7 @@ public class AdminController {
 			System.out.println("\n\n ▶ Family등급 매출액: " + format.format(gadeSales.get(0)) + "원");
 			System.out.println("\n ▶ Silver등급 매출액: " + format.format(gadeSales.get(1)) + "원");
 			System.out.println("\n ▶ Gold등급 매출액: " + format.format(gadeSales.get(2)) + "원");
+			System.out.println("\n ▶ 관리자등급 매출액: " + format.format(gadeSales.get(3)) + "원");
 			System.out.println("\n ▶ 비회원등급 매출액: " + format.format(gadeSales.get(4)) + "원");
 			
 		} else if(salesNum == 3) {
@@ -261,6 +262,35 @@ public class AdminController {
 			System.out.println(" ▶ 현금 결제의 총 매출: " + (methodSales.get("현금") != null ? format.format(methodSales.get("현금")) : 0) + "원" + "\n");
 		}
 		 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		
+		
+		
+	}
+
+	/* 회원의 모든 정보를 볼 수 있는 메소드(혜영) */
+	public void selectUserAll() {
+		System.out.println(">>>>         BurgerHI 회원 전체 조회         <<<<");
+		System.out.println("=================================================");
+		System.out.println();
+		List<Object> allUser = adminService.selectAllUser();
+		
+		for(int i = 0; i < allUser.size(); i+=7) {
+			
+			System.out.println("▶ 회원번호: " + allUser.get(i));
+			System.out.println("▶ 회원이름: " + allUser.get(i+1));
+			System.out.println("▶ 회원ID: " + allUser.get(i+2));
+			System.out.println("▶ 등급: " + allUser.get(i+3));
+			System.out.println("▶ 보유포인트: " + format.format(allUser.get(i+4)));
+			System.out.println("▶ 전화번호: " + allUser.get(i+5));
+			System.out.println("▶ 이용여부(Y/N): " + allUser.get(i+6));
+			System.out.println();
+		}
+		
+	}
+
+	/* 원하는 회원의 등급을 update 할 수 있는 메소드(재성) */
+	public void updateUserGrade() {
+		
 		
 		
 		

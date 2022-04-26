@@ -677,13 +677,13 @@ public class ClientDAO {
 	}
 				
 
-	public int insertGifticonEvent(Connection con) {
+	public int insertGifticonEvent(Connection con, int eventPrice) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("insertGifticonEvent");
 			try {
 				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, 5000);
+				pstmt.setInt(1, eventPrice);
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

@@ -258,64 +258,74 @@ public class ClientController {
 		int setAmount = 0;
 		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
 		List<String> orderMenuList = clientService.selectOrderMenu();
-		System.out.println(">>>>         BurgerHI 장바구니 확인          <<<<");
-		System.out.println("=================================================");
-		System.out.println();
 		
-		/* for문으로 사용자에게 보여줄 내용 출력 */
-		for(int i = 0; i < orderMenuList.size(); i += 5) {
-			int menuNo = Integer.valueOf(orderMenuList.get(i+1));
-			int amount = Integer.valueOf(orderMenuList.get(i + 3));
-			int price = Integer.valueOf(orderMenuList.get(i + 4)); 
+		if(orderMenuList.size() > 0 || setList.size() > 0) {
+			System.out.println(">>>>         BurgerHI 장바구니 확인          <<<<");
+			System.out.println("=================================================");
+			System.out.println();
+			
+			/* for문으로 사용자에게 보여줄 내용 출력 */
+			for(int i = 0; i < orderMenuList.size(); i += 5) {
+				int amount = Integer.valueOf(orderMenuList.get(i + 3));
+				int price = Integer.valueOf(orderMenuList.get(i + 4)); 
 //			System.out.println(i + "번째" + orderMenuList.get(i));		// 값이 제대로 담겨 출력 되는지 확인
 //			System.out.println("▶ 주문번호: " + orderMenuList.get(i));
-			System.out.println("▶ 메뉴번호: " + orderMenuList.get(i + 1));			
-			System.out.println("▶ 메뉴명  : " + orderMenuList.get(i + 2));
-			System.out.println("▶ 주문수량: " + orderMenuList.get(i + 3));
-			System.out.println("▶ 금액    : " + format.format(price) + " * " + amount + " = " + format.format((price *  amount)));
-			System.out.println();
-			totalPrice += (price *  amount);
-		}
-		
-		for(int i = 0; i < setList.size(); i += 5) {
-			System.out.println("▶ 메뉴번호  : " + setList.get(i));
-			List<MenuDTO> menuList = clientService.selectMenuBy(1);
-			for(int j = 0; j < menuList.size(); j++) {
-				if(setList.get(i) == menuList.get(j).getMenuCode()) {
-					setMenu = menuList.get(j).getName();
-				}
+				System.out.println("▶ 메뉴번호: " + orderMenuList.get(i + 1));			
+				System.out.println("▶ 메뉴명  : " + orderMenuList.get(i + 2));
+				System.out.println("▶ 주문수량: " + orderMenuList.get(i + 3));
+				System.out.println("▶ 금액    : " + format.format(price) + " * " + amount + " = " + format.format((price *  amount)));
+				System.out.println();
+				totalPrice += (price *  amount);
 			}
-			System.out.println("▶ 메뉴명    : " + setMenu + " 세트");
-			List<MenuDTO> drinkList = clientService.selectMenuBy(2);
-			for(int j = 0; j < drinkList.size(); j++) {
-				if(setList.get(i+1) == drinkList.get(j).getMenuCode()) {
-					setMenu = drinkList.get(j).getName();
+			
+			for(int i = 0; i < setList.size(); i += 5) {
+				System.out.println("▶ 메뉴번호  : " + setList.get(i));
+				List<MenuDTO> menuList = clientService.selectMenuBy(1);
+				for(int j = 0; j < menuList.size(); j++) {
+					if(setList.get(i) == menuList.get(j).getMenuCode()) {
+						setMenu = menuList.get(j).getName();
+					}
 				}
-			}
-			System.out.println("▶ 세트음료  : " + setMenu);
-			List<MenuDTO> sideList = clientService.selectMenuBy(3);
-			for(int j = 0; j < sideList.size(); j++) {
-				if(setList.get(i+2) == sideList.get(j).getMenuCode()) {
-					setMenu = sideList.get(j).getName();
+				System.out.println("▶ 메뉴명    : " + setMenu + " 세트");
+				List<MenuDTO> drinkList = clientService.selectMenuBy(2);
+				for(int j = 0; j < drinkList.size(); j++) {
+					if(setList.get(i+1) == drinkList.get(j).getMenuCode()) {
+						setMenu = drinkList.get(j).getName();
+					}
 				}
+				System.out.println("▶ 세트음료  : " + setMenu);
+				List<MenuDTO> sideList = clientService.selectMenuBy(3);
+				for(int j = 0; j < sideList.size(); j++) {
+					if(setList.get(i+2) == sideList.get(j).getMenuCode()) {
+						setMenu = sideList.get(j).getName();
+					}
+				}
+				setAmount += setList.get(i+4);
+				System.out.println("▶ 세트사이드: " + setMenu);
+				System.out.println("▶ 주문수량  : " + setList.get(i+4));
+				System.out.println("▶ 금액      : " + format.format(setList.get(i+3)) + " * " + setAmount + " = " + format.format((setList.get(i+3) * setAmount)));
+				totalPrice += setList.get(i+3) * setAmount;
 			}
-			setAmount += setList.get(i+4);
-			System.out.println("▶ 세트사이드: " + setMenu);
-			System.out.println("▶ 주문수량  : " + setList.get(i+4));
-			System.out.println("▶ 금액      : " + format.format(setList.get(i+3)) + " * " + setAmount + " = " + format.format((setList.get(i+3) * setAmount)));
-			totalPrice += setList.get(i+3) * setAmount;
-		}
-		
-		
+			
+			
 //		System.out.println("set값 제대로 들어갔는지? " + set);
-		if(setList.size() > 0) {
-		int setSalePrice = setAmount * 1000;
-		System.out.println("\n\n▶ 세트 할인 금액: " + format.format(setSalePrice));
-		System.out.println("▶ 총 금액: " + format.format(totalPrice) + " - " + format.format(setSalePrice) + " = "  +format.format((totalPrice - setSalePrice)));
-		System.out.println("\n\n\n\n\n\n\n\n\n");
+			if(setList.size() > 0) {
+				int setSalePrice = setAmount * 1000;
+				System.out.println("\n\n▶ 세트 할인 금액: " + format.format(setSalePrice));
+				System.out.println("▶ 총 금액: " + format.format(totalPrice) + " - " + format.format(setSalePrice) + " = "  +format.format((totalPrice - setSalePrice)));
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+			} else {
+				System.out.println("\n\n▶ 총 금액: " + format.format(totalPrice));
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+			}
 		} else {
-			System.out.println("\n\n▶ 총 금액: " + format.format(totalPrice));
-			System.out.println("\n\n\n\n\n\n\n\n\n");
+			System.out.println(">>>>         BurgerHI 장바구니 확인          <<<<");
+			System.out.println("=================================================");
+			System.out.println("\n                  🍔 텅 🍔                     ");
+			System.out.println("\n            장바구니가 텅비었어요.             \n");
+			System.out.println("=================================================");
+			System.out.println("\n → 주문하러 가볼까요?");
+			totalPrice = 0;
 		}
 		return totalPrice;
 	}
@@ -465,7 +475,7 @@ public class ClientController {
 			inputGiftNo = inputGiftNo.replaceAll("[^0-9]", "");
 			inputGiftNo = inputGiftNo.substring(0, 6) + "-" + inputGiftNo.substring(6, 10) + "-" + inputGiftNo.substring(10);
 		}
-		int result = clientService.updateGifticonPrice(inputGiftNo, gifticonPrice);
+		clientService.updateGifticonPrice(inputGiftNo, gifticonPrice);
 //		System.out.println(result);
 //		System.out.println(gifticonPrice);
 	}
@@ -473,7 +483,7 @@ public class ClientController {
 	/* 장바구니에서 결제한 메뉴의 경우 전체 Delete */
 	public void deleteAllOrderMenu() {
 		
-		int result = clientService.deleteAllOrderMenu();
+		clientService.deleteAllOrderMenu();
 //		System.out.println("장바구니 삭제 완료"); 	// 장바구니 삭제 확인
 	}
 
@@ -501,7 +511,7 @@ public class ClientController {
 	/* 비회원의 경우 회원번호와 중복되지 않도록 시퀀스 공유하여 Insert + 비회원 번호 Select */
 	public int insertNonMemberUser(int gradeNo) {
 		
-		int result = clientService.insertNonMemberUser(gradeNo);
+		clientService.insertNonMemberUser(gradeNo);
 //		System.out.println("NullPointException Test2");		// 오류 여부 확인 구문
 		
 		int userNo = clientService.selectNonMemberUserNo();
@@ -529,7 +539,7 @@ public class ClientController {
 	         amount = Integer.valueOf(orderMenuList.get(i + 3));
 	         menuCode = Integer.valueOf(orderMenuList.get(i + 1));
 	         totalPrice = price * amount;
-	         int result = clientService.insertSalesAmount(orderCode, menuCode, amount, totalPrice);
+	         clientService.insertSalesAmount(orderCode, menuCode, amount, totalPrice);
 	      }
 	   }
 
@@ -552,34 +562,6 @@ public class ClientController {
 		return userPhone;
 	}
 
-	/* 주문번호가 10번인 고객님의 경우 기프티콘 증정하는 이벤트 */
-	public void gifticonEvent(int orderCode) {
-
-		int price = 0;
-		String gifticonNo = null;
-
-		/* clientService의 Insert 메소드 사용 */
-		int result = clientService.insertGifticonEvent();
-
-		/* List<GifticonDTO>로 Select 메소드 사용 */
-		List<GifticonDTO> gifticonList = clientService.selectlastgifticon();
-
-		/* if문 사용(orderCode == 10) */
-		for (int i = 0; i < orderCode; i += 10) {
-			if (orderCode == i) {
-				System.out.println("★★★★    BergerHI의 특별한 Event!    ★★★★");
-				System.out.println("=================================================");
-				System.out.println("\n      BergerHI에서 준비한 특별한 Event!!!! ");
-				System.out.println("\n    " + i + "번째 고객님께 드리는 선물🎁");
-				System.out.println("\n → 기프티콘 번호:" + gifticonNo);
-				System.out.println("\n → 기프티콘 금액:" + format.format(price));
-				System.out.println("\n 다음 주문부터 사용이 가능하며, 현금으로 교환은 어렵습니다.");
-				System.out.println("  기프티콘 금액은 분할로 사용이 가능하며, 유효기간은 1년 입니다.");
-				System.out.println("\n\n BergerHI를 사랑해 주셔서 감사합니다. \n 좋은 하루 보내세요♥ ");
-			}
-
-		}
-	}
 	/* 추천카테고리의 메뉴 랜덤 추천 */
 	public int selectRefMenu(int categoryNo, int userNo) {
 		int category = clientService.selectCategoryBy(categoryNo);
@@ -635,15 +617,65 @@ public class ClientController {
 	}
 	/* 골드 등급으로 변경 */
 	public void updateGoldGrade(int userNo) {
+		int eventPrice = 10000;
 		clientService.updateGoldGrade(userNo);
+		
+		/* clientService의 Insert 메소드 사용 */
+		clientService.insertGifticonEvent(eventPrice);
+
+		/* List<GifticonDTO>로 Select 메소드 사용 */
+		List<GifticonDTO> gifticonList = clientService.selectlastgifticon();
+		/* if문 사용(orderCode == 10) */
+		System.out.println("★★★★    BergerHI의 특별한 Event!    ★★★★");
+		System.out.println("=================================================");
+		System.out.println("\n      BergerHI에서 준비한 특별한 Event!!!!    ");
+		System.out.println("\n       골드 등급 고객님께 드리는 선물🎁       ");
+		System.out.println("\n → 기프티콘 번호:" + gifticonList.get(0).getNo());
+		System.out.println("\n → 기프티콘 금액:" + format.format(eventPrice));
+		System.out.println("\n 다음 주문부터 사용이 가능하며, 현금으로 교환은 어렵습니다.");
+		System.out.println("  기프티콘 금액은 분할로 사용이 가능하며, 유효기간은 1년 입니다.");
+		System.out.println("\n\n BergerHI를 사랑해 주셔서 감사합니다. \n 좋은 하루 보내세요♥ ");
+
 	}
 	/* 실버 등급으로 변경 */
 	public void updateSilverGrade(int userNo) {
+		int eventPrice = 5000;
 		clientService.updateSilverGrade(userNo);
+		/* clientService의 Insert 메소드 사용 */
+		clientService.insertGifticonEvent(eventPrice);
+
+		/* List<GifticonDTO>로 Select 메소드 사용 */
+		List<GifticonDTO> gifticonList = clientService.selectlastgifticon();
+		/* if문 사용(orderCode == 10) */
+		System.out.println("★★★★    BergerHI의 특별한 Event!    ★★★★");
+		System.out.println("=================================================");
+		System.out.println("\n      BergerHI에서 준비한 특별한 Event!!!!    ");
+		System.out.println("\n       실버 등급 고객님께 드리는 선물🎁       ");
+		System.out.println("\n → 기프티콘 번호:" + gifticonList.get(0).getNo());
+		System.out.println("\n → 기프티콘 금액:" + format.format(eventPrice));
+		System.out.println("\n 다음 주문부터 사용이 가능하며, 현금으로 교환은 어렵습니다.");
+		System.out.println("  기프티콘 금액은 분할로 사용이 가능하며, 유효기간은 1년 입니다.");
+		System.out.println("\n\n BergerHI를 사랑해 주셔서 감사합니다. \n 좋은 하루 보내세요♥ ");
 	}
 	/* 패밀리 등급으로 변경 */
 	public void updateFamilyGrade(int userNo) {
+		int eventPrice = 2000;
 		clientService.updateFamilyGrade(userNo);
+		/* clientService의 Insert 메소드 사용 */
+		clientService.insertGifticonEvent(eventPrice);
+
+		/* List<GifticonDTO>로 Select 메소드 사용 */
+		List<GifticonDTO> gifticonList = clientService.selectlastgifticon();
+		/* if문 사용(orderCode == 10) */
+		System.out.println("★★★★    BergerHI의 특별한 Event!    ★★★★");
+		System.out.println("=================================================");
+		System.out.println("\n      BergerHI에서 준비한 특별한 Event!!!!    ");
+		System.out.println("\n       패밀리 등급 고객님께 드리는 선물🎁       ");
+		System.out.println("\n → 기프티콘 번호:" + gifticonList.get(0).getNo());
+		System.out.println("\n → 기프티콘 금액:" + format.format(eventPrice));
+		System.out.println("\n 다음 주문부터 사용이 가능하며, 현금으로 교환은 어렵습니다.");
+		System.out.println("  기프티콘 금액은 분할로 사용이 가능하며, 유효기간은 1년 입니다.");
+		System.out.println("\n\n BergerHI를 사랑해 주셔서 감사합니다. \n 좋은 하루 보내세요♥ ");
 		
 	}
 
