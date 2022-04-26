@@ -226,27 +226,27 @@ public class ClientDAO {
 	}
 	
 	/* 최종 금액을 구하기 위한 하나의 메뉴 금액 select 하는 메소드 */
-	public int selectOrderMenuPrice(Connection con, int inputMenuNo) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		int menuPrice = 0;
-		String query = prop.getProperty("selectOrderMenuPrice");
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, inputMenuNo);
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				menuPrice = rset.getInt(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt); 
-		}
-		return menuPrice;
-	}
+//	public int selectOrderMenuPrice(Connection con, int inputMenuNo) {
+//		PreparedStatement pstmt = null;
+//		ResultSet rset = null;
+//		int menuPrice = 0;
+//		String query = prop.getProperty("selectOrderMenuPrice");
+//		try {
+//			pstmt = con.prepareStatement(query);
+//			pstmt.setInt(1, inputMenuNo);
+//			rset = pstmt.executeQuery();
+//			
+//			if(rset.next()) {
+//				menuPrice = rset.getInt(1);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			close(rset);
+//			close(pstmt); 
+//		}
+//		return menuPrice;
+//	}
 
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
 	public List<String> selectOrderMenu(Connection con) {

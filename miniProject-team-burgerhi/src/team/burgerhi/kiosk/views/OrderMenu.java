@@ -31,7 +31,7 @@ public class OrderMenu {
 			int categoryNo = 0;
 			int userNo = 0;
 			int gradeNo = 0;
-			int menuPrice = 0;
+//			int menuPrice = 0;
 			int totalPrice = 0;
 			int paymentBy = 0;
 			int cardCode = 0;
@@ -41,6 +41,7 @@ public class OrderMenu {
 			int setAmount = 0;
 			int inputPrice = 0;
 			int checkCard = 0;
+			int insertSetMenu = 0;
 			double gradeDiscount = 0;
 			double cardDiscount = 0;
 			boolean flag = true;
@@ -150,10 +151,12 @@ public class OrderMenu {
 							if(num2 == 1) {
 								// 세트메뉴 선택 가능한 메소드
 								setList = clientController.ShowSetMenu(userNo);
+								System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+								if(setList.size() > 0) {
+									System.out.println("방금 누르신 메뉴가 장바구니에 담겼습니다!");
+								}
+//								System.out.println(setList);
 							
-//								setDiscount = 1000;
-//								setAmount++;
-//								totalPrice += (setPrice - setDiscount);
 							} else {
 								while(flag3) {
 									// 기존 메뉴선택 메소드
@@ -207,7 +210,7 @@ public class OrderMenu {
 								clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
 								
 								/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
-								menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
+//								menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
 //								totalPrice += (inputAmount * menuPrice);
 								
 								/* 추천카테고리의 메뉴 랜덤 추천 */
@@ -268,21 +271,11 @@ public class OrderMenu {
 							/* OrderMenu(장바구니) Insert 메소드 */
 							clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
 							
-							/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
-							menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
-//							totalPrice += (inputAmount * menuPrice);
+//							menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
 							
-							/* 추천카테고리의 메뉴 랜덤 추천 */
-							refPrice = clientController.selectRefMenu(categoryNo, userNo);
+//							refPrice = clientController.selectRefMenu(categoryNo, userNo);
 						}
 						
-						
-						/* 추천 메뉴 금액과 세트메뉴 금액을 합산 할 총 금액 변수 */
-
-						
-
-						totalPrice += refPrice;
-
 						flag3 = true;
 						while(flag3) {
 						/* 추가 주문 여부 확인 및 장바구니 확인 선택 출력 */
@@ -357,6 +350,15 @@ public class OrderMenu {
 										totalPrice = clientController.selectOrderMenu(setList);
 									}
 								} else if(num == 3) {
+									for(int i = 0; i < setList.size(); i+= 5) {
+										int berger = setList.get(i);
+										int drink = setList.get(i+1);
+										int side = setList.get(i+2);
+										int amount = setList.get(i+4);
+										clientController.insertOrderSetMenu(userNo, berger, amount);
+										clientController.insertOrderSetMenu(userNo, drink, amount);
+										clientController.insertOrderSetMenu(userNo, side, amount);
+									}
 									flag = false; // 모든 while문을 빠져나가 최종 결제 화면이 뜨도록 함
 									flag1 = false;
 									flag3 = false;

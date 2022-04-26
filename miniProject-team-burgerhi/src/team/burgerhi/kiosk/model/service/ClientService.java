@@ -93,12 +93,12 @@ public class ClientService {
 	}
 	
 	/* 최종 금액을 구하기 위한 하나의 메뉴 금액 select 하는 메소드 */
-	public int selectOrderMenuPrice(int inputMenuNo) {
-		Connection con = getConnection();
-		int menuPrice = clientDAO.selectOrderMenuPrice(con, inputMenuNo);
-		close(con);
-		return menuPrice;
-	}
+//	public int selectOrderMenuPrice(int inputMenuNo) {
+//		Connection con = getConnection();
+//		int menuPrice = clientDAO.selectOrderMenuPrice(con, inputMenuNo);
+//		close(con);
+//		return menuPrice;
+//	}
 	
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
 	public List<String> selectOrderMenu() {

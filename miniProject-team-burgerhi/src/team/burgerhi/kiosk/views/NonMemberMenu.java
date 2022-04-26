@@ -15,7 +15,7 @@ public class NonMemberMenu {
 	private ClientController clientController = new ClientController();
 	Scanner sc = new Scanner(System.in);
 	public void displayMainMenu() {
-		int menuPrice = 0;
+//		int menuPrice = 0;
 		int totalPrice = 0;
 		int lastPayment =0;
 		int paymentBy = 0;
@@ -81,13 +81,11 @@ public class NonMemberMenu {
 				
 				if(num2 == 1) {
 					// 세트메뉴 선택 가능한 메소드
-					setList = new ArrayList<>();
 					setList = clientController.ShowSetMenu(userNo);
-					System.out.println(setList);
-//					setDiscount = 1000;
-//					setAmount++;
-//					totalPrice += (setPrice - setDiscount);
 					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+					if(setList.size() > 0) {
+						System.out.println("방금 누르신 메뉴가 장바구니에 담겼습니다!");
+					}
 				} else {
 					
 					while(flag1) {
@@ -140,7 +138,7 @@ public class NonMemberMenu {
 					clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
 					
 					/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
-					menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
+//					menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
 //					totalPrice += (inputAmount * menuPrice);
 					
 					/* 추천카테고리의 메뉴 랜덤 추천 */
@@ -200,7 +198,7 @@ public class NonMemberMenu {
 				clientController.insertOrderMenu(userNo, inputMenuNo, inputAmount);
 				
 				/* 사용자가 선택한 모든 메뉴의 총 금액을 totalPrice변수에 누적시켜 결제시 활용 */
-				menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
+//				menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
 //				totalPrice += (inputAmount * menuPrice);
 				
 				/* 추천카테고리의 메뉴 랜덤 추천 */
@@ -285,6 +283,15 @@ public class NonMemberMenu {
 					clientController.deleteOrderMenu(setList);
 					totalPrice = clientController.selectOrderMenu(setList);
 				} else if(num3 == 3) {
+					for(int i = 0; i < setList.size(); i+= 5) {
+						int berger = setList.get(i);
+						int drink = setList.get(i+1);
+						int side = setList.get(i+2);
+						int amount = setList.get(i+4);
+						clientController.insertOrderSetMenu(userNo, berger, amount);
+						clientController.insertOrderSetMenu(userNo, drink, amount);
+						clientController.insertOrderSetMenu(userNo, side, amount);
+					}
 					flag = false;
 					flag2 = true;
 					flag1 = false;
@@ -375,8 +382,13 @@ public class NonMemberMenu {
 					/* 할인 내역 및 결제 금액 모두 출력 */
 					System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 					System.out.println("▶ 카드사 할인 금액: " + (int)cardDiscount + "원");
-					lastPayment = (int) (totalPrice - cardDiscount);
 					System.out.println();
+					for(int i = 0; i < setList.size(); i += 5) {
+						setAmount += setList.get(i+4);
+					}
+					setPrice = setAmount * 1000;
+					lastPayment = (int) (totalPrice - cardDiscount - setPrice);
+					System.out.println("▶ 세트 할인 금액: " + setPrice + "원");
 					System.out.println("▶ 총 결제 금액은 " + lastPayment + "원 입니다.");
 					System.out.println();
 					System.out.println("고객님의 " + paymentCard + "로 총" + lastPayment + "원이 결제 되었습니다!");
@@ -388,6 +400,12 @@ public class NonMemberMenu {
 						try {		// 실수로 문자열을 입력했을 경우의 예외처리
 							System.out.println("▶ 장바구니 총 금액: " + totalPrice + "원");
 							System.out.println();
+							for(int i = 0; i < setList.size(); i += 5) {
+								setAmount += setList.get(i+4);
+							}
+							setPrice = setAmount * 1000;
+							System.out.println("▶ 세트 할인 금액: " + setPrice + "원");
+							System.out.println("▶ 총 결제 금액은 " + (totalPrice - setPrice) + "원 입니다.");
 							System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
 							inputPrice = sc.nextInt();
 						} catch(InputMismatchException e) {
@@ -456,7 +474,12 @@ public class NonMemberMenu {
 						}
 					}
 				} else if (paymentBy == 3) { // 기프티콘 결제
-					System.out.println("\n → 총 결제 금액은 " + totalPrice + "원 입니다.");
+					for(int i = 0; i < setList.size(); i += 5) {
+						setAmount += setList.get(i+4);
+					}
+					setPrice = setAmount * 1000;
+					System.out.println("▶ 세트 할인 금액: " + setPrice + "원");
+					System.out.println("\n → 총 결제 금액은 " + (totalPrice - setPrice) + "원 입니다.");
 					System.out.println();
 					System.out.print("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
 					sc.nextLine();
