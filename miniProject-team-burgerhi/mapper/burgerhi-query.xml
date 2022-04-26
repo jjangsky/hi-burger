@@ -277,6 +277,7 @@
  	     FROM PAYMENT_TABLE A
   	    RIGHT JOIN GRADE_TABLE B ON (A.GRADE_NO = B.GRADE_NO)
   	    GROUP BY B.GRADE_NO
+        ORDER BY 1
 	</entry>
 	<entry key="deleteAllOrderMenu">
 	    DELETE

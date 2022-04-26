@@ -379,9 +379,10 @@ public class NonMemberMenu {
 					for(int i = 0; i < setList.size(); i += 5) {
 						setAmount += setList.get(i+4);
 					}
+					
+					/* 모든 할인금액 변수에 담아 최종 결제 금액 환산 */
 					setDiscount = setAmount * 1000;
-
-					cardDiscount = (totalPrice - setDiscount) * cardDiscount; // 카드 할인: 10%이기 때문에 총 금액에서 10%가 얼마인지 계산 후 변수에 담기
+					cardDiscount = (totalPrice - setDiscount) * cardDiscount;
 					lastPayment = (int) (totalPrice - cardDiscount - setDiscount);
 
 					/* 할인 내역 및 결제 금액 모두 출력 */

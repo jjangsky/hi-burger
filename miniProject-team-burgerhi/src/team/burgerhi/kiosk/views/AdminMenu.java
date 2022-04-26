@@ -263,7 +263,7 @@ public class AdminMenu {
          } else if(num == 5) {
         	 break;
          }
-      }
+      } // while문 종료
       return exit;
    }
 }

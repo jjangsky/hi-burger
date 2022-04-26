@@ -251,6 +251,7 @@ public class AdminController {
 			System.out.println("\n\n ▶ Family등급 매출액: " + format.format(gadeSales.get(0)) + "원");
 			System.out.println("\n ▶ Silver등급 매출액: " + format.format(gadeSales.get(1)) + "원");
 			System.out.println("\n ▶ Gold등급 매출액: " + format.format(gadeSales.get(2)) + "원");
+			System.out.println("\n ▶ 관리자등급 매출액: " + format.format(gadeSales.get(3)) + "원");
 			System.out.println("\n ▶ 비회원등급 매출액: " + format.format(gadeSales.get(4)) + "원");
 			
 		} else if(salesNum == 3) {

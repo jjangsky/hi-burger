@@ -128,7 +128,6 @@ public class OrderResultSet {
 	/* 기프티콘 결제 후 금액 멤버쉽 누적 및 등급 조절 메소드 */
 	public void giftMemberPoint(int userNo, int lastPayment, int gifticonPrice) {
 		ClientController clientController = new ClientController();
-		
 		int afterPayment = lastPayment - gifticonPrice;
 		int selectPoint = clientController.selectMemberPoint(userNo);
 		selectPoint = selectPoint + afterPayment;
