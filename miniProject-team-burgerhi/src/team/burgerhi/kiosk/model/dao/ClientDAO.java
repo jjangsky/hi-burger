@@ -963,5 +963,26 @@ public class ClientDAO {
 		}
 		return result;
 	}
+
+	public int selectUserUpgrade(Connection con, int userNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int gradeNo = 0;
+		String query = prop.getProperty("selectUserUpgrade");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				gradeNo = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return gradeNo;
+	}
 	
 }

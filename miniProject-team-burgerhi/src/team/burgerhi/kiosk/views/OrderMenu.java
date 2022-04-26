@@ -21,6 +21,7 @@ public class OrderMenu {
 	public void displayMainMenu() {
 		Scanner sc = new Scanner(System.in);
 		DecimalFormat format = new DecimalFormat("###,###");
+		Thread th = new Thread();
 		
 		while(true) {
 			/* do~while문 밖에서도 사용해야 할 변수 */
@@ -127,7 +128,6 @@ public class OrderMenu {
 							} break;
 						}
 						
-						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						if(categoryNo == 0) {
 							flag1 = false;		// 메뉴 주문 while문 탈출
 							continue;			// 메인메뉴로 돌아가도록 설정
@@ -136,7 +136,7 @@ public class OrderMenu {
 								try {	// 문자열 예외처리
 									System.out.print("\n → 세트메뉴로 주문 하시겠습니까?(1.예 / 2. 아니오): ");
 									num2 = sc.nextInt();
-									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 								} catch(InputMismatchException e) {
 									System.out.println("\n 숫자로 입력해 주세요!");
 									sc.next();
@@ -150,6 +150,7 @@ public class OrderMenu {
 								System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 								if(setList.size() > 0) {
 									System.out.println("방금 누르신 메뉴가 장바구니에 담겼습니다!");
+									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 								}
 //								System.out.println(setList);
 							
@@ -306,7 +307,6 @@ public class OrderMenu {
 							break; // while문의 처음으로 돌아가도록 설정
 						} else if (num == 2) { // 장바구니 확인하기
 							totalPrice = clientController.selectOrderMenu(setList); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
-							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 							if(totalPrice == 0) {
 								continue;
 							}
@@ -350,7 +350,6 @@ public class OrderMenu {
 										break; 										// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 									} else {
 										totalPrice = clientController.selectOrderMenu(setList);
-										System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 										if(totalPrice == 0) {
 											break;
 										}
@@ -481,11 +480,29 @@ public class OrderMenu {
 						System.out.println();
 						System.out.println("▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
 						System.out.println();
-						System.out.println("고객님의 " + paymentCard + "로 총" + format.format(lastPayment) + "원이 결제 되었습니다!");
-						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 						
+//						try {
+//							th.sleep(1500);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
+						if(paymentCard.length() == 2 || paymentCard.length() == 3) {
+							paymentCard = paymentCard + "카드";
+						}
+						System.out.println("고객님의 " + paymentCard + "로 총" + format.format(lastPayment) + "원이 결제 되었습니다!");
+						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n\n\n\n");
+//						try {
+//							th.sleep(1000);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
 						if(gradeNo != 4) {
-							orderResultSet.memberGradePoint(userNo, lastPayment); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
+							orderResultSet.memberGradePoint(userNo, lastPayment, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
+//							try {
+//								th.sleep(1000);
+//							} catch (InterruptedException e) {
+//								e.printStackTrace();
+//							}
 						}
 						
 						
@@ -519,7 +536,7 @@ public class OrderMenu {
 							System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 							
 							if(gradeNo != 4) {
-								orderResultSet.memberGradePoint(userNo, lastPayment); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
+								orderResultSet.memberGradePoint(userNo, lastPayment, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 							}
 							
 						} else if (inputPrice > lastPayment) {
@@ -528,7 +545,7 @@ public class OrderMenu {
 							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 							
 							if(gradeNo != 4) {
-								orderResultSet.memberGradePoint(userNo, lastPayment); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
+								orderResultSet.memberGradePoint(userNo, lastPayment, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 							}
 							
 						} else {
@@ -592,7 +609,7 @@ public class OrderMenu {
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 								System.out.println("\n\n\n\n\n\n\n\n\n\n");
 								if(gradeNo != 4) {
-									orderResultSet.memberGradePoint(userNo, lastPayment); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
+									orderResultSet.memberGradePoint(userNo, lastPayment, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 								}
 							}
 						}
@@ -686,7 +703,7 @@ public class OrderMenu {
 										"고객님의 " + paymentCard + "로 총" + format.format((lastPayment - gifticonPrice)) + "원이 결제 되었습니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 								System.out.println("\n\n\n\n\n\n\n\n\n\n");
-								orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice); // 기프티콘 사용 후 결제 금액 누적
+								orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice, gradeNo); // 기프티콘 사용 후 결제 금액 누적
 
 								
 							}else if (paymentBy == 2) {								 
@@ -704,7 +721,7 @@ public class OrderMenu {
 								if (inputPrice == (lastPayment - gifticonPrice)) {
 									System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
-									orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice);// 기프티콘 사용 후 결제 금액 누적
+									orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice, gradeNo);// 기프티콘 사용 후 결제 금액 누적
 
 								}else if (inputPrice > (lastPayment - gifticonPrice)) {
 
@@ -713,7 +730,7 @@ public class OrderMenu {
 									System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
 									
-									orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice);// 기프티콘 사용 후 결제 금액 누적
+									orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice, gradeNo);// 기프티콘 사용 후 결제 금액 누적
 								} else {
 									System.out.println(" 결제 금액이 " + format.format((lastPayment - inputPrice - gifticonPrice)) + "원 부족합니다!");
 									System.out.println("\n 추가 금액 " + format.format((lastPayment - inputPrice - gifticonPrice)) + "원을 결제해 주세요!\n\n\n");
@@ -776,7 +793,7 @@ public class OrderMenu {
 										System.out.println("\n\n\n\n\n\n\n\n\n\n");
 										
 										if(gradeNo != 4) {
-											orderResultSet.memberGradePoint(userNo, lastPayment); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
+											orderResultSet.memberGradePoint(userNo, lastPayment, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 										}
 									}
 								}

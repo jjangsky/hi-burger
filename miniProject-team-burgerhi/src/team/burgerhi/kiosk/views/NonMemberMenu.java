@@ -61,7 +61,6 @@ public class NonMemberMenu {
 			userNo = clientController.insertNonMemberUser(gradeNo);
 //			System.out.println(gradeNo);						// 오류 구문 확인
 //			System.out.println("NullPointException Test1");		// 오류 구문 확인
-			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			if(categoryNo == 0) {
 				flag2 = false;	// 메뉴 주문 while문 탈출
 				break;			// 메인메뉴로 돌아가도록 설정
@@ -71,7 +70,7 @@ public class NonMemberMenu {
 					try {		// 실수로 문자열을 입력했을 경우의 예외처리
 						System.out.print("세트메뉴로 주문 하시겠습니까?(1.예 / 2. 아니오): ");
 						 num2 = sc.nextInt();
-						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 					} catch(InputMismatchException e) {
 						System.out.println("\n 숫자로 입력해 주세요!");
 						sc.next();
@@ -85,6 +84,7 @@ public class NonMemberMenu {
 					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 					if(setList.size() > 0) {
 						System.out.println("방금 누르신 메뉴가 장바구니에 담겼습니다!");
+						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 					}
 				} else {
 					
@@ -386,7 +386,7 @@ public class NonMemberMenu {
 					lastPayment = (int) (totalPrice - cardDiscount - setDiscount);
 
 					/* 할인 내역 및 결제 금액 모두 출력 */
-					System.out.println("▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
+					System.out.println("\n\n▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
 					System.out.println("▶ 카드사 할인 금액: " + format.format((int)cardDiscount) + "원");
 					System.out.println("▶ 세트 할인 금액: " + format.format(setDiscount) + "원");
 					System.out.println("▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
@@ -583,7 +583,7 @@ public class NonMemberMenu {
 				clientController.insertOrder(totalPrice);
 				int orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
 				clientController.insertSalesAmount(orderCode);
-				clientController.gifticonEvent(orderCode);
+//				clientController.gifticonEvent(orderCode);
 				
 
 				/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */

@@ -100,25 +100,26 @@ public class OrderResultSet {
 	}
 	
 	/* 멤버쉽 누적 및 등급 조절 메소드 */
-	public void memberGradePoint(int userNo, int lastPayment) {
+	public void memberGradePoint(int userNo, int lastPayment, int gradeNo) {
 		ClientController clientController = new ClientController();
 		
 		int selectPoint = clientController.selectMemberPoint(userNo);
 		selectPoint = selectPoint + lastPayment;
 		System.out.println("\n\n현재 " + format.format(lastPayment) + "Point 적립되셨습니다." );
 		System.out.println("고객님의 현재 누적된 멤버쉽은 " + format.format(selectPoint) + "Point 입니다.");
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		/* 멤버쉽 포인트 변경 */
 	 int memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
 		/* 멤버쉽 등급 변경 */
 		if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
-			clientController.updateGoldGrade(userNo);
+			clientController.updateGoldGrade(userNo, gradeNo);
 			System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.");
 		} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
-			clientController.updateSilverGrade(userNo);
+			clientController.updateSilverGrade(userNo, gradeNo);
 			System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
 			System.out.println("다음 등급까지" + format.format((300000 - selectPoint)) + "Point 남았습니다. ^_^");
-		}else {
-			clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
+		}else if(selectPoint > 0){
+			clientController.updateFamilyGrade(userNo, gradeNo); /* 패밀리 등급으로 변경 */
 			System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
 			System.out.println("다음 등급까지 " + format.format((100000 - selectPoint)) + "Point 남았습니다. ^_^");
 		}
@@ -126,7 +127,7 @@ public class OrderResultSet {
 	}
 	
 	/* 기프티콘 결제 후 금액 멤버쉽 누적 및 등급 조절 메소드 */
-	public void giftMemberPoint(int userNo, int lastPayment, int gifticonPrice) {
+	public void giftMemberPoint(int userNo, int lastPayment, int gifticonPrice, int gradeNo) {
 		ClientController clientController = new ClientController();
 		int afterPayment = lastPayment - gifticonPrice;
 		int selectPoint = clientController.selectMemberPoint(userNo);
@@ -138,14 +139,14 @@ public class OrderResultSet {
 		/* 멤버쉽 등급 변경 */
 		if(selectPoint >= 300000) { /* 골드 등급으로 변경 */
 			System.out.println("\n\n회원님의 현재 등급은 Gold 입니다.\n\n");
-			clientController.updateGoldGrade(userNo);
+			clientController.updateGoldGrade(userNo, gradeNo);
 		} else if(selectPoint >= 100000) { /* 실버 등급으로 변경 */
 			System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.\n\n");
-			clientController.updateSilverGrade(userNo);
+			clientController.updateSilverGrade(userNo, gradeNo);
 			System.out.println("\n\n ※ 다음 등급까지" + format.format((300000 - selectPoint)) + "Point 남았습니다. ^_^");
 		}else {
 			System.out.println("\n\n회원님의 현재 등급은 Family 입니다.\n\n");
-			clientController.updateFamilyGrade(userNo); /* 패밀리 등급으로 변경 */
+			clientController.updateFamilyGrade(userNo, gradeNo); /* 패밀리 등급으로 변경 */
 			System.out.println("\n\n ※ 다음 등급까지 " + format.format((100000 - selectPoint)) + "Point 남았습니다. ^_^");
 		}
 		

@@ -81,14 +81,6 @@
  		 WHERE A.MENU_CODE = ?
 	</entry>
 	
-	<entry key="selectGrade">
-		
-	</entry>
-	
-	<entry key="selectCard">
-		
-	</entry>
-	
 	<entry key="selectAllCard">
 		SELECT
  		      A.CARD_CODE
@@ -568,5 +560,11 @@
 	      JOIN GRADE_TABLE B ON (A.GRADE_NO = B.GRADE_NO)
 	     WHERE A.USER_NAME IS NOT NULL
 	     ORDER BY A.USER_NO
+	</entry>
+	<entry key = "selectUserUpgrade">
+	    SELECT
+	    	   GRADE_NO
+	      FROM USER_TABLE
+	     WHERE USER_NO = ?
 	</entry>
 </properties>

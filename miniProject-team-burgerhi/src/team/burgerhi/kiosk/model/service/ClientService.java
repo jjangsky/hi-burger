@@ -393,5 +393,12 @@ public class ClientService {
 		return result;
 	}
 
+	public int selectUserUpgrade(int userNo) {
+		Connection con = getConnection();
+		int updateGradeNo = clientDAO.selectUserUpgrade(con, userNo);
+		close(con);
+		return updateGradeNo;
+	}
+
 
 }
