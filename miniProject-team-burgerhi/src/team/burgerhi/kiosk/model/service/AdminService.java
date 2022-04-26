@@ -144,5 +144,13 @@ public class AdminService {
 		close(con);
 		return methodSales;	
 	}
+	public List<Object> selectAllUser() {
+		Connection con = getConnection();
+		
+		List<Object> allUser = adminDAO.selectAllUser(con);
+		
+		close(con);
+		return allUser;
+	}
 
 }

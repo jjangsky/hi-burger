@@ -268,9 +268,22 @@ public class AdminController {
 
 	/* 회원의 모든 정보를 볼 수 있는 메소드(혜영) */
 	public void selectUserAll() {
+		System.out.println(">>>>         BurgerHI 회원 전체 조회         <<<<");
+		System.out.println("=================================================");
+		System.out.println();
+		List<Object> allUser = adminService.selectAllUser();
 		
-		
-		
+		for(int i = 0; i < allUser.size(); i+=7) {
+			
+			System.out.println("▶ 회원번호: " + allUser.get(i));
+			System.out.println("▶ 회원이름: " + allUser.get(i+1));
+			System.out.println("▶ 회원ID: " + allUser.get(i+2));
+			System.out.println("▶ 등급: " + allUser.get(i+3));
+			System.out.println("▶ 보유포인트: " + format.format(allUser.get(i+4)));
+			System.out.println("▶ 전화번호: " + allUser.get(i+5));
+			System.out.println("▶ 이용여부(Y/N): " + allUser.get(i+6));
+			System.out.println();
+		}
 		
 	}
 

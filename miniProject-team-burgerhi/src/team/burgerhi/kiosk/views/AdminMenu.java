@@ -30,7 +30,7 @@ public class AdminMenu {
          System.out.println("               |                |               ");
          System.out.println("------------------------------------------------");
          System.out.println("                       |                       ");
-		 System.out.println("           5           |           6           ");
+		 System.out.println("           4           |           5           ");
 		 System.out.println("     회원 정보 확인    |     메뉴 주문 하기    ");
 		 System.out.println("                       |                       ");
          System.out.println("=================================================");

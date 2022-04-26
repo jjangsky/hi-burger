@@ -554,4 +554,18 @@
                         	     FROM ORDER_MENU_TABLE
                        	        WHERE MENU_CODE = ?)
 	</entry>
+	<entry key="selectAllUser">
+	    SELECT
+	           A.USER_NO
+	         , A.USER_NAME
+	         , A.USER_ID
+	         , B.GRADE_NAME
+	         , A.USER_POINT
+	         , A.PHONE
+	         , A.USER_YN
+	      FROM USER_TABLE A
+	      JOIN GRADE_TABLE B ON (A.GRADE_NO = B.GRADE_NO)
+	     WHERE A.USER_NAME IS NOT NULL
+	     ORDER BY A.USER_NO
+	</entry>
 </properties>

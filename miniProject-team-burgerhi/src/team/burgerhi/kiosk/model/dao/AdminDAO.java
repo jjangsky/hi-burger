@@ -432,5 +432,31 @@ public class AdminDAO {
 		return methodSales;
 	}
 
+	public List<Object> selectAllUser(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectAllUser");
+		List<Object> allUser = new ArrayList<Object>();
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				allUser.add(rset.getInt("USER_NO"));
+				allUser.add(rset.getString("USER_NAME"));
+				allUser.add(rset.getString("USER_ID"));
+				allUser.add(rset.getString("GRADE_NAME"));
+				allUser.add(rset.getInt("USER_POINT"));
+				allUser.add(rset.getString("PHONE"));
+				allUser.add(rset.getString("USER_YN"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allUser;
+	}
+
 
 }
