@@ -2,6 +2,7 @@ package team.burgerhi.kiosk.controller;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ public class AdminController {
 	private AdminService adminService = new AdminService();
 	Scanner sc = new Scanner(System.in);
 	DecimalFormat format = new DecimalFormat("###,###");
+	List<CategoryDTO> categoryList = new ArrayList<>();
 	
 	public void selectHambergerRanking() {
 		
@@ -56,7 +58,7 @@ public class AdminController {
 	
 	public List<CategoryDTO> selectAllCategory() {
 		
-		List<CategoryDTO> categoryList = adminService.selectAllCategory();
+		categoryList = adminService.selectAllCategory();
 				
 		return categoryList;
 	}
@@ -64,6 +66,9 @@ public class AdminController {
 	public void insertCategory() {
 		System.out.println(">>>>      BurgerHI 카테고리 추가 시스템      <<<<");
 		System.out.println("=================================================");
+		for(CategoryDTO cate : categoryList) {
+            System.out.println("▶ " + cate.getCode() + ". " + cate.getName() + "(추천 카테고리: " + cate.getRefName() + ")");
+         }
 		System.out.print("\n  → 추가할 카테고리명을 입력해 주세요: ");
 //		sc.nextLine();
 		String categoryName = sc.nextLine();
@@ -83,6 +88,9 @@ public class AdminController {
 	public void updateCategory() {
 		System.out.println(">>>>      BurgerHI 카테고리 수정 시스템      <<<<");
 		System.out.println("=================================================");
+		for(CategoryDTO cate : categoryList) {
+            System.out.println("▶ " + cate.getCode() + ". " + cate.getName() + "(추천 카테고리: " + cate.getRefName() + ")");
+         }
 		System.out.print("\n  → 변경할 카테고리 번호를 입력해 주세요: ");
 		int categoryCode = sc.nextInt();
 		System.out.print("\n  → 변경할 카테고리 이름을 입력해 주세요: ");
@@ -104,6 +112,9 @@ public class AdminController {
 	public void deleteCategory() {
 		System.out.println(">>>>      BurgerHI 카테고리 삭제 시스템      <<<<");
 		System.out.println("=================================================");
+		for(CategoryDTO cate : categoryList) {
+            System.out.println("▶ " + cate.getCode() + ". " + cate.getName() + "(추천 카테고리: " + cate.getRefName() + ")");
+         }
 		System.out.print("\n → 삭제할 카테고리 이름을 입력해 주세요: ");
 		String categoryName = sc.nextLine();
 		System.out.println("\n\n\n\n\n");
