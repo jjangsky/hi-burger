@@ -306,6 +306,10 @@ public class OrderMenu {
 							break; // while문의 처음으로 돌아가도록 설정
 						} else if (num == 2) { // 장바구니 확인하기
 							totalPrice = clientController.selectOrderMenu(setList); // OrderMenu(장바구니) 모두 출력되도록 하는 메소드
+							System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+							if(totalPrice == 0) {
+								continue;
+							}
 
 							/* 장바구니 while문 */
 							while(true) { // 번호를 잘못 입력할 경우 계속 하단 화면이 보이도록 while문 추가
@@ -340,11 +344,16 @@ public class OrderMenu {
 									break; // 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 								} else if(num == 2) { // 장바구니에 있는 메뉴 수정하기
 									int close = clientController.deleteOrderMenu(setList);
+									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 									if(close == 0) {
 										flag3 = false;
 										break; 										// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 									} else {
 										totalPrice = clientController.selectOrderMenu(setList);
+										System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+										if(totalPrice == 0) {
+											break;
+										}
 									}
 								} else if(num == 3) {
 									for(int i = 0; i < setList.size(); i+= 5) {
@@ -364,6 +373,9 @@ public class OrderMenu {
 									System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");							
 								}
 							} // 장바구니 while문 종료
+							if(totalPrice == 0) {
+								continue;
+							}
 						} else {
 							System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");							
 						}

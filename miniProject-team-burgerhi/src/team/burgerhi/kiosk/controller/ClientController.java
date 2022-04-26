@@ -258,63 +258,74 @@ public class ClientController {
 		int setAmount = 0;
 		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
 		List<String> orderMenuList = clientService.selectOrderMenu();
-		System.out.println(">>>>         BurgerHI 장바구니 확인          <<<<");
-		System.out.println("=================================================");
-		System.out.println();
 		
-		/* for문으로 사용자에게 보여줄 내용 출력 */
-		for(int i = 0; i < orderMenuList.size(); i += 5) {
-			int amount = Integer.valueOf(orderMenuList.get(i + 3));
-			int price = Integer.valueOf(orderMenuList.get(i + 4)); 
+		if(orderMenuList.size() > 0 || setList.size() > 0) {
+			System.out.println(">>>>         BurgerHI 장바구니 확인          <<<<");
+			System.out.println("=================================================");
+			System.out.println();
+			
+			/* for문으로 사용자에게 보여줄 내용 출력 */
+			for(int i = 0; i < orderMenuList.size(); i += 5) {
+				int amount = Integer.valueOf(orderMenuList.get(i + 3));
+				int price = Integer.valueOf(orderMenuList.get(i + 4)); 
 //			System.out.println(i + "번째" + orderMenuList.get(i));		// 값이 제대로 담겨 출력 되는지 확인
 //			System.out.println("▶ 주문번호: " + orderMenuList.get(i));
-			System.out.println("▶ 메뉴번호: " + orderMenuList.get(i + 1));			
-			System.out.println("▶ 메뉴명  : " + orderMenuList.get(i + 2));
-			System.out.println("▶ 주문수량: " + orderMenuList.get(i + 3));
-			System.out.println("▶ 금액    : " + format.format(price) + " * " + amount + " = " + format.format((price *  amount)));
-			System.out.println();
-			totalPrice += (price *  amount);
-		}
-		
-		for(int i = 0; i < setList.size(); i += 5) {
-			System.out.println("▶ 메뉴번호  : " + setList.get(i));
-			List<MenuDTO> menuList = clientService.selectMenuBy(1);
-			for(int j = 0; j < menuList.size(); j++) {
-				if(setList.get(i) == menuList.get(j).getMenuCode()) {
-					setMenu = menuList.get(j).getName();
-				}
+				System.out.println("▶ 메뉴번호: " + orderMenuList.get(i + 1));			
+				System.out.println("▶ 메뉴명  : " + orderMenuList.get(i + 2));
+				System.out.println("▶ 주문수량: " + orderMenuList.get(i + 3));
+				System.out.println("▶ 금액    : " + format.format(price) + " * " + amount + " = " + format.format((price *  amount)));
+				System.out.println();
+				totalPrice += (price *  amount);
 			}
-			System.out.println("▶ 메뉴명    : " + setMenu + " 세트");
-			List<MenuDTO> drinkList = clientService.selectMenuBy(2);
-			for(int j = 0; j < drinkList.size(); j++) {
-				if(setList.get(i+1) == drinkList.get(j).getMenuCode()) {
-					setMenu = drinkList.get(j).getName();
+			
+			for(int i = 0; i < setList.size(); i += 5) {
+				System.out.println("▶ 메뉴번호  : " + setList.get(i));
+				List<MenuDTO> menuList = clientService.selectMenuBy(1);
+				for(int j = 0; j < menuList.size(); j++) {
+					if(setList.get(i) == menuList.get(j).getMenuCode()) {
+						setMenu = menuList.get(j).getName();
+					}
 				}
-			}
-			System.out.println("▶ 세트음료  : " + setMenu);
-			List<MenuDTO> sideList = clientService.selectMenuBy(3);
-			for(int j = 0; j < sideList.size(); j++) {
-				if(setList.get(i+2) == sideList.get(j).getMenuCode()) {
-					setMenu = sideList.get(j).getName();
+				System.out.println("▶ 메뉴명    : " + setMenu + " 세트");
+				List<MenuDTO> drinkList = clientService.selectMenuBy(2);
+				for(int j = 0; j < drinkList.size(); j++) {
+					if(setList.get(i+1) == drinkList.get(j).getMenuCode()) {
+						setMenu = drinkList.get(j).getName();
+					}
 				}
+				System.out.println("▶ 세트음료  : " + setMenu);
+				List<MenuDTO> sideList = clientService.selectMenuBy(3);
+				for(int j = 0; j < sideList.size(); j++) {
+					if(setList.get(i+2) == sideList.get(j).getMenuCode()) {
+						setMenu = sideList.get(j).getName();
+					}
+				}
+				setAmount += setList.get(i+4);
+				System.out.println("▶ 세트사이드: " + setMenu);
+				System.out.println("▶ 주문수량  : " + setList.get(i+4));
+				System.out.println("▶ 금액      : " + format.format(setList.get(i+3)) + " * " + setAmount + " = " + format.format((setList.get(i+3) * setAmount)));
+				totalPrice += setList.get(i+3) * setAmount;
 			}
-			setAmount += setList.get(i+4);
-			System.out.println("▶ 세트사이드: " + setMenu);
-			System.out.println("▶ 주문수량  : " + setList.get(i+4));
-			System.out.println("▶ 금액      : " + format.format(setList.get(i+3)) + " * " + setAmount + " = " + format.format((setList.get(i+3) * setAmount)));
-			totalPrice += setList.get(i+3) * setAmount;
-		}
-		
-		
+			
+			
 //		System.out.println("set값 제대로 들어갔는지? " + set);
-		if(setList.size() > 0) {
-		int setSalePrice = setAmount * 1000;
-		System.out.println("\n\n▶ 세트 할인 금액: " + format.format(setSalePrice));
-		System.out.println("▶ 총 금액: " + format.format(totalPrice) + " - " + format.format(setSalePrice) + " = "  +format.format((totalPrice - setSalePrice)));
-		System.out.println("\n\n\n\n\n\n\n\n\n");
+			if(setList.size() > 0) {
+				int setSalePrice = setAmount * 1000;
+				System.out.println("\n\n▶ 세트 할인 금액: " + format.format(setSalePrice));
+				System.out.println("▶ 총 금액: " + format.format(totalPrice) + " - " + format.format(setSalePrice) + " = "  +format.format((totalPrice - setSalePrice)));
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+			} else {
+				System.out.println("\n\n▶ 총 금액: " + format.format(totalPrice));
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+			}
 		} else {
-			System.out.println("\n\n▶ 총 금액: " + format.format(totalPrice));
-			System.out.println("\n\n\n\n\n\n\n\n\n");
+			System.out.println(">>>>         BurgerHI 장바구니 확인          <<<<");
+			System.out.println("=================================================");
+			System.out.println("\n                  🍔 텅 🍔                     ");
+			System.out.println("\n            장바구니가 텅비었어요.             \n");
+			System.out.println("=================================================");
+			System.out.println("\n → 주문하러 가볼까요?");
+			totalPrice = 0;
 		}
 		return totalPrice;
 	}
