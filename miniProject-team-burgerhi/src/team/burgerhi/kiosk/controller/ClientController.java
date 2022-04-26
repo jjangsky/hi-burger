@@ -1,5 +1,8 @@
 package team.burgerhi.kiosk.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import team.burgerhi.kiosk.views.OrderResultSet;
 public class ClientController {
 	private ClientService clientService = new ClientService();
 	private OrderResultSet orderResultSet = new OrderResultSet();
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	Scanner sc = new Scanner(System.in);
 	String code = "";
 	DecimalFormat format = new DecimalFormat("###,###");
@@ -28,31 +32,35 @@ public class ClientController {
 		/* View에 DTO 형태로 넘겨야 하기 때문에 인스턴스 생성 */
 		UserDTO userDTO = new UserDTO();
 		/* 로그인 화면 출력 및 id와 pwd 입력하도록 유도 */ 
-		System.out.println(">>>>            BurgerHI 회원 주문           <<<<");
-		System.out.println("=================================================");
-		
-		System.out.print("\n  →  ID를 입력해 주세요: ");
-		String id = sc.nextLine();
-		System.out.print("\n  →  PassWord를 입력해 주세요: ");
-		String pwd = sc.nextLine();
-		System.out.println();
-		/* 회원 정보 dto로 담아서 return */
-		List<UserDTO> userList = clientService.loginResult(id, pwd);
-		for(UserDTO user : userList) {
-			if(user.getId().equals(id) && user.getPwd().equals(pwd)) {
-				userDTO.setUserNo(user.getUserNo());
-				userDTO.setName(user.getName());
-				userDTO.setId(user.getId());
-				userDTO.setPwd(user.getPwd());
-				userDTO.setGradeNo(user.getGradeNo());
-				userDTO.setUserPoint(user.getUserPoint());
-				userDTO.setPhone(user.getPhone());
-				break;
-			}
-		}
+		try {
+			System.out.println(">>>>            BurgerHI 회원 주문           <<<<");
+			System.out.println("=================================================");
+			System.out.print("\n  →  ID를 입력해 주세요: ");
+			String id = br.readLine();
+			System.out.print("\n  →  PassWord를 입력해 주세요: ");
+			String pwd = br.readLine();
+			System.out.println();
+			/* 회원 정보 dto로 담아서 return */
+			List<UserDTO> userList = clientService.loginResult(id, pwd);
+			for (UserDTO user : userList) {
+				if (user.getId().equals(id) && user.getPwd().equals(pwd)) {
+					userDTO.setUserNo(user.getUserNo());
+					userDTO.setName(user.getName());
+					userDTO.setId(user.getId());
+					userDTO.setPwd(user.getPwd());
+					userDTO.setGradeNo(user.getGradeNo());
+					userDTO.setUserPoint(user.getUserPoint());
+					userDTO.setPhone(user.getPhone());
+					break;
 
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		/* name에 들어있는 값이 있을 경우 로그인 성공 | 없을 경우(null) 로그인 실패로 간주 */
-		if(userDTO.getName() != null) {
+		if (userDTO.getName() != null) {
 			System.out.println(" → " + userDTO.getName() + "님 환영합니다!");
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		} else {
