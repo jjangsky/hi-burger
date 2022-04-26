@@ -344,11 +344,11 @@ public class NonMemberMenu {
 					}
 					for(int i = 0; i < cardList.size(); i++) {
 						CardDTO card = cardList.get(i);
-						if (card.getBank().equals(paymentCard) && card.getCardable() == "Y") {  // cardable 여부로 할인 적용 판정
+						if (card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {  // cardable 여부로 할인 적용 판정
 							cardDiscount = 0.1;
 							checkCard = 1;
 							break;
-						}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable() == "Y") {
+						}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable().equals("Y")) {
 							cardDiscount = 0.1;
 							checkCard = 1;
 							break;
@@ -426,11 +426,11 @@ public class NonMemberMenu {
 							}
 							for(int i = 0; i < cardList.size(); i++) {
 								CardDTO card = cardList.get(i);
-								if (card.getBank().equals(paymentCard) && card.getCardable() == "Y") {  // cardable 여부로 할인 적용 판정
+								if (card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {  // cardable 여부로 할인 적용 판정
 									cardDiscount = 0.1;
 									checkCard = 1;
 									break;
-								}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable() == "Y") {
+								}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable().equals("Y")) {
 									cardDiscount = 0.1;
 									checkCard = 1;
 									break;
@@ -496,11 +496,11 @@ public class NonMemberMenu {
 							}
 							for(int i = 0; i < cardList.size(); i++) {
 								CardDTO card = cardList.get(i);
-								if (card.getBank().equals(paymentCard) && card.getCardable() == "Y") {  // cardable 여부로 할인 적용 판정
+								if (card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {  // cardable 여부로 할인 적용 판정
 									cardDiscount = 0.1;
 									checkCard = 1;
 									break;
-								}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable() == "Y") {
+								}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable().equals("Y")) {
 									cardDiscount = 0.1;
 									checkCard = 1;
 									break;

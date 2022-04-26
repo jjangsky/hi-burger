@@ -427,11 +427,11 @@ public class OrderMenu {
 						}
 						for(int i = 0; i < cardList.size(); i++) {
 							CardDTO card = cardList.get(i);
-							if (card.getBank().equals(paymentCard) && card.getCardable() == "Y") {  // cardable 여부로 할인 적용 판정
+							if (card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {  // cardable 여부로 할인 적용 판정
 								cardDiscount = 0.1;
 								checkCard = 1;
 								break;
-							}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable() == "Y") {
+							}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable().equals("Y")) {
 								cardDiscount = 0.1;
 								checkCard = 1;
 								break;
@@ -450,7 +450,7 @@ public class OrderMenu {
 							continue;
 							
 						}
-
+							
 						cardCode = clientController.selectCardBy(paymentCard);
 						cardDiscount = totalPrice * cardDiscount; // 카드 할인: 10%이기 때문에 총 금액에서 10%가 얼마인지 계산 후 변수에 담기
 
@@ -549,11 +549,11 @@ public class OrderMenu {
 								}
 								for(int i = 0; i < cardList.size(); i++) {
 									CardDTO card = cardList.get(i);
-									if (card.getBank().equals(paymentCard) && card.getCardable() == "Y") {  // cardable 여부로 할인 적용 판정
+									if (card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {  // cardable 여부로 할인 적용 판정
 										cardDiscount = 0.1;
 										checkCard = 1;
 										break;
-									}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable() == "Y") {
+									}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable().equals("Y")) {
 										cardDiscount = 0.1;
 										checkCard = 1;
 										break;
@@ -644,11 +644,11 @@ public class OrderMenu {
 								}
 								for(int i = 0; i < cardList.size(); i++) {
 									CardDTO card = cardList.get(i);
-									if (card.getBank().equals(paymentCard) && card.getCardable() == "Y") {  // cardable 여부로 할인 적용 판정
+									if (card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {  // cardable 여부로 할인 적용 판정
 										cardDiscount = 0.1;
 										checkCard = 1;
 										break;
-									}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable() == "Y") {
+									}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable().equals("Y")) {
 										cardDiscount = 0.1;
 										checkCard = 1;
 										break;
