@@ -794,7 +794,7 @@ public class OrderMenu {
 					/* 최종 모두 확정된 정보를 테이블에 Insert */
 					clientController.insertOrder(lastPayment);
 					int orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
-					clientController.gifticonEvent(orderCode);
+//					clientController.gifticonEvent(orderCode);
 					
 					
 					/* 장바구니 delete */
