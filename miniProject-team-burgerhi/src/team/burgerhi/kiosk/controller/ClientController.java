@@ -253,8 +253,9 @@ public class ClientController {
 
 	/* OrderMenu(장바구니) 테이블의 Insert 되어 있는 내용 모두 출력하는 메소드 */
 	public int selectOrderMenu(List<Integer> setList) {
+		String setMenu = null;
 		int totalPrice = 0;
-		int set = 0;
+		int setAmount = 0;
 		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
 		List<String> orderMenuList = clientService.selectOrderMenu();
 		System.out.println(">>>>         BurgerHI 장바구니 확인          <<<<");
@@ -263,30 +264,57 @@ public class ClientController {
 		
 		/* for문으로 사용자에게 보여줄 내용 출력 */
 		for(int i = 0; i < orderMenuList.size(); i += 5) {
-			int price = Integer.valueOf(orderMenuList.get(i + 4)); 
+			int menuNo = Integer.valueOf(orderMenuList.get(i+1));
 			int amount = Integer.valueOf(orderMenuList.get(i + 3));
+			int price = Integer.valueOf(orderMenuList.get(i + 4)); 
 //			System.out.println(i + "번째" + orderMenuList.get(i));		// 값이 제대로 담겨 출력 되는지 확인
-			System.out.println("▶ 주문번호: " + orderMenuList.get(i));
+//			System.out.println("▶ 주문번호: " + orderMenuList.get(i));
 			System.out.println("▶ 메뉴번호: " + orderMenuList.get(i + 1));			
-			System.out.println("▶ 메뉴명 : " + orderMenuList.get(i + 2));
+			System.out.println("▶ 메뉴명  : " + orderMenuList.get(i + 2));
 			System.out.println("▶ 주문수량: " + orderMenuList.get(i + 3));
-			System.out.println("▶ 금액: " + format.format(price) + " * " + amount + " = " + format.format((price *  amount)));
+			System.out.println("▶ 금액    : " + format.format(price) + " * " + amount + " = " + format.format((price *  amount)));
 			System.out.println();
 			totalPrice += (price *  amount);
 		}
 		
-		for(int i = 0; i < setList.size(); i+=5) {
-			set += setList.get(i+4);
+		for(int i = 0; i < setList.size(); i += 5) {
+			System.out.println("▶ 메뉴번호  : " + setList.get(i));
+			List<MenuDTO> menuList = clientService.selectMenuBy(1);
+			for(int j = 0; j < menuList.size(); j++) {
+				if(setList.get(i) == menuList.get(j).getMenuCode()) {
+					setMenu = menuList.get(j).getName();
+				}
+			}
+			System.out.println("▶ 메뉴명    : " + setMenu + " 세트");
+			List<MenuDTO> drinkList = clientService.selectMenuBy(2);
+			for(int j = 0; j < drinkList.size(); j++) {
+				if(setList.get(i+1) == drinkList.get(j).getMenuCode()) {
+					setMenu = drinkList.get(j).getName();
+				}
+			}
+			System.out.println("▶ 세트음료  : " + setMenu);
+			List<MenuDTO> sideList = clientService.selectMenuBy(3);
+			for(int j = 0; j < sideList.size(); j++) {
+				if(setList.get(i+2) == sideList.get(j).getMenuCode()) {
+					setMenu = sideList.get(j).getName();
+				}
+			}
+			setAmount += setList.get(i+4);
+			System.out.println("▶ 세트사이드: " + setMenu);
+			System.out.println("▶ 주문수량  : " + setList.get(i+4));
+			System.out.println("▶ 금액      : " + format.format(setList.get(i+3)) + " * " + setAmount + " = " + format.format((setList.get(i+3) * setAmount)));
+			totalPrice += setList.get(i+3) * setAmount;
 		}
 		
+		
 //		System.out.println("set값 제대로 들어갔는지? " + set);
-		if(set > 0) {
-		int setSalePrice = set * 1000;
-		System.out.println("▶ 세트 할인 금액: " + format.format(setSalePrice));
-		System.out.println("▶ 총 금액: " + format.format(totalPrice - setSalePrice));
+		if(setList.size() > 0) {
+		int setSalePrice = setAmount * 1000;
+		System.out.println("\n\n▶ 세트 할인 금액: " + format.format(setSalePrice));
+		System.out.println("▶ 총 금액: " + format.format(totalPrice) + " - " + format.format(setSalePrice) + " = "  +format.format((totalPrice - setSalePrice)));
 		System.out.println("\n\n\n\n\n\n\n\n\n");
 		} else {
-			System.out.println("▶ 총 금액: " + format.format(totalPrice));
+			System.out.println("\n\n▶ 총 금액: " + format.format(totalPrice));
 			System.out.println("\n\n\n\n\n\n\n\n\n");
 		}
 		return totalPrice;
@@ -314,19 +342,17 @@ public class ClientController {
 		}
 		
 		for(int i = 0; i < setList.size(); i += 5) {
-			if(deleteMenuCode == setList.get(i) || deleteMenuCode == setList.get(i+1) || deleteMenuCode == setList.get(i+2)) {
+			if(deleteMenuCode == setList.get(i)) {
 				System.out.print("\n\n → 세트 메뉴를 삭제하시겠습니까?(1.예 / 2. 아니오):");
 				int num = sc.nextInt();
 				if(num == 1) {
-					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i));
-					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+1));
-					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+2));
+//					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i));
+//					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+1));
+//					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+2));
 					setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);
+					deleteResult = 1;
 					break;
-				} else {
-					deleteResult = clientService.deleteOrderMenuAmount(deleteMenuCode);
-					break;
-				}
+				} 
 			}
 		}
 		
@@ -452,12 +478,12 @@ public class ClientController {
 	}
 
 	/* 사용자가 선택한 메뉴의 단가 Select */
-	public int selectOrderMenuPrice(int inputMenuNo) {
-		
-		int menuPrice = clientService.selectOrderMenuPrice(inputMenuNo);
-		
-		return menuPrice;
-	}
+//	public int selectOrderMenuPrice(int inputMenuNo) {
+//		
+//		int menuPrice = clientService.selectOrderMenuPrice(inputMenuNo);
+//		
+//		return menuPrice;
+//	}
 
 	/* 비회원 회원가입 절차, View 에서 받은 Scanner 값을 DTO에 담아서 Service 계층으로 전송 */
 	public int createUserInfo(String name, String userId, String userPwd, String userPhone) {
@@ -652,9 +678,9 @@ public class ClientController {
 		if(inputSetOrder == 1) {
 			
 			/* 장바구니에 insert */
-			clientService.insertOrderMenu(userNo, inputSetNo, inputAmount);	// 버거 insert
-			clientService.insertDrinkMenu(userNo, inputAmount);				// 음료 insert
-			clientService.insertSetMenu(userNo, inputAmount);				// 사이드 insert
+//			clientService.insertOrderMenu(userNo, inputSetNo, inputAmount);	// 버거 insert
+//			clientService.insertDrinkMenu(userNo, inputAmount);				// 음료 insert
+//			clientService.insertSetMenu(userNo, inputAmount);				// 사이드 insert
 			
 			for(int i = 0; i < burgerList.size(); i++) {
 				if(inputSetNo == burgerList.get(i).getMenuCode()) {
@@ -695,9 +721,9 @@ public class ClientController {
 			System.out.print("\n → 변경 할 사이드를 골라주세요: ");
 			int inputsideNo = sc.nextInt();
 			/* 장바구니에 insert */
-			clientService.insertOrderMenu(userNo, inputSetNo, inputAmount);			// 버거 insert
-			clientService.insertOrderMenu(userNo, inputDrinkNo, inputAmount);		// 음료 insert
-			clientService.insertOrderMenu(userNo, inputsideNo, inputAmount);		// 사이드 insert
+//			clientService.insertOrderMenu(userNo, inputSetNo, inputAmount);			// 버거 insert
+//			clientService.insertOrderMenu(userNo, inputDrinkNo, inputAmount);		// 음료 insert
+//			clientService.insertOrderMenu(userNo, inputsideNo, inputAmount);		// 사이드 insert
 			
 			for(int i = 0; i < burgerList.size(); i++) {
 				if(inputSetNo == burgerList.get(i).getMenuCode()) {
@@ -730,6 +756,13 @@ public class ClientController {
 			list.add(inputAmount);
 		}
 		return list;
+	}
+
+	public int insertOrderSetMenu(int userNo, int menuNo, int amount) {
+		int insertOrderMenu = clientService.insertOrderMenu(userNo, menuNo, amount);
+		
+		return insertOrderMenu;
+		
 	}
 
 }
