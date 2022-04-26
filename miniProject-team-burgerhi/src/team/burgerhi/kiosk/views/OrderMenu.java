@@ -45,7 +45,9 @@ public class OrderMenu {
 			boolean flag3 = true;
 			List<Integer> setList = new ArrayList<Integer>();
 			
+			
 			do {
+				
 				flag2 = true;
 				clientController.deleteAllOrderMenu();
 				/* BurgerHI 메인 주문 화면(첫 화면) */
