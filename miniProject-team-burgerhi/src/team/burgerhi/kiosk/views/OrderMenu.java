@@ -2,8 +2,6 @@ package team.burgerhi.kiosk.views;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -31,17 +29,14 @@ public class OrderMenu {
 			int categoryNo = 0;
 			int userNo = 0;
 			int gradeNo = 0;
-//			int menuPrice = 0;
 			int totalPrice = 0;
 			int paymentBy = 0;
 			int cardCode = 0;
 			int lastPayment = 0;
-			int setPrice = 0;
 			int setDiscount = 0;
 			int setAmount = 0;
 			int inputPrice = 0;
 			int checkCard = 0;
-			int insertSetMenu = 0;
 			double gradeDiscount = 0;
 			double cardDiscount = 0;
 			boolean flag = true;
@@ -91,8 +86,10 @@ public class OrderMenu {
 
 					/* 회원 등급이 4일 경우 관리자로 분류되어 관리자 페이지로 이동 */
 					if(gradeNo == 4) {
-						admin.displayMainMenu();
-						continue;
+						int exit = admin.displayMainMenu();
+						if(exit == 0) {
+							continue;
+						}
 					}
 
 					/* 메뉴 선택 or 회원 정보 조회, 수정, 탈퇴 메소드 */
@@ -108,7 +105,6 @@ public class OrderMenu {
 					while(flag1) {
 						int inputMenuNo = 0;
 						int inputAmount = 0;
-						int refPrice = 0;
 						
 						/* 전체 Category 출력 */
 						System.out.println(">>>>         BurgerHI 카테고리 선택          <<<<");
@@ -214,7 +210,7 @@ public class OrderMenu {
 //								totalPrice += (inputAmount * menuPrice);
 								
 								/* 추천카테고리의 메뉴 랜덤 추천 */
-								refPrice = clientController.selectRefMenu(categoryNo, userNo);
+								clientController.selectRefMenu(categoryNo, userNo);
 							}
 						} else if(categoryNo > categoryList.get(categoryList.size()-1).getCode()) {
 							System.out.print("\n ※ 번호를 잘못 입력하셨습니다. 다시 입력해 주세요.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -273,7 +269,8 @@ public class OrderMenu {
 							
 //							menuPrice = clientController.selectOrderMenuPrice(inputMenuNo);
 							
-//							refPrice = clientController.selectRefMenu(categoryNo, userNo);
+							/* 추천카테고리의 메뉴 랜덤 추천 */
+							clientController.selectRefMenu(categoryNo, userNo);
 						}
 						
 						flag3 = true;
@@ -452,21 +449,21 @@ public class OrderMenu {
 							
 						}
 							
+						/* 세트 메뉴 있을 경우 세트 금액 할인 변수 적용 */
+						for(int i = 0; i < setList.size(); i += 5) {
+							setAmount += setList.get(i+4);
+						}
+						setDiscount = setAmount * 1000;
 						cardCode = clientController.selectCardBy(paymentCard);
-						cardDiscount = totalPrice * cardDiscount; // 카드 할인: 10%이기 때문에 총 금액에서 10%가 얼마인지 계산 후 변수에 담기
-
+						cardDiscount = (totalPrice - setDiscount) * cardDiscount; // 카드 할인: 10%이기 때문에 총 금액에서 10%가 얼마인지 계산 후 변수에 담기
 						/* 할인 내역 및 결제 금액 모두 출력 */
 						System.out.println("▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
 						int grade = clientController.selectGrade(gradeNo);
-						gradeDiscount = totalPrice * (grade * 0.01);
+						gradeDiscount = (totalPrice - setDiscount) * (grade * 0.01);
 						System.out.println("▶ 등급 할인 금액: " + format.format((int)gradeDiscount) + "원");
-						for(int i = 0; i < setList.size(); i += 5) {
-						setAmount += setList.get(i+4);
-						}
-						setPrice = setAmount * 1000;
 						System.out.println("▶ 카드사 할인 금액: " + format.format((int)cardDiscount) + "원");
-						System.out.println("▶ 세트 할인 금액: " + format.format((int)setPrice) + "원");
-						lastPayment = (int) (totalPrice - gradeDiscount - cardDiscount - setPrice);
+						System.out.println("▶ 세트 할인 금액: " + format.format((int)setDiscount) + "원");
+						lastPayment = (int) (totalPrice - gradeDiscount - cardDiscount - setDiscount);
 						System.out.println();
 						System.out.println("▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
 						System.out.println();
@@ -479,17 +476,16 @@ public class OrderMenu {
 						
 						
 					} else if (paymentBy == 2) { // 현금 결제
-						System.out.println("▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
-						int grade = clientController.selectGrade(gradeNo);
-						gradeDiscount = totalPrice * (grade * 0.01);
-						lastPayment = (int) (totalPrice - gradeDiscount);
-						System.out.println("▶ 등급 할인 금액: " + format.format((int)gradeDiscount) + "원");
 						for(int i = 0; i < setList.size(); i += 5) {
-						setAmount += setList.get(i+4);
+							setAmount += setList.get(i+4);
 						}
-						setPrice = setAmount * 1000;
-						System.out.println("▶ 세트 할인 금액: " + format.format((int)setPrice) + "원");
-						lastPayment = (int) (totalPrice - gradeDiscount - setPrice);
+						setDiscount = setAmount * 1000;
+						int grade = clientController.selectGrade(gradeNo);
+						gradeDiscount = (totalPrice - setDiscount) * (grade * 0.01);
+						System.out.println("▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
+						System.out.println("▶ 등급 할인 금액: " + format.format((int)gradeDiscount) + "원");
+						System.out.println("▶ 세트 할인 금액: " + format.format((int)setDiscount) + "원");
+						lastPayment = (int) (totalPrice - gradeDiscount - setDiscount);
 						System.out.println();
 						System.out.println("▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
 						System.out.println();				
@@ -584,17 +580,16 @@ public class OrderMenu {
 						
 						
 					} else if (paymentBy == 3) { // 기프티콘 결제
-						System.out.println("▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
 						int grade = clientController.selectGrade(gradeNo);
-						gradeDiscount = totalPrice * (grade * 0.01);
-						lastPayment = (int)(totalPrice - gradeDiscount);
-						System.out.println("▶ 등급 할인 금액: " + format.format((int)gradeDiscount) + "원");
 						for(int i = 0; i < setList.size(); i += 5) {
 						setAmount += setList.get(i+4);
 						}
-						setPrice = setAmount * 1000;
-						System.out.println("▶ 세트 할인 금액: " + format.format((int)setPrice) + "원");
-						lastPayment = (int) (totalPrice - gradeDiscount - setPrice);
+						setDiscount = setAmount * 1000;
+						gradeDiscount = (totalPrice - setDiscount) * (grade * 0.01);
+						System.out.println("▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
+						System.out.println("▶ 등급 할인 금액: " + format.format((int)gradeDiscount) + "원");
+						System.out.println("▶ 세트 할인 금액: " + format.format((int)setDiscount) + "원");
+						lastPayment = (int) (totalPrice - gradeDiscount - setDiscount);
 						System.out.println();
 						System.out.println("▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
 						System.out.println();

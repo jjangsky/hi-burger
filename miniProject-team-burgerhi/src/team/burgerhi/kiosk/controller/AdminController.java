@@ -266,6 +266,22 @@ public class AdminController {
 		
 	}
 
+	/* 회원의 모든 정보를 볼 수 있는 메소드(혜영) */
+	public void selectUserAll() {
+		
+		
+		
+		
+	}
+
+	/* 원하는 회원의 등급을 update 할 수 있는 메소드(재성) */
+	public void updateUserGrade() {
+		
+		
+		
+		
+	}
+
 
 
 }
