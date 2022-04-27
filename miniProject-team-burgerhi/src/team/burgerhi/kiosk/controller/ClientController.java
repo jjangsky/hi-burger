@@ -175,7 +175,6 @@ public class ClientController {
 					System.out.println("          1            |           2           ");
 					System.out.println("      회원 탈퇴        |         취소          ");
 					System.out.println("                       |                       \n");
-					System.out.print("\n → 번호를 선택해 주세요: ");
 					
 					while(true) {
 						try {	// 문자열 예외처리
