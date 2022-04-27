@@ -339,8 +339,14 @@ public class NonMemberMenu {
 
 					/* 할인 가능한 전체 제휴카드 리스트 출력 */
 					List<CardDTO> cardList = clientController.selectCard();
-					for (CardDTO card : cardList) {
+					for(int i = 0; i < 4; i++) {
+						CardDTO card = cardList.get(i);
 						System.out.println("▶ " + card.getBank() + "의 할인율 :" + card.getDiscount() + "%");
+					}
+					System.out.println("=================================================");
+					for(int i = 4; i < 7; i++) {
+						CardDTO card = cardList.get(i);
+						System.out.println("▶ " + card.getBank() + " : 할인 혜택 적용 불가능");
 					}
 
 					/* 사용자가 결제 할 카드 입력받기 */
