@@ -17,7 +17,8 @@ public class OrderMenu {
 	private NonMemberMenu nonMemberMenu = new NonMemberMenu();
 	private AdminMenu admin = new AdminMenu();
 	private OrderResultSet orderResultSet = new OrderResultSet();
-
+	List<Integer> setList = new ArrayList<Integer>();
+	
 	public void displayMainMenu() {
 		Scanner sc = new Scanner(System.in);
 		DecimalFormat format = new DecimalFormat("###,###");
@@ -44,16 +45,15 @@ public class OrderMenu {
 			boolean flag1 = true;
 			boolean flag2 = true;
 			boolean flag3 = true;
-			List<Integer> setList = new ArrayList<Integer>();
+			
 			
 			
 			do {
 				
 				flag2 = true;
-				setList.clear();
 				clientController.deleteAllOrderMenu();
 				/* BurgerHI 메인 주문 화면(첫 화면) */
-				
+				setList.clear();
 				System.out.println();
 				System.out.println(">>>>       어서오세요 BurgerHI 입니다.       <<<<");
 				System.out.println("=================================================");
@@ -578,6 +578,7 @@ public class OrderMenu {
 							
 							if(paymentBy == 1) {
 								List<CardDTO> cardList = clientController.selectCard();
+								
 
 								/* 사용자가 결제 할 카드 입력받기 */
 								System.out.print("\n →결제하실 카드명을 입력해 주세요: ");

@@ -13,6 +13,8 @@ import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 
 public class NonMemberMenu {
+	List<Integer> setList = new ArrayList<Integer>();
+	
 	private ClientController clientController = new ClientController();
 	Scanner sc = new Scanner(System.in);
 	DecimalFormat format = new DecimalFormat("###,###");
@@ -37,10 +39,10 @@ public class NonMemberMenu {
 		double cardDiscount = 0;
 		boolean flag = true;
 		boolean flag2 = true;
-		List<Integer> setList = new ArrayList<Integer>();
+		
 		
 		while(flag){
-			setList.clear();
+			
 			boolean flag1 = true;
 			System.out.println(">>>>        BurgerHI 비회원 주문하기         <<<<");
 			System.out.println("=================================================");
@@ -596,6 +598,7 @@ public class NonMemberMenu {
 				/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
 //				orderResultSet.closeDisplayMainMenu();
 				System.out.println("\n\n\n\n");
+				setList.clear();
 				break;
 		}
 	}
