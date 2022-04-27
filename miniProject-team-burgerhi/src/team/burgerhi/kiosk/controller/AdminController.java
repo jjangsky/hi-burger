@@ -290,12 +290,33 @@ public class AdminController {
 
 	/* 원하는 회원의 등급을 update 할 수 있는 메소드(재성) */
 	public void updateUserGrade() {
+
+//	      int num = sc.nextInt();
+		System.out.println(">>>>         BurgerHI 회원 등급 수정         <<<<");
+		System.out.println("=================================================");
+		List<Object> allUser = adminService.selectAllUser();
+
+		for (int i = 0; i < allUser.size(); i += 7) {
+
+			System.out.println("▶ 회원번호: " + allUser.get(i));
+			System.out.println("▶ 회원이름: " + allUser.get(i + 1));
+			System.out.println("▶ 회원ID: " + allUser.get(i + 2));
+			System.out.println("▶ 등급: " + allUser.get(i + 3));
+			System.out.println("▶ 보유포인트: " + format.format(allUser.get(i + 4)));
+			System.out.println("▶ 전화번호: " + allUser.get(i + 5));
+			System.out.println("▶ 이용여부(Y/N): " + allUser.get(i + 6));
+			System.out.println();
+		}
+		System.out.println();
+
+		System.out.print("\n → 수정하실 회원 번호를 입력해 주세요: ");
+
+		int userNo = sc.nextInt();
+
+		System.out.print(" → 수정하실 등급 gradeNo를 입력해 주세요(관리자:4): ");
+		int gradeNo = sc.nextInt();
 		
-		
-		
-		
+		int result = adminService.updateUserGrade(userNo, gradeNo);
 	}
-
-
 
 }

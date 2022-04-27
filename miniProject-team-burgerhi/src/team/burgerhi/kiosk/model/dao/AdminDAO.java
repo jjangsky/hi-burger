@@ -458,5 +458,29 @@ public class AdminDAO {
 		return allUser;
 	}
 
+	 public int updateUserGrade(Connection con, int userNo, int gradeNo) {
+	      PreparedStatement pstmt = null;
+	      int result = 0;      
+	      String query = prop.getProperty("updateUserGrade");
+	      
+	      try {
+	         pstmt = con.prepareStatement(query);
+	         
+	         pstmt.setInt(1, gradeNo);
+	         pstmt.setInt(2, userNo);
+	         
+	         
+	         result = pstmt.executeUpdate();
+	         
+	         
+	         
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	      }
+	      return result;
+	   }
 
 }

@@ -567,4 +567,9 @@
 	      FROM USER_TABLE
 	     WHERE USER_NO = ?
 	</entry>
+	<entry key="updateUserGrade">
+        UPDATE USER_TABLE A
+           SET A.GRADE_NO = ?
+         WHERE USER_NO = ?
+   </entry>
 </properties>

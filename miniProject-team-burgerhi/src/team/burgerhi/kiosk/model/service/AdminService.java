@@ -148,9 +148,20 @@ public class AdminService {
 		Connection con = getConnection();
 		
 		List<Object> allUser = adminDAO.selectAllUser(con);
-		
+
 		close(con);
 		return allUser;
+	}
+
+	public int updateUserGrade(int userNo, int gradeNo) {
+		Connection con = getConnection();
+
+		int updateUserGrade = adminDAO.updateUserGrade(con, userNo, gradeNo);
+		
+		close(con);
+
+		return updateUserGrade;
+
 	}
 
 }
