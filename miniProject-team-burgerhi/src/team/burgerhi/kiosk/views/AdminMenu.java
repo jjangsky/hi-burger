@@ -11,7 +11,7 @@ import team.burgerhi.kiosk.model.dto.MenuDTO;
 public class AdminMenu {
    private AdminController adminController = new AdminController();
 
-   public void displayMainMenu() {
+   public int displayMainMenu() {
       Scanner sc = new Scanner(System.in);
       boolean flag = true;
       int num = 0;
@@ -20,13 +20,19 @@ public class AdminMenu {
       int categoryNum = 0;
       int menuNum = 0;
       int salesNum = 0;
+      int exit = 1;
       while (flag) {
          System.out.println(">>>>       BurgerHI 관리자 페이지       <<<<");
          System.out.println("=================================================");
          System.out.println("               |                |               ");
-         System.out.println("      1      　|        2       |       3      ");
-         System.out.println("판매 순위 확인 |    메뉴 관리   |   매출 확인 ");
-         System.out.println("               |                |             ");
+         System.out.println("      1      　|        2       |       3       ");
+         System.out.println("판매 순위 확인 |    메뉴 관리   |   매출 확인   ");
+         System.out.println("               |                |               ");
+         System.out.println("------------------------------------------------");
+         System.out.println("                       |                       ");
+       System.out.println("           4           |           5           ");
+       System.out.println("     회원 정보 확인    |     메뉴 주문 하기    ");
+       System.out.println("                       |                       ");
          System.out.println("=================================================");
          System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
          while (true) {
@@ -47,6 +53,7 @@ public class AdminMenu {
          
          /* 판매 순위 확인 */
          if (num == 0) {
+            exit = 0;
             break;
          }else if(num == 1) {
             System.out.println(">>>>       BurgerHI 카테고리 랭킹       <<<<");
@@ -219,7 +226,44 @@ public class AdminMenu {
                case 1: adminController.SalesBydate(); break;      // 날짜별 매출 확인하는 메소드
                case 2: adminController.SalesCategory(); break;      // 카테고리별 매출 확인하는 메소드
             }
+            /* 회원 정보 확인 */
+         } else if(num == 4) {
+            System.out.println(">>>>        BurgerHI 회원 정보 시스템        <<<<");
+             System.out.println("=================================================");
+             System.out.println("                       |                       ");
+             System.out.println("           1           |           2           ");
+             System.out.println("       회원 조회       |     회원 등급 수정    ");
+             System.out.println("                       |                       ");
+             System.out.println("=================================================");
+             System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
+          int selectUser = 0;   
+             while (true) {
+               try {
+                  System.out.print("\n  → 번호를 선택해 주세요: ");
+                  selectUser = sc.nextInt();
+                  sc.nextLine();
+               } catch (InputMismatchException e) {
+                  System.out.println("\n 숫자로 입력해 주세요!");
+                  sc.next();
+                  continue;
+               }
+               break;
+            }
+             if(selectUser == 0) {
+                exit = 0;
+                break;
+             } else if(selectUser == 1) {
+                adminController.selectUserAll();
+             } else if(selectUser == 2) {
+                adminController.updateUserGrade();
+             }
+             
+            
+            /* 메뉴 주문 하기 */
+         } else if(num == 5) {
+            break;
          }
-      }
+      } // while문 종료
+      return exit;
    }
 }
