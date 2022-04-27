@@ -677,13 +677,13 @@ public class ClientDAO {
 	}
 				
 
-	public int insertGifticonEvent(Connection con) {
+	public int insertGifticonEvent(Connection con, int eventPrice) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("insertGifticonEvent");
 			try {
 				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, 5000);
+				pstmt.setInt(1, eventPrice);
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -962,6 +962,27 @@ public class ClientDAO {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int selectUserUpgrade(Connection con, int userNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int gradeNo = 0;
+		String query = prop.getProperty("selectUserUpgrade");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				gradeNo = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return gradeNo;
 	}
 	
 }

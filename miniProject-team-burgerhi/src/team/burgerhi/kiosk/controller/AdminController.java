@@ -298,6 +298,7 @@ public class AdminController {
       
    }
 
+<<<<<<< HEAD
    /* 원하는 회원의 등급을 update 할 수 있는 메소드(재성) */
    public void updateUserGrade() {
       
@@ -326,6 +327,75 @@ public class AdminController {
       }
       
    }
+=======
+	public void SalesCategory() {
+		
+		System.out.println(">>>>      BurgerHI 카테고리별 매출 확인      <<<<");
+		System.out.println("=================================================");
+		System.out.println("              |                |               ");
+		System.out.println("       1 　   |        2　　   |       3       ");
+		System.out.println(" 총 누적 매출 |회원 등급별 매출|결제 종류별 매출");
+		System.out.println("              |                |               ");
+		System.out.println("=================================================");
+		System.out.print("\n  → 번호를 선택해 주세요: ");
+		int salesNum = sc.nextInt();
+		
+		Date now = new Date();
+		SimpleDateFormat sdfm = new SimpleDateFormat("yy년 MM월 dd일");
+		
+		if(salesNum == 1) {
+			int totalSales = adminService.selectAllSales();
+			System.out.println("\n\n ▶ " + sdfm.format(now) + " 기준 총 매출액은 " + format.format(totalSales) + "원 입니다.");
+		} else if(salesNum == 2) {
+			Map<Integer, Integer> gadeSales = adminService.selectGradeSales();
+			System.out.println("\n\n ▶ Family등급 매출액: " + format.format(gadeSales.get(0)) + "원");
+			System.out.println("\n ▶ Silver등급 매출액: " + format.format(gadeSales.get(1)) + "원");
+			System.out.println("\n ▶ Gold등급 매출액: " + format.format(gadeSales.get(2)) + "원");
+			System.out.println("\n ▶ 관리자등급 매출액: " + format.format(gadeSales.get(3)) + "원");
+			System.out.println("\n ▶ 비회원등급 매출액: " + format.format(gadeSales.get(4)) + "원");
+			
+		} else if(salesNum == 3) {
+			Map<String, Integer> methodSales = adminService.selectMethodSales();
+			
+			System.out.println("\n\n ▶ 기프티콘 결제의 총 매출: " + (methodSales.get("기프티콘") != null ? format.format(methodSales.get("기프티콘")) : 0) + "원" + "\n");
+			System.out.println(" ▶ 카드 결제의 총 매출: " + (methodSales.get("카드") != null ? format.format(methodSales.get("카드")) : 0) + "원" + "\n");
+			System.out.println(" ▶ 현금 결제의 총 매출: " + (methodSales.get("현금") != null ? format.format(methodSales.get("현금")) : 0) + "원" + "\n");
+		}
+		 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		
+		
+		
+	}
+>>>>>>> 45e69117c417f62bcb0f89f81fae65092d76fc03
+
+	/* 회원의 모든 정보를 볼 수 있는 메소드(혜영) */
+	public void selectUserAll() {
+		System.out.println(">>>>         BurgerHI 회원 전체 조회         <<<<");
+		System.out.println("=================================================");
+		System.out.println();
+		List<Object> allUser = adminService.selectAllUser();
+		
+		for(int i = 0; i < allUser.size(); i+=7) {
+			
+			System.out.println("▶ 회원번호: " + allUser.get(i));
+			System.out.println("▶ 회원이름: " + allUser.get(i+1));
+			System.out.println("▶ 회원ID: " + allUser.get(i+2));
+			System.out.println("▶ 등급: " + allUser.get(i+3));
+			System.out.println("▶ 보유포인트: " + format.format(allUser.get(i+4)));
+			System.out.println("▶ 전화번호: " + allUser.get(i+5));
+			System.out.println("▶ 이용여부(Y/N): " + allUser.get(i+6));
+			System.out.println();
+		}
+		
+	}
+
+	/* 원하는 회원의 등급을 update 할 수 있는 메소드(재성) */
+	public void updateUserGrade() {
+		
+		
+		
+		
+	}
 
 
 

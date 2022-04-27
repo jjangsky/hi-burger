@@ -81,14 +81,6 @@
  		 WHERE A.MENU_CODE = ?
 	</entry>
 	
-	<entry key="selectGrade">
-		
-	</entry>
-	
-	<entry key="selectCard">
-		
-	</entry>
-	
 	<entry key="selectAllCard">
 		SELECT
  		      A.CARD_CODE
@@ -277,6 +269,7 @@
  	     FROM PAYMENT_TABLE A
   	    RIGHT JOIN GRADE_TABLE B ON (A.GRADE_NO = B.GRADE_NO)
   	    GROUP BY B.GRADE_NO
+        ORDER BY 1
 	</entry>
 	<entry key="deleteAllOrderMenu">
 	    DELETE
@@ -554,9 +547,32 @@
                         	     FROM ORDER_MENU_TABLE
                        	        WHERE MENU_CODE = ?)
 	</entry>
+<<<<<<< HEAD
 	<entry key="updateUserGrade">
        UPDATE USER_TABLE A
           SET A.GRADE_NO = ?
         WHERE USER_NO = ?
    </entry>
+=======
+	<entry key="selectAllUser">
+	    SELECT
+	           A.USER_NO
+	         , A.USER_NAME
+	         , A.USER_ID
+	         , B.GRADE_NAME
+	         , A.USER_POINT
+	         , A.PHONE
+	         , A.USER_YN
+	      FROM USER_TABLE A
+	      JOIN GRADE_TABLE B ON (A.GRADE_NO = B.GRADE_NO)
+	     WHERE A.USER_NAME IS NOT NULL
+	     ORDER BY A.USER_NO
+	</entry>
+	<entry key = "selectUserUpgrade">
+	    SELECT
+	    	   GRADE_NO
+	      FROM USER_TABLE
+	     WHERE USER_NO = ?
+	</entry>
+>>>>>>> 45e69117c417f62bcb0f89f81fae65092d76fc03
 </properties>

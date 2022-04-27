@@ -291,9 +291,9 @@ public class ClientService {
 	}
 
 	/* 기프티콘 이벤트에 당첨된 기프티콘 생성 */
-	public int insertGifticonEvent() {
+	public int insertGifticonEvent(int eventPrice) {
 		Connection con = getConnection();
-		int result = clientDAO.insertGifticonEvent(con);
+		int result = clientDAO.insertGifticonEvent(con, eventPrice);
 		close(con);
 		return result;
 	}
@@ -391,6 +391,13 @@ public class ClientService {
 		int result = clientDAO.deleteOrderMenuAmount(con, menuNo);
 		close(con);
 		return result;
+	}
+
+	public int selectUserUpgrade(int userNo) {
+		Connection con = getConnection();
+		int updateGradeNo = clientDAO.selectUserUpgrade(con, userNo);
+		close(con);
+		return updateGradeNo;
 	}
 
 

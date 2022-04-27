@@ -432,6 +432,7 @@ public class AdminDAO {
       return methodSales;
    }
 
+<<<<<<< HEAD
    public List<Object> selectAllUser(Connection con) {
       Statement stmt = null;
       ResultSet rset = null;
@@ -460,6 +461,34 @@ public class AdminDAO {
    
    public int updateUserGrade(Connection con, int userNo, int gradeNo) {
       
+=======
+	public List<Object> selectAllUser(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectAllUser");
+		List<Object> allUser = new ArrayList<Object>();
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				allUser.add(rset.getInt("USER_NO"));
+				allUser.add(rset.getString("USER_NAME"));
+				allUser.add(rset.getString("USER_ID"));
+				allUser.add(rset.getString("GRADE_NAME"));
+				allUser.add(rset.getInt("USER_POINT"));
+				allUser.add(rset.getString("PHONE"));
+				allUser.add(rset.getString("USER_YN"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allUser;
+	}
+
+>>>>>>> 45e69117c417f62bcb0f89f81fae65092d76fc03
 
       
       PreparedStatement pstmt = null;

@@ -152,6 +152,7 @@ public class AdminService {
 		close(con);
 		return allUser;
 	}
+<<<<<<< HEAD
 	
   public int updateUserGrade(int userNo, int gradeNo) {
   Connection con = getConnection();
@@ -163,5 +164,7 @@ public class AdminService {
   return updateUserGrade;
 
 }   
+=======
+>>>>>>> 45e69117c417f62bcb0f89f81fae65092d76fc03
 
 }
