@@ -264,6 +264,7 @@ public class ClientController {
 		String setMenu = null;
 		int totalPrice = 0;
 		int setAmount = 0;
+		int setAmount1 = 0;
 		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
 		List<String> orderMenuList = clientService.selectOrderMenu();
 		
@@ -271,7 +272,7 @@ public class ClientController {
 			System.out.println(">>>>         BurgerHI 장바구니 확인          <<<<");
 			System.out.println("=================================================");
 			System.out.println();
-			
+	
 			/* for문으로 사용자에게 보여줄 내용 출력 */
 			for(int i = 0; i < orderMenuList.size(); i += 5) {
 				int amount = Integer.valueOf(orderMenuList.get(i + 3));
@@ -308,17 +309,19 @@ public class ClientController {
 						setMenu = sideList.get(j).getName();
 					}
 				}
-				setAmount += setList.get(i+4);
+				setAmount = setList.get(i+4);
 				System.out.println("▶ 세트사이드: " + setMenu);
 				System.out.println("▶ 주문수량  : " + setList.get(i+4));
 				System.out.println("▶ 금액      : " + format.format(setList.get(i+3)) + " * " + setAmount + " = " + format.format((setList.get(i+3) * setAmount)));
 				totalPrice += setList.get(i+3) * setAmount;
+				setAmount1 += setList.get(i+4);
 			}
 			
 			
 //		System.out.println("set값 제대로 들어갔는지? " + set);
 			if(setList.size() > 0) {
-				int setSalePrice = setAmount * 1000;
+				
+				int setSalePrice = setAmount1 * 1000;
 				System.out.println("\n\n▶ 세트 할인 금액: " + format.format(setSalePrice));
 				System.out.println("▶ 총 금액: " + format.format(totalPrice) + " - " + format.format(setSalePrice) + " = "  +format.format((totalPrice - setSalePrice)));
 				System.out.println("\n\n\n\n\n\n\n\n\n");

@@ -482,6 +482,7 @@ public class OrderMenu {
 						System.out.println();
 						System.out.println("▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
 						System.out.println();
+						setList.clear();
 						
 //						try {
 //							th.sleep(1500);
@@ -706,7 +707,7 @@ public class OrderMenu {
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 								System.out.println("\n\n\n\n\n\n\n\n\n\n");
 								orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice, gradeNo); // 기프티콘 사용 후 결제 금액 누적
-
+								
 								
 							}else if (paymentBy == 2) {								 
 								 while(true) {
