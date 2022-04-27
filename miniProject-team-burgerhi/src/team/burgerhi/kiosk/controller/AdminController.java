@@ -1,5 +1,6 @@
 package team.burgerhi.kiosk.controller;
 
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -307,6 +308,7 @@ public class AdminController {
 			System.out.println("▶ 이용여부(Y/N): " + allUser.get(i + 6));
 			System.out.println();
 		}
+
 		System.out.println();
 
 		System.out.print("\n → 수정하실 회원 번호를 입력해 주세요: ");
@@ -315,8 +317,22 @@ public class AdminController {
 
 		System.out.print(" → 수정하실 등급 gradeNo를 입력해 주세요(관리자:4): ");
 		int gradeNo = sc.nextInt();
-		
+
 		int result = adminService.updateUserGrade(userNo, gradeNo);
+
+
+		boolean tt = false;
+		for(int i = 0; i < allUser.size(); i+=7) {
+			if((int)allUser.get(i) == userNo) {
+				tt = true;
+			}
+		}
+		
+		if(tt == true && result > 0) {
+			System.out.println("회원 등급 업데이트에 성공했습니다.");
+		} else {
+			System.out.println("회원 등급 업데이트에 실패했습니다.");
+		}
 	}
 
 }
