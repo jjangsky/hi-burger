@@ -358,30 +358,30 @@ public class NonMemberMenu {
 					if(paymentCard.equals("0")) {
 						flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 					}
+					
+					if(paymentCard.length() == 2) {
+						paymentCard = paymentCard + "카드";
+					} else if(!paymentCard.endsWith("카드")) {
+						paymentCard = paymentCard.substring(0, 2) + "카드";
+					}
+					
+					
 					for(int i = 0; i < cardList.size(); i++) {
 						CardDTO card = cardList.get(i);
-						if (card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {  // cardable 여부로 할인 적용 판정
+						if(card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {	// cardable 여부로 할인 적용 판정
 							cardDiscount = 0.1;
 							checkCard = 1;
 							break;
-						}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable().equals("Y")) {
-							cardDiscount = 0.1;
+						} else if(card.getBank().equals(paymentCard) && card.getCardable().equals("N")) {
 							checkCard = 1;
 							break;
-						}else if (card.getBank().equals(paymentCard) || card.getBank().substring(0, 2).equals(paymentCard)) {
-							checkCard = 1;
-							break;
-						}else {
-							continue;
 						}
-						
-					}							
+					}
 					
-						if(checkCard == 0) {
-							System.out.println("\n 사용할 수 없는 카드입니다.");
-							System.out.println("다시 결제를 시도해 주세요.");
+					if(checkCard == 0) {
+						System.out.println("\n 저희 매장과 제휴되어 있지 않은 카드 입니다.");
+						System.out.println("다시 결제를 시도해 주세요!");
 						continue;
-						
 					}
 
 					cardCode = clientController.selectCardBy(paymentCard);
@@ -399,9 +399,6 @@ public class NonMemberMenu {
 					System.out.println("▶ 카드사 할인 금액: " + format.format((int)cardDiscount) + "원");
 					System.out.println("▶ 세트 할인 금액: " + format.format(setDiscount) + "원");
 					System.out.println("\n▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.\n");
-					if(paymentCard.length() == 2) {
-						paymentCard = paymentCard + "카드";
-					}
 					System.out.println("고객님의 " + paymentCard + "로 총" + format.format(lastPayment) + "원이 결제 되었습니다!");
 					System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
 
@@ -454,30 +451,32 @@ public class NonMemberMenu {
 							if(paymentCard.equals("0")) {
 								flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 							}
+							
+							if(paymentCard.length() == 2) {
+								paymentCard = paymentCard + "카드";
+							} else if(!paymentCard.endsWith("카드")) {
+								paymentCard = paymentCard.substring(0, 2) + "카드";
+							}
+							
+							
 							for(int i = 0; i < cardList.size(); i++) {
 								CardDTO card = cardList.get(i);
-								if (card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {  // cardable 여부로 할인 적용 판정
+								if(card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {	// cardable 여부로 할인 적용 판정
 									cardDiscount = 0.1;
 									checkCard = 1;
 									break;
-								}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable().equals("Y")) {
-									cardDiscount = 0.1;
+								} else if(card.getBank().equals(paymentCard) && card.getCardable().equals("N")) {
 									checkCard = 1;
 									break;
-								}else if (card.getBank().equals(paymentCard) || card.getBank().substring(0, 2).equals(paymentCard)) {
-									checkCard = 1;
-									break;
-								}else {
-									continue;
 								}
-								
-							}							
-								if(checkCard == 0) {
-									System.out.println("\n 사용할 수 없는 카드입니다.");
-									System.out.println("다시 결제를 시도해 주세요.");
-								continue;
-								
 							}
+							
+							if(checkCard == 0) {
+								System.out.println("\n 저희 매장과 제휴되어 있지 않은 카드 입니다.");
+								System.out.println("다시 결제를 시도해 주세요!");
+								continue;
+							}
+							
 							System.out.println(
 									"\n고객님의 " + paymentCard + "로 총" + format.format((lastPayment - inputPrice)) + "원이 결제 되었습니다!");
 							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
@@ -528,34 +527,36 @@ public class NonMemberMenu {
 							if(paymentCard.equals("0")) {
 								flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 							}
+							
+							if(paymentCard.length() == 2) {
+								paymentCard = paymentCard + "카드";
+							} else if(!paymentCard.endsWith("카드")) {
+								paymentCard = paymentCard.substring(0, 2) + "카드";
+							}
+							
+							
 							for(int i = 0; i < cardList.size(); i++) {
 								CardDTO card = cardList.get(i);
-								if (card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {  // cardable 여부로 할인 적용 판정
+								if(card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {	// cardable 여부로 할인 적용 판정
 									cardDiscount = 0.1;
 									checkCard = 1;
 									break;
-								}else if (card.getBank().substring(0, 2).equals(paymentCard) && card.getCardable().equals("Y")) {
-									cardDiscount = 0.1;
+								} else if(card.getBank().equals(paymentCard) && card.getCardable().equals("N")) {
 									checkCard = 1;
 									break;
-								}else if (card.getBank().equals(paymentCard) || card.getBank().substring(0, 2).equals(paymentCard)) {
-									checkCard = 1;
-									break;
-								}else {
-									continue;
 								}
-								
-							}							
-							
-								if(checkCard == 0) {
-									System.out.println("\n 사용할 수 없는 카드입니다.");
-									System.out.println("다시 결제를 시도해 주세요.");
-								continue;
-								
 							}
-							System.out.println(
-									"고객님의 " + paymentCard + "로 총" + format.format((lastPayment - gifticonPrice)) + "원이 결제 되었습니다!");
+							
+							if(checkCard == 0) {
+								System.out.println("\n 저희 매장과 제휴되어 있지 않은 카드 입니다.");
+								System.out.println("다시 결제를 시도해 주세요!");
+								continue;
+							}
+							
+							System.out.println("고객님의 " + paymentCard + "로 총" + format.format((lastPayment - gifticonPrice)) + "원이 결제 되었습니다!");
 							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+							
+							
 						}else if (paymentBy == 2) {					
 							while(true) {
 								try {		// 실수로 문자열을 입력했을 경우의 예외처리
@@ -579,8 +580,8 @@ public class NonMemberMenu {
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 							}
 						}
-						gifticonPrice = 0;
 						/* 사용한 기프티콘 잔액 수정 */
+						gifticonPrice = 0;
 						clientController.updateGifticonPrice(inputGiftNo, gifticonPrice);
 					}
 				} else {
