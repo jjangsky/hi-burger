@@ -408,11 +408,17 @@
          FROM PAYMENT_TABLE
    </entry>
 
-   <entry key="selectCategoryBy">
+   <entry key="selectRefMenu">
       SELECT
-             A.REF_CATEGORY_CODE
-        FROM CATEGORY_TABLE A
-       WHERE A.CATEGORY_CODE = ?
+             A.MENU_CODE
+           , A.MENU_NAME
+           , A.PRICE
+           , A.MENU_EXPLAIN
+           , A.CATEGORY_CODE
+        FROM MENU_TABLE A
+       WHERE A.CATEGORY_CODE = (SELECT B.REF_CATEGORY_CODE
+                                  FROM CATEGORY_TABLE B
+                                 WHERE B.CATEGORY_CODE = ? )
 	</entry>
    <entry key="insertGifticonEvent">
       INSERT
