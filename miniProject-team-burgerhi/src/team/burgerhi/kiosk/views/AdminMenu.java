@@ -30,15 +30,9 @@ public class AdminMenu {
          System.out.println("               |                |               ");
          System.out.println("------------------------------------------------");
          System.out.println("                       |                       ");
-<<<<<<< HEAD
-       System.out.println("           4           |           5           ");
-       System.out.println("     회원 정보 확인    |     메뉴 주문 하기    ");
-       System.out.println("                       |                       ");
-=======
 		 System.out.println("           4           |           5           ");
 		 System.out.println("     회원 정보 확인    |     메뉴 주문 하기    ");
 		 System.out.println("                       |                       ");
->>>>>>> 45e69117c417f62bcb0f89f81fae65092d76fc03
          System.out.println("=================================================");
          System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
          while (true) {
@@ -59,11 +53,7 @@ public class AdminMenu {
          
          /* 판매 순위 확인 */
          if (num == 0) {
-<<<<<<< HEAD
-            exit = 0;
-=======
         	 exit = 0;
->>>>>>> 45e69117c417f62bcb0f89f81fae65092d76fc03
             break;
          }else if(num == 1) {
             System.out.println(">>>>       BurgerHI 카테고리 랭킹       <<<<");
@@ -238,11 +228,7 @@ public class AdminMenu {
             }
             /* 회원 정보 확인 */
          } else if(num == 4) {
-<<<<<<< HEAD
-            System.out.println(">>>>        BurgerHI 회원 정보 시스템        <<<<");
-=======
         	 System.out.println(">>>>        BurgerHI 회원 정보 시스템        <<<<");
->>>>>>> 45e69117c417f62bcb0f89f81fae65092d76fc03
              System.out.println("=================================================");
              System.out.println("                       |                       ");
              System.out.println("           1           |           2           ");
@@ -250,34 +236,6 @@ public class AdminMenu {
              System.out.println("                       |                       ");
              System.out.println("=================================================");
              System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
-<<<<<<< HEAD
-          int selectUser = 0;   
-             while (true) {
-               try {
-                  System.out.print("\n  → 번호를 선택해 주세요: ");
-                  selectUser = sc.nextInt();
-                  sc.nextLine();
-               } catch (InputMismatchException e) {
-                  System.out.println("\n 숫자로 입력해 주세요!");
-                  sc.next();
-                  continue;
-               }
-               break;
-            }
-             if(selectUser == 0) {
-                exit = 0;
-                break;
-             } else if(selectUser == 1) {
-                adminController.selectUserAll();
-             } else if(selectUser == 2) {
-                adminController.updateUserGrade();
-             }
-             
-            
-            /* 메뉴 주문 하기 */
-         } else if(num == 5) {
-            break;
-=======
 			 int selectUser = 0;	
              while (true) {
 					try {
@@ -304,7 +262,6 @@ public class AdminMenu {
         	 /* 메뉴 주문 하기 */
          } else if(num == 5) {
         	 break;
->>>>>>> 45e69117c417f62bcb0f89f81fae65092d76fc03
          }
       } // while문 종료
       return exit;

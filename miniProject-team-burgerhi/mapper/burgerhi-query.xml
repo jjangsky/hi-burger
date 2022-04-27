@@ -547,13 +547,6 @@
                         	     FROM ORDER_MENU_TABLE
                        	        WHERE MENU_CODE = ?)
 	</entry>
-<<<<<<< HEAD
-	<entry key="updateUserGrade">
-       UPDATE USER_TABLE A
-          SET A.GRADE_NO = ?
-        WHERE USER_NO = ?
-   </entry>
-=======
 	<entry key="selectAllUser">
 	    SELECT
 	           A.USER_NO
@@ -574,5 +567,4 @@
 	      FROM USER_TABLE
 	     WHERE USER_NO = ?
 	</entry>
->>>>>>> 45e69117c417f62bcb0f89f81fae65092d76fc03
 </properties>
