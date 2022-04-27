@@ -149,7 +149,9 @@ public class OrderMenu {
 							
 							if(num2 == 1) {
 								// 세트메뉴 선택 가능한 메소드
+								System.out.println(setList);
 								setList = clientController.ShowSetMenu(userNo);
+								System.out.println(setList);
 								System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 								if(setList.size() > 0) {
 									System.out.println("방금 누르신 메뉴가 장바구니에 담겼습니다!");
@@ -429,11 +431,12 @@ public class OrderMenu {
 							CardDTO card = cardList.get(i);
 							System.out.println("▶ " + card.getBank() + "의 할인율 :" + card.getDiscount() + "%");
 						}
-						System.out.println("=================================================");
+						System.out.println("-------------------------------------------------");
 						for(int i = 4; i < 7; i++) {
 							CardDTO card = cardList.get(i);
 							System.out.println("▶ " + card.getBank() + " : 할인 혜택 적용 불가능");
 						}
+						System.out.println("=================================================");
 						/* 사용자가 결제 할 카드 입력받기 */
 						System.out.print("\n →결제하실 카드명을 입력해 주세요: ");
 						sc.nextLine();
