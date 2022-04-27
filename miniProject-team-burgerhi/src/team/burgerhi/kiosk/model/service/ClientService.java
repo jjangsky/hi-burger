@@ -48,7 +48,6 @@ public class ClientService {
 		}
 		close(con);
 		return result;
-		
 	}
 	
 	/* 로그인 한 회원의 정보 삭제 */
@@ -258,7 +257,7 @@ public class ClientService {
 		return userNo;
 	}
 
-
+	/* 매출 조회를 위한 최종 결제 메뉴 SaleAmount Insert */
 	public int insertSalesAmount(int orderCode, int menuCode, int amount, int totalPrice) {
 		Connection con = getConnection();
 		int result = clientDAO.insertSalesAmount(con, orderCode, menuCode, amount, totalPrice);
@@ -271,23 +270,23 @@ public class ClientService {
 		return result;
 	}
 
-	public int deleteSalesAmount(int deleteMenuCode) {
-		Connection con = getConnection();
-		int result = clientDAO.deleteSalesAmount(con, deleteMenuCode);
-		if (result > 0) {
-			commit(con);
-		} else {
-			rollback(con);
-		}
-		close(con);
-		return result;
-	}
+//	public int deleteSalesAmount(int deleteMenuCode) {
+//		Connection con = getConnection();
+//		int result = clientDAO.deleteSalesAmount(con, deleteMenuCode);
+//		if (result > 0) {
+//			commit(con);
+//		} else {
+//			rollback(con);
+//		}
+//		close(con);
+//		return result;
+//	}
 
-	public int selectCategoryBy(int categoryNo) {
+	public List<MenuDTO> selectRefMenu(int categoryNo) {
 		Connection con = getConnection();
-		int category = clientDAO.selectCategoryBy(con, categoryNo);
+		List<MenuDTO> randomMenu = clientDAO.selectRefMenu(con, categoryNo);
 		close(con);
-		return category;
+		return randomMenu;
 	}
 
 	/* 기프티콘 이벤트에 당첨된 기프티콘 생성 */
@@ -297,14 +296,15 @@ public class ClientService {
 		close(con);
 		return result;
 	}
-
+	
+	/* 기프티콘 이벤트 당첨자에게 제공할 번호 조회 */
 	public List<GifticonDTO> selectlastgifticon() {
 		Connection con = getConnection();
 		List<GifticonDTO> gifticonList = clientDAO.selectlastgifticon(con);
 		close(con);
 		return gifticonList;
 	}
-/* 멤버쉽 포인트 변경 */
+	/* 멤버쉽 포인트 변경 */
 	public int updateMemberPoint(int userNo, int selectPoint) {
 		Connection con = getConnection();
 		int memberPoint = clientDAO.updateMemberPoint(con, userNo, selectPoint);
@@ -312,7 +312,7 @@ public class ClientService {
 		
 		return memberPoint;
 	}
-/* 멤버쉽 포인트 조회 */
+	/* 멤버쉽 포인트 조회 */
 	public int selectMemberPoint(int userNo) {
 		Connection con = getConnection();
 		int selectPoint = clientDAO.selectMemberPoint(con, userNo);
@@ -326,33 +326,33 @@ public class ClientService {
 		close(con);
 		
 	}
-
+	/* 실버 등급으로 변경 */
 	public void updateSilverGrade(int userNo) {
 		Connection con = getConnection();
 		clientDAO.updateSilverGrade(con, userNo);
 		close(con);		
 	}
-
+	/* 패밀리 등급으로 변경 */
 	public void updateFamilyGrade(int userNo) {
 		Connection con = getConnection();
 		clientDAO.updateFamilyGrade(con, userNo);
 		close(con);		
 	}
-
+	/* 모든 버거 조회 */
 	public List<MenuDTO> selectAllBurger() {
 		Connection con = getConnection();
 		List<MenuDTO> burgerList = clientDAO.selectAllBurger(con);
 		close(con);
 		return burgerList;
 	}
-
+	/* 모든 음료 조회 */
 	public List<MenuDTO> selectAllDrink() {
 		Connection con = getConnection();
 		List<MenuDTO> drinkList = clientDAO.selectAllDrink(con);
 		close(con);
 		return drinkList;
 	}
-
+	/* 모든 사이드 조회 */
 	public List<MenuDTO> selectAllSide() {
 		Connection con = getConnection();
 		List<MenuDTO> sideList = clientDAO.selectAllSide(con);
@@ -360,45 +360,44 @@ public class ClientService {
 		return sideList;
 	}
 
-	public int insertDrinkMenu(int userNo, int inputAmount) {
-		Connection con = getConnection();
-		int insertDrinkMenu = clientDAO.insertDrinkMenu(con, userNo, inputAmount);
-		if(insertDrinkMenu > 0) {
-			commit(con);
-		} else {
-			rollback(con);
-		}
-		close(con);
-		return insertDrinkMenu;
-		
-	}
+//	public int insertDrinkMenu(int userNo, int inputAmount) {
+//		Connection con = getConnection();
+//		int insertDrinkMenu = clientDAO.insertDrinkMenu(con, userNo, inputAmount);
+//		if(insertDrinkMenu > 0) {
+//			commit(con);
+//		} else {
+//			rollback(con);
+//		}
+//		close(con);
+//		return insertDrinkMenu;
+//		
+//	}
 
-	public int insertSetMenu(int userNo, int inputAmount) {
-		Connection con = getConnection();
-		int insertSetMenu = clientDAO.insertSetMenu(con, userNo, inputAmount);
-		if(insertSetMenu > 0) {
-			commit(con);
-		} else {
-			rollback(con);
-		}
-		close(con);
-		return insertSetMenu;
-		
-	}
+//	public int insertSetMenu(int userNo, int inputAmount) {
+//		Connection con = getConnection();
+//		int insertSetMenu = clientDAO.insertSetMenu(con, userNo, inputAmount);
+//		if(insertSetMenu > 0) {
+//			commit(con);
+//		} else {
+//			rollback(con);
+//		}
+//		close(con);
+//		return insertSetMenu;
+//		
+//	}
 
-	public int deleteOrderMenuAmount(int menuNo) {
-		Connection con = getConnection();
-		int result = clientDAO.deleteOrderMenuAmount(con, menuNo);
-		close(con);
-		return result;
-	}
+//	public int deleteOrderMenuAmount(int menuNo) {
+//		Connection con = getConnection();
+//		int result = clientDAO.deleteOrderMenuAmount(con, menuNo);
+//		close(con);
+//		return result;
+//	}
 
+	/* 업그레이드 된 등급 조회 */
 	public int selectUserUpgrade(int userNo) {
 		Connection con = getConnection();
 		int updateGradeNo = clientDAO.selectUserUpgrade(con, userNo);
 		close(con);
 		return updateGradeNo;
 	}
-
-
 }

@@ -108,7 +108,7 @@ public class OrderResultSet {
 		selectPoint = selectPoint + lastPayment;
 		System.out.println("\n\n현재 " + format.format(lastPayment) + "Point 적립되셨습니다." );
 		System.out.println("고객님의 현재 누적된 멤버쉽은 " + format.format(selectPoint) + "Point 입니다.");
-		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		System.out.println("\n\n\n");
 		/* 멤버쉽 포인트 변경 */
 	 int memberPoint = clientController.updateMemberPoint(userNo, selectPoint);
 		/* 멤버쉽 등급 변경 */

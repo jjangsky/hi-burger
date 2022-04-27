@@ -315,7 +315,7 @@ public class NonMemberMenu {
 			System.out.println("       1 　  　|        2　　  |       3      ");
 			System.out.println("     카 드     |      현 금    |    기프티콘  ");
 			System.out.println("               |               |              ");
-			System.out.println("=================================================z");
+			System.out.println("================================================");
 			System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");			
 				while(true) {
 					try {		// 실수로 문자열을 입력했을 경우의 예외처리
@@ -398,16 +398,15 @@ public class NonMemberMenu {
 				
 					while(true) {
 						try {		// 실수로 문자열을 입력했을 경우의 예외처리
-							System.out.println("▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
-							System.out.println();
+							System.out.println("\n\n▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
 							for(int i = 0; i < setList.size(); i += 5) {
 								setAmount += setList.get(i+4);
 							}
 							setDiscount = setAmount * 1000;
 							System.out.println("▶ 세트 할인 금액: " + format.format(setDiscount) + "원");
 							lastPayment = (int) (totalPrice - setDiscount);
-							System.out.println("▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
-							System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
+							System.out.println("\n▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
+							System.out.print("\n\n → 결제하실 금액을 입력해 주세요: ");
 							inputPrice = sc.nextInt();
 						} catch(InputMismatchException e) {
 							System.out.println("\n 숫자로 입력해 주세요!");
@@ -417,14 +416,15 @@ public class NonMemberMenu {
 						}
 					
 					if (inputPrice == lastPayment) {
-						System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+						System.out.println("\n 결제가 완료 되었습니다!");
+						System.out.println(" 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 					} else if (inputPrice > lastPayment) {
 
-						System.out.println("거스름돈은 " + format.format((inputPrice - lastPayment)) + "원 입니다!");
-						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+						System.out.println("\n 거스름돈은 " + format.format((inputPrice - lastPayment)) + "원 입니다!");
+						System.out.println(" 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 					} else {
-						System.out.println("결제 금액이 " + format.format((lastPayment - inputPrice)) + "원 부족합니다!");
-						System.out.println("\n 추가 금액 " + format.format((lastPayment - inputPrice)) + "원을 결제해 주세요!\n\n\n");
+						System.out.println("\n\n ※ 결제 금액이 " + format.format((lastPayment - inputPrice)) + "원 부족합니다!");
+						System.out.println("    추가 금액 " + format.format((lastPayment - inputPrice)) + "원을 결제해 주세요!\n\n\n");
 						System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
 						System.out.println("=================================================");
 						System.out.println("                                                 ");

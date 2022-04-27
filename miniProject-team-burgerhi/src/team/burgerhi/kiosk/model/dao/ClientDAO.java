@@ -653,19 +653,24 @@ public class ClientDAO {
 	}
 
 
-	public int selectCategoryBy(Connection con, int categoryNo) {
+	public List<MenuDTO> selectRefMenu(Connection con, int categoryNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		int category = 0;
-		String query = prop.getProperty("selectCategoryBy");
+		List<MenuDTO> randomMenu = new ArrayList<MenuDTO>();
+		String query = prop.getProperty("selectRefMenu");
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, categoryNo);
-			
 			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				category = rset.getInt(1);
+			while(rset.next()) {
+				MenuDTO menu = new MenuDTO();
+				menu.setMenuCode(rset.getInt("MENU_CODE"));
+				menu.setName(rset.getString("MENU_NAME"));
+				menu.setPrice(rset.getInt("PRICE"));
+				menu.setExplain(rset.getString("MENU_EXPLAIN"));
+				menu.setCategoryCode(rset.getInt("CATEGORY_CODE"));
+				
+				randomMenu.add(menu);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -673,7 +678,7 @@ public class ClientDAO {
 			close(rset);
 			close(pstmt);
 		}
-		return category;
+		return randomMenu;
 	}
 				
 
