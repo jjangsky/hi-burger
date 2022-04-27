@@ -56,7 +56,6 @@ public class ClientController {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		/* name에 들어있는 값이 있을 경우 로그인 성공 | 없을 경우(null) 로그인 실패로 간주 */
@@ -264,6 +263,7 @@ public class ClientController {
 		String setMenu = null;
 		int totalPrice = 0;
 		int setAmount = 0;
+		int setAmount1 = 0;
 		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
 		List<String> orderMenuList = clientService.selectOrderMenu();
 		
@@ -271,7 +271,7 @@ public class ClientController {
 			System.out.println(">>>>         BurgerHI 장바구니 확인          <<<<");
 			System.out.println("=================================================");
 			System.out.println();
-			
+	
 			/* for문으로 사용자에게 보여줄 내용 출력 */
 			for(int i = 0; i < orderMenuList.size(); i += 5) {
 				int amount = Integer.valueOf(orderMenuList.get(i + 3));
@@ -308,17 +308,19 @@ public class ClientController {
 						setMenu = sideList.get(j).getName();
 					}
 				}
-				setAmount += setList.get(i+4);
+				setAmount = setList.get(i+4);
 				System.out.println("▶ 세트사이드: " + setMenu);
 				System.out.println("▶ 주문수량  : " + setList.get(i+4));
 				System.out.println("▶ 금액      : " + format.format(setList.get(i+3)) + " * " + setAmount + " = " + format.format((setList.get(i+3) * setAmount)));
 				totalPrice += setList.get(i+3) * setAmount;
+				setAmount1 += setList.get(i+4);
 			}
 			
 			
 //		System.out.println("set값 제대로 들어갔는지? " + set);
 			if(setList.size() > 0) {
-				int setSalePrice = setAmount * 1000;
+				
+				int setSalePrice = setAmount1 * 1000;
 				System.out.println("\n\n▶ 세트 할인 금액: " + format.format(setSalePrice));
 				System.out.println("▶ 총 금액: " + format.format(totalPrice) + " - " + format.format(setSalePrice) + " = "  +format.format((totalPrice - setSalePrice)));
 				System.out.println("\n\n\n\n\n\n\n\n\n");
@@ -572,15 +574,11 @@ public class ClientController {
 	}
 
 	/* 추천카테고리의 메뉴 랜덤 추천 */
-	public int selectRefMenu(int categoryNo, int userNo) {
-		int category = clientService.selectCategoryBy(categoryNo);
-		int refPrice = 0;
+	public void selectRefMenu(int categoryNo, int userNo) {
 		int refNum = 0;
-		
-		List<MenuDTO> randomMenu = clientService.selectMenuBy(category);
+		int refAmount = 0;
+		List<MenuDTO> randomMenu = clientService.selectRefMenu(categoryNo);
 		int i = (int)(Math.random() * randomMenu.size());
-//		System.out.println(randomMenu.size());			// 랜덤기능 확인 출력문
-//		System.out.println(i);
 		System.out.println("\n\n\n ******** BergerHI가 추천하는 함께하면 좋을 메뉴 ********");
 		System.out.println("\n▶ " + randomMenu.get(i).getMenuCode() + ". " + randomMenu.get(i).getName() + "  "
 				+ format.format(randomMenu.get(i).getPrice()) + "원\n     " + randomMenu.get(i).getExplain());
@@ -594,20 +592,13 @@ public class ClientController {
 				sc.next();
 				continue;
 			} break;
-			}
-		
-		
-		int refAmount = 0;
+		}
 		if(refNum == 1) {
 			System.out.print("\n\n 탁월한 선택이세요! 수량은 몇 개 담아드릴까요? ");
 			refAmount = sc.nextInt();
 			insertOrderMenu(userNo, randomMenu.get(i).getMenuCode(), refAmount);
 		}
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-		
-		refPrice = (refAmount * randomMenu.get(i).getPrice());
-		sc.nextLine();
-		return refPrice;
 	}
 	
 /* 멤버쉽 포인트 변경 */
