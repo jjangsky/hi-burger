@@ -265,7 +265,7 @@ public class ClientController {
 		int totalPrice = 0;
 		int setAmount = 0;
 		int setAmount1 = 0;
-		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
+		/* 장바구니에 Insert했던 내용 출력 */
 		List<String> orderMenuList = clientService.selectOrderMenu();
 		
 		if(orderMenuList.size() > 0 || setList.size() > 0) {
@@ -289,10 +289,10 @@ public class ClientController {
 			
 			for(int i = 0; i < setList.size(); i += 5) {
 				System.out.println("▶ 메뉴번호  : " + setList.get(i));
-				List<MenuDTO> menuList = clientService.selectMenuBy(1);
-				for(int j = 0; j < menuList.size(); j++) {
-					if(setList.get(i) == menuList.get(j).getMenuCode()) {
-						setMenu = menuList.get(j).getName();
+				List<MenuDTO> burgerList = clientService.selectMenuBy(1);
+				for(int j = 0; j < burgerList.size(); j++) {
+					if(setList.get(i) == burgerList.get(j).getMenuCode()) {
+						setMenu = burgerList.get(j).getName();
 					}
 				}
 				System.out.println("▶ 메뉴명    : " + setMenu + " 세트");
@@ -365,12 +365,9 @@ public class ClientController {
 		
 		for(int i = 0; i < setList.size(); i += 5) {
 			if(deleteMenuCode == setList.get(i)) {
-				System.out.print("\n\n → 세트 메뉴를 삭제하시겠습니까?(1.예 / 2. 아니오):");
+				System.out.print("\n\n → 세트 메뉴를 삭제하시겠습니까?(1.예 / 2. 아니오): ");
 				int num = sc.nextInt();
 				if(num == 1) {
-//					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i));
-//					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+1));
-//					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+2));
 					setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);
 					deleteResult = 1;
 					break;

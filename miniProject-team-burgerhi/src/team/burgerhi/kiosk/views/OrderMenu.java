@@ -22,6 +22,7 @@ public class OrderMenu {
 		Scanner sc = new Scanner(System.in);
 		DecimalFormat format = new DecimalFormat("###,###");
 		Thread th = new Thread();
+		List<Integer> setList = new ArrayList<Integer>();
 		
 		while(true) {
 			/* do~while문 밖에서도 사용해야 할 변수 */
@@ -33,27 +34,27 @@ public class OrderMenu {
 			int totalPrice = 0;
 			int paymentBy = 0;
 			int cardCode = 0;
-			int lastPayment = 0;
+			int paymentPrice = 0;
 			int setDiscount = 0;
 			int setAmount = 0;
 			int inputPrice = 0;
 			int checkCard = 0;
+			int orderCode = 0;
 			double gradeDiscount = 0;
 			double cardDiscount = 0;
 			boolean flag = true;
 			boolean flag1 = true;
 			boolean flag2 = true;
 			boolean flag3 = true;
-			List<Integer> setList = new ArrayList<Integer>();
+			
 			
 			
 			do {
 				
 				flag2 = true;
-				setList.clear();
 				clientController.deleteAllOrderMenu();
+				setList.clear();
 				/* BurgerHI 메인 주문 화면(첫 화면) */
-				
 				System.out.println();
 				System.out.println(">>>>       어서오세요 BurgerHI 입니다.       <<<<");
 				System.out.println("=================================================");
@@ -149,9 +150,7 @@ public class OrderMenu {
 							
 							if(num2 == 1) {
 								// 세트메뉴 선택 가능한 메소드
-								System.out.println(setList);
 								setList = clientController.ShowSetMenu(userNo);
-								System.out.println(setList);
 								System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 								if(setList.size() > 0) {
 									System.out.println("방금 누르신 메뉴가 장바구니에 담겼습니다!");
@@ -480,19 +479,21 @@ public class OrderMenu {
 						cardDiscount = (totalPrice - setDiscount) * cardDiscount;
 						int grade = clientController.selectGrade(gradeNo);
 						gradeDiscount = (totalPrice - setDiscount) * (grade * 0.01);
-						lastPayment = (int) (totalPrice - gradeDiscount - cardDiscount - setDiscount);
+						paymentPrice = (int) (totalPrice - gradeDiscount - cardDiscount - setDiscount);
 						
 						/* 할인 내역 및 결제 금액 모두 출력 */
 						System.out.println("\n\n▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
 						System.out.println("▶ 등급 할인 금액: " + format.format((int)gradeDiscount) + "원");
 						System.out.println("▶ 카드사 할인 금액: " + format.format((int)cardDiscount) + "원");
 						System.out.println("▶ 세트 할인 금액: " + format.format((int)setDiscount) + "원");
-						System.out.println("\n▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.\n");
-						System.out.println("고객님의 " + paymentCard + "로 총" + format.format(lastPayment) + "원이 결제 되었습니다!");
+						System.out.println("\n▶ 총 결제 금액은 " + format.format(paymentPrice) + "원 입니다.\n");
+						System.out.println("고객님의 " + paymentCard + "로 총" + format.format(paymentPrice) + "원이 결제 되었습니다!");
 						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
 						if(gradeNo != 4) {
-							orderResultSet.memberGradePoint(userNo, lastPayment, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
+							orderResultSet.memberGradePoint(userNo, paymentPrice, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 						}
+						clientController.insertOrder(paymentPrice);
+						orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
 						
 						/* 현금 결제 */
 					} else if (paymentBy == 2) {
@@ -505,8 +506,8 @@ public class OrderMenu {
 						System.out.println("\n\n▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
 						System.out.println("▶ 등급 할인 금액: " + format.format((int)gradeDiscount) + "원");
 						System.out.println("▶ 세트 할인 금액: " + format.format((int)setDiscount) + "원");
-						lastPayment = (int) (totalPrice - gradeDiscount - setDiscount);
-						System.out.println("\n▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
+						paymentPrice = (int) (totalPrice - gradeDiscount - setDiscount);
+						System.out.println("\n▶ 총 결제 금액은 " + format.format(paymentPrice) + "원 입니다.");
 						while(true) {
 							try {	// 문자열 예외처리
 								System.out.print("\n\n → 결제하실 금액을 입력해 주세요: ");
@@ -517,27 +518,28 @@ public class OrderMenu {
 								continue;
 							} break;
 							}
-						
-						if (inputPrice == lastPayment) {
+						clientController.insertOrder(paymentPrice);
+						if (inputPrice == paymentPrice) {
 							System.out.println("\n결제가 완료 되었습니다!");
 							System.out.println(" 주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
 							
 							if(gradeNo != 4) {
-								orderResultSet.memberGradePoint(userNo, lastPayment, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
+								orderResultSet.memberGradePoint(userNo, paymentPrice, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 							}
-							
-						} else if (inputPrice > lastPayment) {
+							orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
+						} else if (inputPrice > paymentPrice) {
 
-							System.out.println("\n 거스름돈은 " + format.format((inputPrice - lastPayment)) + "원 입니다!");
+							System.out.println("\n 거스름돈은 " + format.format((inputPrice - paymentPrice)) + "원 입니다!");
 							System.out.println(" 주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
 							
 							if(gradeNo != 4) {
-								orderResultSet.memberGradePoint(userNo, lastPayment, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
+								orderResultSet.memberGradePoint(userNo, paymentPrice, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 							}
-							
+							orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
 						} else {
-							System.out.println("\n\n※ 결제 금액이 " + format.format((lastPayment - inputPrice)) + "원 부족합니다!");
-							System.out.println("   추가 금액 " + format.format((lastPayment - inputPrice)) + "원을 결제해 주세요!\n\n\n\n\n\n\n");
+							System.out.println("\n\n※ 결제 금액이 " + format.format((paymentPrice - inputPrice)) + "원 부족합니다!");
+							System.out.println("   추가 금액 " + format.format((paymentPrice - inputPrice)) + "원을 결제해 주세요!\n\n\n\n\n\n\n");
+							orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, inputPrice, paymentBy);
 							System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
 							System.out.println("=================================================");
 							System.out.println("                                                 ");
@@ -545,61 +547,50 @@ public class OrderMenu {
 							System.out.println("                     카  드      　              ");
 							System.out.println("                                                 ");
 							System.out.println("=================================================");		
-							while(true) {
-								try {	// 문자열 예외처리
-									System.out.print("\n → 결제하실 수단을 선택해 주세요: ");
-									paymentBy = sc.nextInt();
-								} catch(InputMismatchException e) {
-									System.out.println("\n 숫자로 입력해 주세요!");
-									sc.next();
-									continue;
-								} break;
-								}
-							
-							if(paymentBy == 1) {
-								List<CardDTO> cardList = clientController.selectCard();
 
-								/* 사용자가 결제 할 카드 입력받기 */
-								System.out.print("\n →결제하실 카드명을 입력해 주세요: ");
-								sc.nextLine();
-								String paymentCard = sc.nextLine();
-								if(paymentCard.equals("0")) {
-									flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
+							List<CardDTO> cardList = clientController.selectCard();
+							/* 사용자가 결제 할 카드 입력받기 */
+							System.out.print("\n →결제하실 카드명을 입력해 주세요: ");
+							sc.nextLine();
+							String paymentCard = sc.nextLine();
+							if(paymentCard.equals("0")) {
+								flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
+							}
+							
+							if(paymentCard.length() == 2) {
+								paymentCard = paymentCard + "카드";
+							} else if(!paymentCard.endsWith("카드")) {
+								paymentCard = paymentCard.substring(0, 2) + "카드";
+							}
+							
+							
+							for(int i = 0; i < cardList.size(); i++) {
+								CardDTO card = cardList.get(i);
+								if(card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {	// cardable 여부로 할인 적용 판정
+									cardDiscount = 0.1;
+									checkCard = 1;
+									break;
+								} else if(card.getBank().equals(paymentCard) && card.getCardable().equals("N")) {
+									checkCard = 1;
+									break;
 								}
-								
-								if(paymentCard.length() == 2) {
-									paymentCard = paymentCard + "카드";
-								} else if(!paymentCard.endsWith("카드")) {
-									paymentCard = paymentCard.substring(0, 2) + "카드";
-								}
-								
-								
-								for(int i = 0; i < cardList.size(); i++) {
-									CardDTO card = cardList.get(i);
-									if(card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {	// cardable 여부로 할인 적용 판정
-										cardDiscount = 0.1;
-										checkCard = 1;
-										break;
-									} else if(card.getBank().equals(paymentCard) && card.getCardable().equals("N")) {
-										checkCard = 1;
-										break;
-									}
-								}
-								
-								if(checkCard == 0) {
-									System.out.println("\n 저희 매장과 제휴되어 있지 않은 카드 입니다.");
-									System.out.println("다시 결제를 시도해 주세요!");
-									continue;
-								}
-								
-								System.out.println("\n고객님의 " + paymentCard + "로 총" + format.format((lastPayment - inputPrice)) + "원이 결제 되었습니다!");
-								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
-								if(gradeNo != 4) {
-									orderResultSet.memberGradePoint(userNo, lastPayment, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
-								}
+							}
+							
+							if(checkCard == 0) {
+								System.out.println("\n 저희 매장과 제휴되어 있지 않은 카드 입니다.");
+								System.out.println("다시 결제를 시도해 주세요!");
+								continue;
+							}
+							System.out.println("\n고객님의 " + paymentCard + "로 총" + format.format((paymentPrice - inputPrice)) + "원이 결제 되었습니다!");
+							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
+							cardCode = clientController.selectCardBy(paymentCard);
+							if(gradeNo != 4) {
+								orderResultSet.memberGradePoint(userNo, paymentPrice, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 							}
 						}
 						
+						paymentBy = 1;
+						orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - inputPrice), paymentBy);
 						
 					} else if (paymentBy == 3) { // 기프티콘 결제
 						int grade = clientController.selectGrade(gradeNo);
@@ -611,9 +602,9 @@ public class OrderMenu {
 						System.out.println("▶ 장바구니 총 금액: " + format.format(totalPrice) + "원");
 						System.out.println("▶ 등급 할인 금액: " + format.format((int)gradeDiscount) + "원");
 						System.out.println("▶ 세트 할인 금액: " + format.format((int)setDiscount) + "원");
-						lastPayment = (int) (totalPrice - gradeDiscount - setDiscount);
+						paymentPrice = (int) (totalPrice - gradeDiscount - setDiscount);
 						System.out.println();
-						System.out.println("▶ 총 결제 금액은 " + format.format(lastPayment) + "원 입니다.");
+						System.out.println("▶ 총 결제 금액은 " + format.format(paymentPrice) + "원 입니다.");
 						System.out.println();
 						System.out.print("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
 						sc.nextLine();
@@ -625,11 +616,12 @@ public class OrderMenu {
 							System.out.println("\n\n\n\n\n\n\n\n\n\n");
 							continue;
 						}
+						clientController.insertOrder(paymentPrice);
 //						System.out.println(lastPayment);
 //						System.out.println(gifticonPrice);
 						
-						if (gifticonPrice >= lastPayment) {
-							gifticonPrice = gifticonPrice - lastPayment;
+						if (gifticonPrice >= paymentPrice) {
+							gifticonPrice = gifticonPrice - paymentPrice;
 							System.out.println("\n 결제가 완료 되었습니다! 기프티콘 잔액은 " + format.format(gifticonPrice) + "원 입니다!");
 							System.out.println("\n 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 							
@@ -638,16 +630,18 @@ public class OrderMenu {
 //							System.out.println(inputGiftNo);
 //							System.out.println(gifticonPrice);
 							System.out.println("\n\n\n\n\n\n\n\n\n\n");
-							
-						} else if(gifticonPrice < lastPayment){
+							orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
+						} else if(gifticonPrice < paymentPrice){
 							System.out.println("\n 기프티콘 사용이 완료 되었습니다!");
-							System.out.println("\n 추가 금액 " + format.format((lastPayment - gifticonPrice)) + "원을 결제해 주세요!\n\n\n");
+							System.out.println("\n 추가 금액 " + format.format((paymentPrice - gifticonPrice)) + "원을 결제해 주세요!\n\n\n");
+							orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, gifticonPrice, paymentBy);
 							System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
 							System.out.println("=================================================");
 							System.out.println("                       |                        ");
 							System.out.println("           1           |            2           ");
 							System.out.println("        카  드      　 |         현  금         ");
 							System.out.println("                       |                        ");
+							System.out.println("=================================================");
 							System.out.print("\n → 결제하실 수단을 선택해 주세요: ");
 							paymentBy = sc.nextInt();
 							
@@ -686,11 +680,13 @@ public class OrderMenu {
 									continue;
 								}
 								
-								System.out.println("고객님의 " + paymentCard + "로 총" + format.format((lastPayment - gifticonPrice)) + "원이 결제 되었습니다!");
+								System.out.println("고객님의 " + paymentCard + "로 총" + format.format((paymentPrice - gifticonPrice)) + "원이 결제 되었습니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 								System.out.println("\n\n\n\n\n\n\n\n\n\n");
-								orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice, gradeNo); // 기프티콘 사용 후 결제 금액 누적
-								
+								orderResultSet.giftMemberPoint(userNo, paymentPrice, gifticonPrice, gradeNo); // 기프티콘 사용 후 결제 금액 누적
+								cardCode = clientController.selectCardBy(paymentCard);
+								paymentBy = 1;
+								orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - gifticonPrice), paymentBy);
 								
 							}else if (paymentBy == 2) {								 
 								 while(true) {
@@ -704,22 +700,24 @@ public class OrderMenu {
 										} break;
 										}
 								 
-								if (inputPrice == (lastPayment - gifticonPrice)) {
+								if (inputPrice == (paymentPrice - gifticonPrice)) {
 									System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
-									orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice, gradeNo);// 기프티콘 사용 후 결제 금액 누적
-
-								}else if (inputPrice > (lastPayment - gifticonPrice)) {
+									orderResultSet.giftMemberPoint(userNo, paymentPrice, gifticonPrice, gradeNo);// 기프티콘 사용 후 결제 금액 누적
+									orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - gifticonPrice), paymentBy);
+									
+								}else if (inputPrice > (paymentPrice - gifticonPrice)) {
 
 									System.out.println(
-											"거스름돈은 " + format.format((inputPrice - (lastPayment - gifticonPrice))) + "원 입니다!");
+											"거스름돈은 " + format.format((inputPrice - (paymentPrice - gifticonPrice))) + "원 입니다!");
 									System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
-									
-									orderResultSet.giftMemberPoint(userNo, lastPayment, gifticonPrice, gradeNo);// 기프티콘 사용 후 결제 금액 누적
+									orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - gifticonPrice), paymentBy);
+									orderResultSet.giftMemberPoint(userNo, paymentPrice, gifticonPrice, gradeNo);// 기프티콘 사용 후 결제 금액 누적
 								} else {
-									System.out.println(" 결제 금액이 " + format.format((lastPayment - inputPrice - gifticonPrice)) + "원 부족합니다!");
-									System.out.println("\n 추가 금액 " + format.format((lastPayment - inputPrice - gifticonPrice)) + "원을 결제해 주세요!\n\n\n");
+									System.out.println(" 결제 금액이 " + format.format((paymentPrice - inputPrice - gifticonPrice)) + "원 부족합니다!");
+									System.out.println("\n 추가 금액 " + format.format((paymentPrice - inputPrice - gifticonPrice)) + "원을 결제해 주세요!\n\n\n");
+									orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, inputPrice, paymentBy);
 									System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
 									System.out.println("=================================================");
 									System.out.println("                                                 ");
@@ -727,61 +725,51 @@ public class OrderMenu {
 									System.out.println("                     카  드      　              ");
 									System.out.println("                                                 ");
 									System.out.println("=================================================");		
-									while(true) {
-										try {	// 문자열 예외처리
-											System.out.print("\n →결제하실 카드명을 입력해 주세요: ");
-											paymentBy = sc.nextInt();
-										} catch(InputMismatchException e) {
-											System.out.println("\n 숫자로 입력해 주세요!");
-											sc.next();
-											continue;
-										} break;
-										}
+									List<CardDTO> cardList = clientController.selectCard();
 									
-									if(paymentBy == 1) {
-										List<CardDTO> cardList = clientController.selectCard();
-
-										/* 사용자가 결제 할 카드 입력받기 */
-										System.out.print("\n → 결제하실 카드명을 입력해 주세요: ");
-										sc.nextLine();
-										String paymentCard = sc.nextLine();
-										if(paymentCard.equals("0")) {
-											flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
-										}
-										
-										if(paymentCard.length() == 2) {
-											paymentCard = paymentCard + "카드";
-										} else if(!paymentCard.endsWith("카드")) {
-											paymentCard = paymentCard.substring(0, 2) + "카드";
-										}
-										
-										
-										for(int i = 0; i < cardList.size(); i++) {
-											CardDTO card = cardList.get(i);
-											if(card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {	// cardable 여부로 할인 적용 판정
-												cardDiscount = 0.1;
-												checkCard = 1;
-												break;
-											} else if(card.getBank().equals(paymentCard) && card.getCardable().equals("N")) {
-												checkCard = 1;
-												break;
-											}
-										}
-										
-										if(checkCard == 0) {
-											System.out.println("\n 저희 매장과 제휴되어 있지 않은 카드 입니다.");
-											System.out.println("다시 결제를 시도해 주세요!");
-											continue;
-										}
-										
-										System.out.println("고객님의 " + paymentCard + "로 총" + format.format((lastPayment - inputPrice - gifticonPrice)) + "원이 결제 되었습니다!");
-										System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
-										System.out.println("\n\n\n\n\n\n\n\n\n\n");
-										
-										if(gradeNo != 4) {
-											orderResultSet.memberGradePoint(userNo, lastPayment, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
+									/* 사용자가 결제 할 카드 입력받기 */
+									System.out.print("\n → 결제하실 카드명을 입력해 주세요: ");
+									sc.nextLine();
+									String paymentCard = sc.nextLine();
+									if(paymentCard.equals("0")) {
+										flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
+									}
+									
+									if(paymentCard.length() == 2) {
+										paymentCard = paymentCard + "카드";
+									} else if(!paymentCard.endsWith("카드")) {
+										paymentCard = paymentCard.substring(0, 2) + "카드";
+									}
+									
+									
+									for(int i = 0; i < cardList.size(); i++) {
+										CardDTO card = cardList.get(i);
+										if(card.getBank().equals(paymentCard) && card.getCardable().equals("Y")) {	// cardable 여부로 할인 적용 판정
+											cardDiscount = 0.1;
+											checkCard = 1;
+											break;
+										} else if(card.getBank().equals(paymentCard) && card.getCardable().equals("N")) {
+											checkCard = 1;
+											break;
 										}
 									}
+									
+									if(checkCard == 0) {
+										System.out.println("\n 저희 매장과 제휴되어 있지 않은 카드 입니다.");
+										System.out.println("다시 결제를 시도해 주세요!");
+										continue;
+									}
+									
+									System.out.println("고객님의 " + paymentCard + "로 총" + format.format((paymentPrice - inputPrice - gifticonPrice)) + "원이 결제 되었습니다!");
+									System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+									System.out.println("\n\n\n\n\n\n\n\n\n\n");
+									
+									if(gradeNo != 4) {
+										orderResultSet.memberGradePoint(userNo, paymentPrice, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
+									}
+									paymentBy = 1;
+									cardCode = clientController.selectCardBy(paymentCard);
+									orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - inputPrice - gifticonPrice), paymentBy);
 								}
 								
 							}
@@ -795,12 +783,9 @@ public class OrderMenu {
 					}
 
 					/* 최종 모두 확정된 정보를 테이블에 Insert */
-					clientController.insertOrder(lastPayment);
-					int orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
+					
+//					int orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, lastPayment, paymentBy);
 //					clientController.gifticonEvent(orderCode);
-					
-					
-					/* 장바구니 delete */
 					clientController.insertSalesAmount(orderCode);
 					
 
