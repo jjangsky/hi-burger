@@ -490,12 +490,19 @@ public class OrderMenu {
 						System.out.println("▶ 세트 할인 금액: " + format.format((int)setDiscount) + "원");
 						System.out.println("\n▶ 총 결제 금액은 " + format.format(paymentPrice) + "원 입니다.\n");
 						System.out.println("고객님의 " + paymentCard + "로 총" + format.format(paymentPrice) + "원이 결제 되었습니다!");
-						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
+						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n");
 						if(gradeNo != 4) {
 							orderResultSet.memberGradePoint(userNo, paymentPrice, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 						}
+						try {
+							th.sleep(1800);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						System.out.println("\n\n\n\n\n\n\n\n\n\n");
 						clientController.insertOrder(paymentPrice);
 						orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
+						
 						
 						/* 현금 결제 */
 					} else if (paymentBy == 2) {
@@ -523,24 +530,35 @@ public class OrderMenu {
 						clientController.insertOrder(paymentPrice);
 						if (inputPrice == paymentPrice) {
 							System.out.println("\n결제가 완료 되었습니다!");
-							System.out.println(" 주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
-							
+							System.out.println(" 주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n");
 							if(gradeNo != 4) {
 								orderResultSet.memberGradePoint(userNo, paymentPrice, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 							}
+							try {
+								th.sleep(1800);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							System.out.println("\n\n\n\n\n\n\n\n\n\n");
 							orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
 						} else if (inputPrice > paymentPrice) {
 
 							System.out.println("\n 거스름돈은 " + format.format((inputPrice - paymentPrice)) + "원 입니다!");
-							System.out.println(" 주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
-							
+							System.out.println(" 주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n");
 							if(gradeNo != 4) {
 								orderResultSet.memberGradePoint(userNo, paymentPrice, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 							}
+							try {
+								th.sleep(1800);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							System.out.println("\n\n\n\n\n\n\n\n\n\n");
+							
 							orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
 						} else {
 							System.out.println("\n\n※ 결제 금액이 " + format.format((paymentPrice - inputPrice)) + "원 부족합니다!");
-							System.out.println("   추가 금액 " + format.format((paymentPrice - inputPrice)) + "원을 결제해 주세요!\n\n\n\n\n\n\n");
+							System.out.println("   추가 금액 " + format.format((paymentPrice - inputPrice)) + "원을 결제해 주세요!\n\n\n");
 							orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, inputPrice, paymentBy);
 							System.out.println(">>>>         BurgerHI 장바구니 결제          <<<<");
 							System.out.println("=================================================");
@@ -583,7 +601,13 @@ public class OrderMenu {
 								continue;
 							}
 							System.out.println("\n고객님의 " + paymentCard + "로 총" + format.format((paymentPrice - inputPrice)) + "원이 결제 되었습니다!");
-							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
+							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+							try {
+								th.sleep(1800);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							System.out.println("\n\n\n\n\n\n\n\n\n\n");
 							cardCode = clientController.selectCardBy(paymentCard);
 							if(gradeNo != 4) {
 								orderResultSet.memberGradePoint(userNo, paymentPrice, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
@@ -625,7 +649,11 @@ public class OrderMenu {
 							gifticonPrice = gifticonPrice - paymentPrice;
 							System.out.println("\n 결제가 완료 되었습니다! 기프티콘 잔액은 " + format.format(gifticonPrice) + "원 입니다!");
 							System.out.println("\n 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
-							
+							try {
+								th.sleep(1800);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 							/* 사용한 기프티콘 잔액 수정 */
 							clientController.updateGifticonPrice(inputGiftNo, gifticonPrice);
 //							System.out.println(inputGiftNo);
@@ -683,6 +711,11 @@ public class OrderMenu {
 								
 								System.out.println("고객님의 " + paymentCard + "로 총" + format.format((paymentPrice - gifticonPrice)) + "원이 결제 되었습니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+								try {
+									th.sleep(1800);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
 								System.out.println("\n\n\n\n\n\n\n\n\n\n");
 								orderResultSet.giftMemberPoint(userNo, paymentPrice, gifticonPrice, gradeNo); // 기프티콘 사용 후 결제 금액 누적
 								cardCode = clientController.selectCardBy(paymentCard);
@@ -703,6 +736,11 @@ public class OrderMenu {
 								 
 								if (inputPrice == (paymentPrice - gifticonPrice)) {
 									System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+									try {
+										th.sleep(1800);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
 									orderResultSet.giftMemberPoint(userNo, paymentPrice, gifticonPrice, gradeNo);// 기프티콘 사용 후 결제 금액 누적
 									orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - gifticonPrice), paymentBy);
@@ -712,6 +750,11 @@ public class OrderMenu {
 									System.out.println(
 											"거스름돈은 " + format.format((inputPrice - (paymentPrice - gifticonPrice))) + "원 입니다!");
 									System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+									try {
+										th.sleep(1800);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
 									orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - gifticonPrice), paymentBy);
 									orderResultSet.giftMemberPoint(userNo, paymentPrice, gifticonPrice, gradeNo);// 기프티콘 사용 후 결제 금액 누적
@@ -762,12 +805,17 @@ public class OrderMenu {
 									}
 									
 									System.out.println("고객님의 " + paymentCard + "로 총" + format.format((paymentPrice - inputPrice - gifticonPrice)) + "원이 결제 되었습니다!");
-									System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
-									System.out.println("\n\n\n\n\n\n\n\n\n\n");
-									
+									System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n");
 									if(gradeNo != 4) {
 										orderResultSet.memberGradePoint(userNo, paymentPrice, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 									}
+									try {
+										th.sleep(1800);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
+									System.out.println("\n\n\n\n\n\n\n\n\n\n");
+									
 									paymentBy = 1;
 									cardCode = clientController.selectCardBy(paymentCard);
 									orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - inputPrice - gifticonPrice), paymentBy);

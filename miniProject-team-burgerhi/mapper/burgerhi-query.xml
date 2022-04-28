@@ -582,7 +582,7 @@
    </entry>
    <entry key="selectUserIdCheck">
        SELECT
-       	      COUNT(*)
+              COUNT(*)
          FROM USER_TABLE
         WHERE USER_ID = ?
    </entry>

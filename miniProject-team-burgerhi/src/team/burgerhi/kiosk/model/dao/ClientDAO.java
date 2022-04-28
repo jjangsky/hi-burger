@@ -996,7 +996,19 @@ public class ClientDAO {
 		ResultSet rset = null;
 		int result = 0;
 		String query = prop.getProperty("selectUserIdCheck");
-		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
 		
 		return result;
 	}

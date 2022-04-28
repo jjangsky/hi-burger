@@ -173,8 +173,10 @@ public class ClientController {
 					System.out.println(">>>>           BurgerHI 회원 탈퇴            <<<<");
 					System.out.println("=================================================");
 					System.out.println();
-					System.out.println("      ★ 고객님의 모든 정보가 사라집니다. ★     ");
-					System.out.println("       ★ 모든 정보는 복구되지 않습니다. ★       \n 그래도 진행 하시겠습니까?");
+					System.out.println("      ★ 고객님의 모든 정보가 사라집니다. ★    ");
+					System.out.println("       ★ 모든 정보는 복구되지 않습니다. ★      ");
+					System.out.println("           그래도 진행 하시겠습니까?            \n");
+					System.out.println("=================================================");
 					System.out.println("                       |                       ");
 					System.out.println("          1            |           2           ");
 					System.out.println("      회원 탈퇴        |         취소          ");

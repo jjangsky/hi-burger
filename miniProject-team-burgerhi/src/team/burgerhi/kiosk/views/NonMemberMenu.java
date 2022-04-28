@@ -17,6 +17,7 @@ public class NonMemberMenu {
 	
 	private ClientController clientController = new ClientController();
 	Scanner sc = new Scanner(System.in);
+	Thread th = new Thread();
 	DecimalFormat format = new DecimalFormat("###,###");
 	public void displayMainMenu() {
 //		int menuPrice = 0;
@@ -399,7 +400,13 @@ public class NonMemberMenu {
 					System.out.println("▶ 세트 할인 금액: " + format.format(setDiscount) + "원");
 					System.out.println("\n▶ 총 결제 금액은 " + format.format(paymentPrice) + "원 입니다.\n");
 					System.out.println("고객님의 " + paymentCard + "로 총" + format.format(paymentPrice) + "원이 결제 되었습니다!");
-					System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
+					System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+					try {
+						th.sleep(1800);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					System.out.println("\n\n\n\n\n\n\n\n\n\n");
 					cardCode = clientController.selectCardBy(paymentCard);
 					clientController.insertOrder(paymentPrice);
 					orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
@@ -426,12 +433,24 @@ public class NonMemberMenu {
 					clientController.insertOrder(paymentPrice);
 					if (inputPrice == paymentPrice) {
 						System.out.println("\n 결제가 완료 되었습니다!");
-						System.out.println(" 주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
+						System.out.println(" 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+						try {
+							th.sleep(1800);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						System.out.println("\n\n\n\n\n\n\n\n\n\n");
 						orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
 					} else if (inputPrice > paymentPrice) {
 
 						System.out.println("\n 거스름돈은 " + format.format((inputPrice - paymentPrice)) + "원 입니다!");
 						System.out.println(" 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+						try {
+							th.sleep(1800);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						System.out.println("\n\n\n\n\n\n\n\n\n\n");
 						orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
 					} else {
 						System.out.println("\n\n※ 결제 금액이 " + format.format((paymentPrice - inputPrice)) + "원 부족합니다!");
@@ -474,7 +493,13 @@ public class NonMemberMenu {
 							continue;
 						}
 						System.out.println("\n고객님의 " + paymentCard + "로 총" + format.format((paymentPrice - inputPrice)) + "원이 결제 되었습니다!");
-						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)\n\n\n");
+						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+						try {
+							th.sleep(1800);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						System.out.println("\n\n\n\n\n\n\n\n\n\n");
 						paymentBy = 1;
 						cardCode = clientController.selectCardBy(paymentCard);
 						orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - inputPrice), paymentBy);
@@ -503,6 +528,12 @@ public class NonMemberMenu {
 						gifticonPrice = gifticonPrice - paymentPrice;
 						System.out.println("결제가 완료 되었습니다! 기프티콘 잔액은 " + format.format(gifticonPrice) + "원 입니다!");
 						System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+						try {
+							th.sleep(1800);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						System.out.println("\n\n\n\n\n\n\n\n\n\n");
 						orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
 
 						/* 사용한 기프티콘 잔액 수정 */
@@ -557,6 +588,12 @@ public class NonMemberMenu {
 							
 							System.out.println("고객님의 " + paymentCard + "로 총" + format.format((paymentPrice - gifticonPrice)) + "원이 결제 되었습니다!");
 							System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+							try {
+								th.sleep(1800);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							System.out.println("\n\n\n\n\n\n\n\n\n\n");
 							cardCode = clientController.selectCardBy(paymentCard);
 							orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - gifticonPrice), paymentBy);
 							
@@ -576,6 +613,11 @@ public class NonMemberMenu {
 							
 							if (inputPrice == (paymentPrice - gifticonPrice)) {
 								System.out.println("결제가 완료 되었습니다! 주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+								try {
+									th.sleep(1800);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
 								System.out.println("\n\n\n\n\n\n\n\n\n\n");
 								orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - gifticonPrice), paymentBy);
 							}else if (inputPrice > (paymentPrice - gifticonPrice)) {
@@ -583,6 +625,12 @@ public class NonMemberMenu {
 								System.out.println(
 										"거스름돈은 " + format.format((inputPrice - paymentPrice - gifticonPrice)) + "원 입니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+								try {
+									th.sleep(1800);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+								System.out.println("\n\n\n\n\n\n\n\n\n\n");
 								orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - gifticonPrice), paymentBy);
 							}else {
 								System.out.println(" 결제 금액이 " + format.format((paymentPrice - inputPrice - gifticonPrice)) + "원 부족합니다!");
@@ -632,6 +680,11 @@ public class NonMemberMenu {
 								
 								System.out.println("고객님의 " + paymentCard + "로 총" + format.format((paymentPrice - inputPrice - gifticonPrice)) + "원이 결제 되었습니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
+								try {
+									th.sleep(1800);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
 								System.out.println("\n\n\n\n\n\n\n\n\n\n");
 								
 								paymentBy = 1;
@@ -667,24 +720,26 @@ public class NonMemberMenu {
 	
 	
 	public void createUserInfo(){
-		
+		String userId = null;
+		int checkResult = 0;
 		/* 비회원 회원가입 절차 */
 		System.out.println(">>>>         BurgerHI 회원가입 안내         <<<<");
 		System.out.println("=================================================");
 		System.out.print("\n →  본인의 성함을 입력해 주세요: ");
 //		sc.nextLine();
 		String name = sc.nextLine();
-		System.out.print("\n →  사용하실 아이디를 입력해 주세요: ");
-		String userId = sc.nextLine();
-		int checkResult = clientController.selectUserIdCheck(userId);
-		
-		
-		
-		
-		
-		
-		
-		
+		/* 아이디 중복 확인 */
+		while(true) {
+			System.out.print("\n →  사용하실 아이디를 입력해 주세요: ");
+			userId = sc.nextLine();
+			checkResult = clientController.selectUserIdCheck(userId);
+			if(checkResult == 1) {
+				System.out.println("\n※ 이미 사용중인 아이디 입니다! 다시 입력해 주세요. ※\n");
+				continue;
+			} else {
+				break;
+			}
+		}
 		System.out.print("\n →  사용하실 비밀번호를 입력해 주세요: ");
 		String userPwd = sc.nextLine();
 		System.out.print("\n →  사용하시는 휴대폰 번호를 입력해 주세요: ");
