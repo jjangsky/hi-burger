@@ -405,9 +405,9 @@ public class OrderMenu {
 				System.out.println("     카 드     |      현 금    |    기프티콘  ");
 				System.out.println("               |               |              ");
 				System.out.println("=================================================");		
+				System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 				while(true) {
 					try {	// 문자열 예외처리
-						System.out.println(" * 프 로 그 램 종 료 는 0 번 을 눌 러 주 세 요. ");
 						System.out.print("\n → 결제하실 수단을 선택해 주세요: ");
 						paymentBy = sc.nextInt();
 					} catch(InputMismatchException e) {
@@ -419,7 +419,8 @@ public class OrderMenu {
 
 					if (paymentBy == 0) {
 						System.out.println("\n\n\n\n\n\n\n\n\n\n");
-						flag2 = false;								// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
+						flag2 = false;
+						break; 										// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 					} else if (paymentBy == 1) { // 카드 결제
 						System.out.println("\n\n\n\n\n\n\n\n\n\n");
 						System.out.println("★★★★      카드 중복 할인 Event!      ★★★★");
@@ -556,7 +557,8 @@ public class OrderMenu {
 							System.out.println("\n\n\n\n\n\n\n\n\n\n");
 							
 							orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
-						} else {
+							break;
+						} else if(inputPrice < paymentPrice) {
 							System.out.println("\n\n※ 결제 금액이 " + format.format((paymentPrice - inputPrice)) + "원 부족합니다!");
 							System.out.println("   추가 금액 " + format.format((paymentPrice - inputPrice)) + "원을 결제해 주세요!\n\n\n");
 							orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, inputPrice, paymentBy);
@@ -613,7 +615,6 @@ public class OrderMenu {
 								orderResultSet.memberGradePoint(userNo, paymentPrice, gradeNo); // 멤버쉽 관련 메소드(누적 포인트 및 등급)
 							}
 						}
-						
 						paymentBy = 1;
 						orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - inputPrice), paymentBy);
 						
@@ -758,7 +759,7 @@ public class OrderMenu {
 									System.out.println("\n\n\n\n\n\n\n\n\n\n");
 									orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - gifticonPrice), paymentBy);
 									orderResultSet.giftMemberPoint(userNo, paymentPrice, gifticonPrice, gradeNo);// 기프티콘 사용 후 결제 금액 누적
-								} else {
+								} else if(inputPrice < (paymentPrice - gifticonPrice)) {
 									System.out.println(" 결제 금액이 " + format.format((paymentPrice - inputPrice - gifticonPrice)) + "원 부족합니다!");
 									System.out.println("\n 추가 금액 " + format.format((paymentPrice - inputPrice - gifticonPrice)) + "원을 결제해 주세요!\n\n\n");
 									orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, inputPrice, paymentBy);
