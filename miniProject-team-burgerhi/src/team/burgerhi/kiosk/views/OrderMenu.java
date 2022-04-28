@@ -633,13 +633,31 @@ public class OrderMenu {
 						System.out.println();
 						System.out.println("▶ 총 결제 금액은 " + format.format(paymentPrice) + "원 입니다.");
 						System.out.println();
-						System.out.print("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
+						String inputGiftNo = null;
 						sc.nextLine();
-						String inputGiftNo = sc.nextLine();
+						System.out.print("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
+						inputGiftNo = sc.nextLine();
+						while(true) {
+							if(inputGiftNo.length() > 14) {
+								break;
+							} else {
+								System.out.println("\n\n ※ 기프티콘 번호를 잘못 입력하셨습니다,");
+								System.out.println("     이전 페이지로 돌아가기는 9번 입니다.");
+								System.out.print("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
+								inputGiftNo = sc.nextLine();
+								if(inputGiftNo.equals("9")) {
+									break;
+								}
+							}
+						}
+						if(inputGiftNo.equals("9")) {
+							System.out.println("\n\n\n\n\n\n\n\n\n\n");
+							continue;
+						}
 //						System.out.println(inputGiftNo);
 						int gifticonPrice = clientController.selectGifticonBy(inputGiftNo);
 						if(gifticonPrice == 0) {
-							System.out.println("기프티콘 번호를 잘못 입력하셨습니다. 다시 입력해 주세요!");
+							System.out.println("\n 이미 사용된 기프티콘 입니다!");
 							System.out.println("\n\n\n\n\n\n\n\n\n\n");
 							continue;
 						}

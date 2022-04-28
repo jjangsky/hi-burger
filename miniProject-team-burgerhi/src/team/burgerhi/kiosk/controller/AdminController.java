@@ -1,6 +1,8 @@
 package team.burgerhi.kiosk.controller;
 
-import java.sql.SQLException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,8 +15,10 @@ import team.burgerhi.kiosk.model.dto.CategoryDTO;
 import team.burgerhi.kiosk.model.dto.MenuDTO;
 import team.burgerhi.kiosk.model.service.AdminService;
 
+
 public class AdminController {	
 	private AdminService adminService = new AdminService();
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	Scanner sc = new Scanner(System.in);
 	DecimalFormat format = new DecimalFormat("###,###");
 	List<CategoryDTO> categoryList = new ArrayList<>();
@@ -71,7 +75,6 @@ public class AdminController {
             System.out.println("▶ " + cate.getCode() + ". " + cate.getName() + "(추천 카테고리: " + cate.getRefName() + ")");
          }
 		System.out.print("\n  → 추가할 카테고리명을 입력해 주세요: ");
-//		sc.nextLine();
 		String categoryName = sc.nextLine();
 		System.out.print("\n  → 추천 카테고리 번호를 입력해 주세요: ");
 		int refCategory = sc.nextInt();
@@ -117,7 +120,9 @@ public class AdminController {
             System.out.println("▶ " + cate.getCode() + ". " + cate.getName() + "(추천 카테고리: " + cate.getRefName() + ")");
          }
 		System.out.print("\n → 삭제할 카테고리 이름을 입력해 주세요: ");
-		String categoryName = sc.nextLine();
+		String categoryName;
+		try {
+			categoryName = br.readLine();
 		System.out.println("\n\n\n\n\n");
 		
 		int deleteResult = adminService.deleteCategory(categoryName);
@@ -126,6 +131,9 @@ public class AdminController {
 			System.out.println("DELETE 실패");
 		} else {
 			System.out.println("DELETE 성공");
+		}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
