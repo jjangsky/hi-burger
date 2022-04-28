@@ -284,6 +284,7 @@ public class NonMemberMenu {
 					flag1 = false;
 					break;// 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 				} else if(num3 == 2) { // 장바구니에 있는 메뉴 수정하기
+					clientController.selectOrderMenu(setList);
 					clientController.deleteOrderMenu(setList);
 					totalPrice = clientController.selectOrderMenu(setList);
 				} else if(num3 == 3) {

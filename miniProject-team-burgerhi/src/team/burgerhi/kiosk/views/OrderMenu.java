@@ -349,6 +349,7 @@ public class OrderMenu {
 									flag3 = false;
 									break; // 장바구니 while문 빠져나가서 메뉴주문 while문 처음으로 돌아감
 								} else if(num == 2) { // 장바구니에 있는 메뉴 수정하기
+									clientController.selectOrderMenu(setList);
 									int close = clientController.deleteOrderMenu(setList);
 									System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 									if(close == 0) {
@@ -419,6 +420,7 @@ public class OrderMenu {
 
 					if (paymentBy == 0) {
 						System.out.println("\n\n\n\n\n\n\n\n\n\n");
+
 						flag2 = false;
 						break; 										// 프로그램 종료를 누를 경우 메뉴 주문 while문 탈출
 					} else if (paymentBy == 1) { // 카드 결제
@@ -840,7 +842,7 @@ public class OrderMenu {
 					
 
 					/* 모든 주문이 종료되면 주문번호를 호출하는 메소드 */
-//					orderResultSet.closeDisplayMainMenu();
+					orderResultSet.closeDisplayMainMenu();
 					flag2 = false;
 					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			} 
