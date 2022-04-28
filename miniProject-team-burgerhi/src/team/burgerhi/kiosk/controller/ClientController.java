@@ -207,6 +207,7 @@ public class ClientController {
 						}
 						break;
 					}
+					orderResultSet.displayDmlResult(code);
 				}
 			}
 			

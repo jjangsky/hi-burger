@@ -23,7 +23,6 @@ public class OrderMenu {
 		Scanner sc = new Scanner(System.in);
 		DecimalFormat format = new DecimalFormat("###,###");
 		Thread th = new Thread();
-//		List<Integer> setList = new ArrayList<Integer>();
 		
 		while(true) {
 			/* do~while문 밖에서도 사용해야 할 변수 */
