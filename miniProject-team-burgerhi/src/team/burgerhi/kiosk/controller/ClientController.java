@@ -26,7 +26,8 @@ public class ClientController {
 	Scanner sc = new Scanner(System.in);
 	String code = "";
 	DecimalFormat format = new DecimalFormat("###,###");
-	List<Integer> list = new ArrayList<>();
+	List<Integer> setList = new ArrayList<Integer>();
+	
 	/* Login 진행 메소드 */
 	public UserDTO loginResult() {
 		/* View에 DTO 형태로 넘겨야 하기 때문에 인스턴스 생성 */
@@ -264,7 +265,7 @@ public class ClientController {
 		int totalPrice = 0;
 		int setAmount = 0;
 		int setAmount1 = 0;
-		/* 장바구니에 Insert했던 내용 출력(회원번호를 조건으로 가져오기) */
+		/* 장바구니에 Insert했던 내용 출력 */
 		List<String> orderMenuList = clientService.selectOrderMenu();
 		
 		if(orderMenuList.size() > 0 || setList.size() > 0) {
@@ -288,10 +289,10 @@ public class ClientController {
 			
 			for(int i = 0; i < setList.size(); i += 5) {
 				System.out.println("▶ 메뉴번호  : " + setList.get(i));
-				List<MenuDTO> menuList = clientService.selectMenuBy(1);
-				for(int j = 0; j < menuList.size(); j++) {
-					if(setList.get(i) == menuList.get(j).getMenuCode()) {
-						setMenu = menuList.get(j).getName();
+				List<MenuDTO> burgerList = clientService.selectMenuBy(1);
+				for(int j = 0; j < burgerList.size(); j++) {
+					if(setList.get(i) == burgerList.get(j).getMenuCode()) {
+						setMenu = burgerList.get(j).getName();
 					}
 				}
 				System.out.println("▶ 메뉴명    : " + setMenu + " 세트");
@@ -364,12 +365,9 @@ public class ClientController {
 		
 		for(int i = 0; i < setList.size(); i += 5) {
 			if(deleteMenuCode == setList.get(i)) {
-				System.out.print("\n\n → 세트 메뉴를 삭제하시겠습니까?(1.예 / 2. 아니오):");
+				System.out.print("\n\n → 세트 메뉴를 삭제하시겠습니까?(1.예 / 2. 아니오): ");
 				int num = sc.nextInt();
 				if(num == 1) {
-//					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i));
-//					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+1));
-//					deleteResult = clientService.deleteOrderMenuAmount(setList.get(i+2));
 					setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);
 					deleteResult = 1;
 					break;
@@ -716,11 +714,6 @@ public class ClientController {
 		int inputSetOrder = sc.nextInt();
 		if(inputSetOrder == 1) {
 			
-			/* 장바구니에 insert */
-//			clientService.insertOrderMenu(userNo, inputSetNo, inputAmount);	// 버거 insert
-//			clientService.insertDrinkMenu(userNo, inputAmount);				// 음료 insert
-//			clientService.insertSetMenu(userNo, inputAmount);				// 사이드 insert
-			
 			for(int i = 0; i < burgerList.size(); i++) {
 				if(inputSetNo == burgerList.get(i).getMenuCode()) {
 					selectBurgerPrice = burgerList.get(i).getPrice();
@@ -733,11 +726,12 @@ public class ClientController {
 			int c = selectSidePrice;
 			setPrice = a+b+c;
 			
-			list.add(inputSetNo);
-			list.add(4);
-			list.add(6);
-			list.add(setPrice);
-			list.add(inputAmount);
+			setList.add(inputSetNo);
+			setList.add(4);
+			setList.add(6);
+			setList.add(setPrice);
+			setList.add(inputAmount);
+			
 		} else if(inputSetOrder == 2){
 			/* 구성을 변경하는 메소드 */
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -788,13 +782,13 @@ public class ClientController {
 			int c = selectSidePrice;
 			setPrice = a+b+c;
 			
-			list.add(selectBurgerCode);
-			list.add(selectDrinkCode);
-			list.add(selectSideCode);
-			list.add(setPrice);
-			list.add(inputAmount);
+			setList.add(selectBurgerCode);
+			setList.add(selectDrinkCode);
+			setList.add(selectSideCode);
+			setList.add(setPrice);
+			setList.add(inputAmount);
 		}
-		return list;
+		return setList;
 	}
 
 	public int insertOrderSetMenu(int userNo, int menuNo, int amount) {
