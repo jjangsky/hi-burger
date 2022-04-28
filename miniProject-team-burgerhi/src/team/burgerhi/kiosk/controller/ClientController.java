@@ -128,6 +128,7 @@ public class ClientController {
 					try {	// 문자열 예외처리
 						System.out.println(" → 회원 정보 수정은 1번을 회원 탈퇴는 2번을 눌러주세요.");
 						System.out.println(" → 이전 화면으로 돌아가시려면 3번을 눌러주세요.");
+						System.out.print("\n → 번호를 선택해 주세요: ");
 						num = sc.nextInt();
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 					} catch(InputMismatchException e) {
