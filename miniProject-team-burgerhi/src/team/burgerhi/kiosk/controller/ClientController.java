@@ -126,8 +126,9 @@ public class ClientController {
 				
 				while(true) {
 					try {	// 문자열 예외처리
-						System.out.println(" → 회원 정보 수정은 1번을 회원 탈퇴는 2번을 눌러주세요.");
-						System.out.println(" → 이전 화면으로 돌아가시려면 3번을 눌러주세요.");
+						System.out.println(" ▷ 1번 : 회원 정보 수정");
+						System.out.println(" ▷ 2번 : 회원 탈퇴");
+						System.out.println(" ▷ 3번 : 이전 화면 돌아가기");
 						System.out.print("\n → 번호를 선택해 주세요: ");
 						num = sc.nextInt();
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -172,11 +173,13 @@ public class ClientController {
 					System.out.println(">>>>           BurgerHI 회원 탈퇴            <<<<");
 					System.out.println("=================================================");
 					System.out.println();
-					System.out.println("★ 고객님의 모든 정보가 사라집니다. 모든 정보는 복구되지 않습니다. ★ \n 그래도 진행 하시겠습니까?");
+					System.out.println("      ★ 고객님의 모든 정보가 사라집니다. ★     ");
+					System.out.println("       ★ 모든 정보는 복구되지 않습니다. ★       \n 그래도 진행 하시겠습니까?");
 					System.out.println("                       |                       ");
 					System.out.println("          1            |           2           ");
 					System.out.println("      회원 탈퇴        |         취소          ");
-					System.out.println("                       |                       \n");
+					System.out.println("                       |                       ");
+					System.out.println("=================================================");
 					
 					while(true) {
 						try {	// 문자열 예외처리
@@ -315,6 +318,7 @@ public class ClientController {
 				System.out.println("▶ 금액      : " + format.format(setList.get(i+3)) + " * " + setAmount + " = " + format.format((setList.get(i+3) * setAmount)));
 				totalPrice += setList.get(i+3) * setAmount;
 				setAmount1 += setList.get(i+4);
+				System.out.println();
 			}
 			
 			
@@ -507,6 +511,15 @@ public class ClientController {
 	/* 비회원 회원가입 절차, View 에서 받은 Scanner 값을 DTO에 담아서 Service 계층으로 전송 */
 	public int createUserInfo(String name, String userId, String userPwd, String userPhone) {
 		UserDTO userDTO = new UserDTO();
+		List<UserDTO> userList = clientService.loginResult(userId, userPwd);
+//		if()
+		
+		
+		
+		
+		
+		
+		
 		userDTO.setName(name);
 		userDTO.setId(userId);
 		userDTO.setPwd(userPwd);
@@ -661,11 +674,11 @@ public class ClientController {
 		}
 	}
 	/* 패밀리 등급으로 변경 */
-	public void updateFamilyGrade(int userNo, int gradeNo) {
+	public void updateFamilyGrade(int userNo, int gradeNo, int pastPoint) {
 		int eventPrice = 2000;
 		clientService.updateFamilyGrade(userNo);
-		int updateGradeNo = clientService.selectUserUpgrade(userNo);
-		if(updateGradeNo != gradeNo) {
+		
+		if(pastPoint == 0) {
 			/* clientService의 Insert 메소드 사용 */
 			clientService.insertGifticonEvent(eventPrice);
 			

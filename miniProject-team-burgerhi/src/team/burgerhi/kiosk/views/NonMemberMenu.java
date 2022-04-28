@@ -444,7 +444,6 @@ public class NonMemberMenu {
 						System.out.println("                    카  드                       ");
 						System.out.println("                                                 ");
 						System.out.println("=================================================");
-						System.out.print("\n →결제하실 카드명을 입력해 주세요: ");
 						List<CardDTO> cardList = clientController.selectCard();
 						/* 사용자가 결제 할 카드 입력받기 */
 						System.out.print("\n →결제하실 카드명을 입력해 주세요: ");

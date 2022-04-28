@@ -133,6 +133,7 @@ public class OrderMenu {
 							} break;
 						}
 						
+						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 						if(categoryNo == 0) {
 							flag1 = false;		// 메뉴 주문 while문 탈출
 							continue;			// 메인메뉴로 돌아가도록 설정

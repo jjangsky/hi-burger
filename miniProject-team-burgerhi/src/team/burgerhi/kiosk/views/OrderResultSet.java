@@ -105,6 +105,7 @@ public class OrderResultSet {
 		ClientController clientController = new ClientController();
 		
 		int selectPoint = clientController.selectMemberPoint(userNo);
+		int pastPoint = selectPoint;
 		selectPoint = selectPoint + lastPayment;
 		System.out.println("\n\n현재 " + format.format(lastPayment) + "Point 적립되셨습니다." );
 		System.out.println("고객님의 현재 누적된 멤버쉽은 " + format.format(selectPoint) + "Point 입니다.");
@@ -120,7 +121,7 @@ public class OrderResultSet {
 			System.out.println("\n\n회원님의 현재 등급은 Silver 입니다.");
 			System.out.println("다음 등급까지" + format.format((300000 - selectPoint)) + "Point 남았습니다. ^_^");
 		}else if(selectPoint > 0){
-			clientController.updateFamilyGrade(userNo, gradeNo); /* 패밀리 등급으로 변경 */
+			clientController.updateFamilyGrade(userNo, gradeNo, pastPoint); /* 패밀리 등급으로 변경 */
 			System.out.println("\n\n회원님의 현재 등급은 Family 입니다.");
 			System.out.println("다음 등급까지 " + format.format((100000 - selectPoint)) + "Point 남았습니다. ^_^");
 		}
