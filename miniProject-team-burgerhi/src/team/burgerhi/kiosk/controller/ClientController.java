@@ -27,6 +27,7 @@ public class ClientController {
 	String code = "";
 	DecimalFormat format = new DecimalFormat("###,###");
 	List<Integer> setList = new ArrayList<Integer>();
+	Thread th = new Thread();
 	
 	/* Login 진행 메소드 */
 	public UserDTO loginResult() {
@@ -292,41 +293,41 @@ public class ClientController {
 				totalPrice += (price *  amount);
 			}
 			
-			for(int i = 0; i < setList.size(); i += 5) {
+			for(int i = 0; i < setList.size(); i += 6) {
+				
 				System.out.println("▶ 메뉴번호  : " + setList.get(i));
 				List<MenuDTO> burgerList = clientService.selectMenuBy(1);
 				for(int j = 0; j < burgerList.size(); j++) {
-					if(setList.get(i) == burgerList.get(j).getMenuCode()) {
+					if(setList.get(i+1) == burgerList.get(j).getMenuCode()) {
 						setMenu = burgerList.get(j).getName();
 					}
 				}
 				System.out.println("▶ 메뉴명    : " + setMenu + " 세트");
 				List<MenuDTO> drinkList = clientService.selectMenuBy(2);
 				for(int j = 0; j < drinkList.size(); j++) {
-					if(setList.get(i+1) == drinkList.get(j).getMenuCode()) {
+					if(setList.get(i+2) == drinkList.get(j).getMenuCode()) {
 						setMenu = drinkList.get(j).getName();
 					}
 				}
 				System.out.println("▶ 세트음료  : " + setMenu);
 				List<MenuDTO> sideList = clientService.selectMenuBy(3);
 				for(int j = 0; j < sideList.size(); j++) {
-					if(setList.get(i+2) == sideList.get(j).getMenuCode()) {
+					if(setList.get(i+3) == sideList.get(j).getMenuCode()) {
 						setMenu = sideList.get(j).getName();
 					}
 				}
-				setAmount = setList.get(i+4);
+				setAmount = setList.get(i+5);
 				System.out.println("▶ 세트사이드: " + setMenu);
-				System.out.println("▶ 주문수량  : " + setList.get(i+4));
-				System.out.println("▶ 금액      : " + format.format(setList.get(i+3)) + " * " + setAmount + " = " + format.format((setList.get(i+3) * setAmount)));
-				totalPrice += setList.get(i+3) * setAmount;
-				setAmount1 += setList.get(i+4);
+				System.out.println("▶ 주문수량  : " + setList.get(i+5));
+				System.out.println("▶ 금액      : " + format.format(setList.get(i+4)) + " * " + setAmount + " = " + format.format((setList.get(i+4) * setAmount)));
+				totalPrice += setList.get(i+4) * setAmount;
+				setAmount1 += setList.get(i+5);
 				System.out.println();
 			}
 			
 			
 //		System.out.println("set값 제대로 들어갔는지? " + set);
 			if(setList.size() > 0) {
-				
 				int setSalePrice = setAmount1 * 1000;
 				System.out.println("\n\n▶ 세트 할인 금액: " + format.format(setSalePrice));
 				System.out.println("▶ 총 금액: " + format.format(totalPrice) + " - " + format.format(setSalePrice) + " = "  +format.format((totalPrice - setSalePrice)));
@@ -342,6 +343,11 @@ public class ClientController {
 			System.out.println("\n              장바구니가 텅비었어요.           \n");
 			System.out.println("=================================================");
 			System.out.println("\n → 주문하러 가볼까요?");
+			try {
+				th.sleep(1800);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			totalPrice = 0;
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		}
@@ -369,12 +375,12 @@ public class ClientController {
 			} break;
 		}
 		
-		for(int i = 0; i < setList.size(); i += 5) {
+		for(int i = 0; i < setList.size(); i += 6) {
 			if(deleteMenuCode == setList.get(i)) {
 				System.out.print("\n\n → 세트 메뉴를 삭제하시겠습니까?(1.예 / 2. 아니오): ");
 				int num = sc.nextInt();
 				if(num == 1) {
-					setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);
+					setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);setList.remove(i);
 					deleteResult = 1;
 					break;
 				} 
@@ -692,6 +698,13 @@ public class ClientController {
 
 	/* 세트메뉴 선택 가능한 메소드 */
 	public List<Integer> ShowSetMenu(int userNo) {
+		int setNo = 1;
+		if(setList.size() > 0) {
+			for(int i = 1; i <= setList.size(); i += 6) {
+				setNo++;
+			}
+		}
+		setList.add(setNo);
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		System.out.println(">>>>           BurgerHI 세트 선택            <<<<");
 		System.out.println("=================================================");

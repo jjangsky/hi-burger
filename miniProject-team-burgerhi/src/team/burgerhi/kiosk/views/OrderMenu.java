@@ -23,7 +23,7 @@ public class OrderMenu {
 		Scanner sc = new Scanner(System.in);
 		DecimalFormat format = new DecimalFormat("###,###");
 		Thread th = new Thread();
-		List<Integer> setList = new ArrayList<Integer>();
+//		List<Integer> setList = new ArrayList<Integer>();
 		
 		while(true) {
 			/* do~while문 밖에서도 사용해야 할 변수 */
@@ -361,11 +361,11 @@ public class OrderMenu {
 										}
 									}
 								} else if(num == 3) {
-									for(int i = 0; i < setList.size(); i+= 5) {
-										int berger = setList.get(i);
-										int drink = setList.get(i+1);
-										int side = setList.get(i+2);
-										int amount = setList.get(i+4);
+									for(int i = 0; i < setList.size(); i+= 6) {
+										int berger = setList.get(i+1);
+										int drink = setList.get(i+2);
+										int side = setList.get(i+3);
+										int amount = setList.get(i+5);
 										clientController.insertOrderSetMenu(userNo, berger, amount);
 										clientController.insertOrderSetMenu(userNo, drink, amount);
 										clientController.insertOrderSetMenu(userNo, side, amount);
@@ -473,8 +473,8 @@ public class OrderMenu {
 						}
 						
 						/* 세트 메뉴 있을 경우 세트 금액 할인 변수 적용 */
-						for(int i = 0; i < setList.size(); i += 5) {
-							setAmount += setList.get(i+4);
+						for(int i = 0; i < setList.size(); i += 6) {
+							setAmount += setList.get(i+5);
 						}
 						/* 할인 금액 모두 변수로 담아서 최종 결제 금액 환산 */
 						setDiscount = setAmount * 1000;
@@ -507,8 +507,8 @@ public class OrderMenu {
 						
 						/* 현금 결제 */
 					} else if (paymentBy == 2) {
-						for(int i = 0; i < setList.size(); i += 5) {
-							setAmount += setList.get(i+4);
+						for(int i = 0; i < setList.size(); i += 6) {
+							setAmount += setList.get(i+5);
 						}
 						setDiscount = setAmount * 1000;
 						int grade = clientController.selectGrade(gradeNo);
@@ -620,8 +620,8 @@ public class OrderMenu {
 						
 					} else if (paymentBy == 3) { // 기프티콘 결제
 						int grade = clientController.selectGrade(gradeNo);
-						for(int i = 0; i < setList.size(); i += 5) {
-						setAmount += setList.get(i+4);
+						for(int i = 0; i < setList.size(); i += 6) {
+						setAmount += setList.get(i+5);
 						}
 						setDiscount = setAmount * 1000;
 						gradeDiscount = (totalPrice - setDiscount) * (grade * 0.01);

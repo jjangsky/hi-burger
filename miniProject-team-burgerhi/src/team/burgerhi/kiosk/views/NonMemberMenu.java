@@ -287,11 +287,11 @@ public class NonMemberMenu {
 					clientController.deleteOrderMenu(setList);
 					totalPrice = clientController.selectOrderMenu(setList);
 				} else if(num3 == 3) {
-					for(int i = 0; i < setList.size(); i+= 5) {
-						int berger = setList.get(i);
-						int drink = setList.get(i+1);
-						int side = setList.get(i+2);
-						int amount = setList.get(i+4);
+					for(int i = 0; i < setList.size(); i+= 6) {
+						int berger = setList.get(i+1);
+						int drink = setList.get(i+2);
+						int side = setList.get(i+3);
+						int amount = setList.get(i+5);
 						clientController.insertOrderSetMenu(userNo, berger, amount);
 						clientController.insertOrderSetMenu(userNo, drink, amount);
 						clientController.insertOrderSetMenu(userNo, side, amount);
@@ -385,8 +385,8 @@ public class NonMemberMenu {
 						System.out.println("다시 결제를 시도해 주세요!");
 						continue;
 					}
-					for(int i = 0; i < setList.size(); i += 5) {
-						setAmount += setList.get(i+4);
+					for(int i = 0; i < setList.size(); i += 6) {
+						setAmount += setList.get(i+5);
 					}
 					
 					/* 모든 할인금액 변수에 담아 최종 결제 금액 환산 */
@@ -414,8 +414,8 @@ public class NonMemberMenu {
 				
 					while(true) {
 						try {		// 실수로 문자열을 입력했을 경우의 예외처리
-							for(int i = 0; i < setList.size(); i += 5) {
-								setAmount += setList.get(i+4);
+							for(int i = 0; i < setList.size(); i += 6) {
+								setAmount += setList.get(i+5);
 							}
 							setDiscount = setAmount * 1000;
 							paymentPrice = (int) (totalPrice - setDiscount);
@@ -506,8 +506,8 @@ public class NonMemberMenu {
 					}
 					
 				} else if (paymentBy == 3) { // 기프티콘 결제
-					for(int i = 0; i < setList.size(); i += 5) {
-						setAmount += setList.get(i+4);
+					for(int i = 0; i < setList.size(); i += 6) {
+						setAmount += setList.get(i+5);
 					}
 					setDiscount = setAmount * 1000;
 					System.out.println("▶ 세트 할인 금액: " + format.format(setDiscount) + "원");
