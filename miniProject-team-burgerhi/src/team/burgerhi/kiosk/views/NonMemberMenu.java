@@ -453,7 +453,7 @@ public class NonMemberMenu {
 						}
 						System.out.println("\n\n\n\n\n\n\n\n\n\n");
 						orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, paymentPrice, paymentBy);
-					} else {
+					} else if(inputPrice < paymentPrice) {
 						System.out.println("\n\n※ 결제 금액이 " + format.format((paymentPrice - inputPrice)) + "원 부족합니다!");
 						System.out.println("   추가 금액 " + format.format((paymentPrice - inputPrice)) + "원을 결제해 주세요!\n\n\n\n\n\n\n");
 						orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, inputPrice, paymentBy);
@@ -546,7 +546,7 @@ public class NonMemberMenu {
 
 						/* 사용한 기프티콘 잔액 수정 */
 						clientController.updateGifticonPrice(inputGiftNo, gifticonPrice);
-					} else {
+					} else if(inputPrice < (paymentPrice - gifticonPrice)){
 						System.out.println("기프티콘 사용이 완료 되었습니다!");
 						System.out.println("추가 금액 " + format.format((paymentPrice - gifticonPrice)) + "원을 결제해 주세요! \n\n\n\n");
 						orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, gifticonPrice, paymentBy);
