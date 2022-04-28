@@ -492,11 +492,18 @@ public class NonMemberMenu {
 					System.out.print("\n → 사용하실 기프티콘 번호를 입력해 주세요: ");
 					sc.nextLine();
 					String inputGiftNo = sc.nextLine();
+					for(int i = 0; i < 100; i++) {
+						if(inputGiftNo.length() < 14) {
+							System.out.print("\n → 잘못된 기프티콘 번호입니다. 다시 입력해주세요: ");
+							inputGiftNo = sc.nextLine();
+						}
+					}
 					int gifticonPrice = clientController.selectGifticonBy(inputGiftNo);
 					if(gifticonPrice == 0) {
-						System.out.println("기프티콘 번호를 잘못 입력하셨습니다. 다시 입력해 주세요!");
+						System.out.println("\n → 이미 사용된 기프티콘 입니다!");
 						System.out.println("\n\n\n\n\n\n\n\n\n\n");
-						continue;
+						setList.clear();
+						break;
 					}
 					clientController.insertOrder(paymentPrice);
 					if (gifticonPrice >= paymentPrice) {
@@ -564,7 +571,7 @@ public class NonMemberMenu {
 							while(true) {
 								try {		// 실수로 문자열을 입력했을 경우의 예외처리
 									System.out.print("\n → 결제하실 금액을 입력해 주세요: ");
-									inputPrice = sc.nextInt();
+//									inputPrice = sc.nextInt();
 									inputPrice = sc.nextInt();
 								} catch(InputMismatchException e) {
 									System.out.println("\n 숫자로 입력해 주세요!");
@@ -581,7 +588,7 @@ public class NonMemberMenu {
 							}else if (inputPrice > (paymentPrice - gifticonPrice)) {
 
 								System.out.println(
-										"거스름돈은 " + format.format((inputPrice - paymentPrice - gifticonPrice)) + "원 입니다!");
+										"거스름돈은 " + format.format((inputPrice - (paymentPrice - gifticonPrice))) + "원 입니다!");
 								System.out.println("주문이 진행되고 있으니 잠시만 기다려 주세요 :)");
 								orderCode = clientController.insertPayment(userNo, totalPrice, gradeNo, cardCode, (paymentPrice - gifticonPrice), paymentBy);
 							}else {
