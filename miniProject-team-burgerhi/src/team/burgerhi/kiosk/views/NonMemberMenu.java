@@ -676,6 +676,15 @@ public class NonMemberMenu {
 		String name = sc.nextLine();
 		System.out.print("\n →  사용하실 아이디를 입력해 주세요: ");
 		String userId = sc.nextLine();
+		int checkResult = clientController.selectUserIdCheck(userId);
+		
+		
+		
+		
+		
+		
+		
+		
 		System.out.print("\n →  사용하실 비밀번호를 입력해 주세요: ");
 		String userPwd = sc.nextLine();
 		System.out.print("\n →  사용하시는 휴대폰 번호를 입력해 주세요: ");
@@ -683,6 +692,8 @@ public class NonMemberMenu {
 		String formatUserPhone = clientController.phoneFormat(userPhone);		// 휴대폰 번호의 경우 일정한 format으로 가공하여 DB Insert
 //		System.out.println(formatUserPhone);									// 제대로 적용 되는지 확인 차 출력
 		System.out.println("\n\n\n\n\n\n\n\n\n\n");
+		
+		
 		int result = clientController.createUserInfo(name, userId, userPwd, formatUserPhone);
 		
 		if(result > 0) {

@@ -989,5 +989,16 @@ public class ClientDAO {
 		}
 		return gradeNo;
 	}
+
+	/* 아이디 중복 체크 */
+	public int selectUserIdCheck(Connection con, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = prop.getProperty("selectUserIdCheck");
+		
+		
+		return result;
+	}
 	
 }

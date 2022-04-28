@@ -511,15 +511,6 @@ public class ClientController {
 	/* 비회원 회원가입 절차, View 에서 받은 Scanner 값을 DTO에 담아서 Service 계층으로 전송 */
 	public int createUserInfo(String name, String userId, String userPwd, String userPhone) {
 		UserDTO userDTO = new UserDTO();
-		List<UserDTO> userList = clientService.loginResult(userId, userPwd);
-//		if()
-		
-		
-		
-		
-		
-		
-		
 		userDTO.setName(name);
 		userDTO.setId(userId);
 		userDTO.setPwd(userPwd);
@@ -809,6 +800,13 @@ public class ClientController {
 		
 		return insertOrderMenu;
 		
+	}
+
+	/* 아이디 중복 체크 확인 */
+	public int selectUserIdCheck(String userId) {
+		int  result = clientService.selectUserIdCheck(userId);
+		
+		return result;
 	}
 
 }

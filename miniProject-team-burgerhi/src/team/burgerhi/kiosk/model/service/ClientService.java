@@ -400,4 +400,11 @@ public class ClientService {
 		close(con);
 		return updateGradeNo;
 	}
+
+	public int selectUserIdCheck(String userId) {
+		Connection con = getConnection();
+		int result = clientDAO.selectUserIdCheck(con, userId);
+		close(con);
+		return result;
+	}
 }

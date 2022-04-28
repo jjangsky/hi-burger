@@ -580,4 +580,10 @@
            SET A.GRADE_NO = ?
          WHERE USER_NO = ?
    </entry>
+   <entry key="selectUserIdCheck">
+       SELECT
+       	      COUNT(*)
+         FROM USER_TABLE
+        WHERE USER_ID = ?
+   </entry>
 </properties>
